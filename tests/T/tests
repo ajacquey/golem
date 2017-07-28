@@ -1,0 +1,47 @@
+[Tests]
+  [./1D_steady]
+    type = 'Exodiff'
+    input = 'T_1D_steady.i'
+    exodiff = 'T_1D_steady_out.e'
+  [../]
+  [./2D_steady]
+    type = 'Exodiff'
+    input = 'T_2D_steady.i'
+    exodiff = 'T_2D_steady_out.e'
+  [../]
+  [./3D_steady]
+    type = 'Exodiff'
+    input = 'T_3D_steady.i'
+    exodiff = 'T_3D_steady_out.e'
+  [../]
+  [./1D_bc_steady]
+    type = 'Exodiff'
+    input = 'T_1D_bc_steady.i'
+    exodiff = 'T_1D_bc_steady_out.e'
+  [../]
+  [./2D_bc_steady]
+    type = 'Exodiff'
+    input = 'T_2D_bc_steady.i'
+    exodiff = 'T_2D_bc_steady_out.e'
+  [../]
+  [./1D_transient]
+    type = 'Exodiff'
+    input = 'T_1D_transient.i'
+    exodiff = 'T_1D_transient_out.e'
+  [../]
+  [./1D_bc_transient]
+    type = 'Exodiff'
+    input = 'T_1D_bc_transient.i'
+    exodiff = 'T_1D_bc_transient_out.e'
+  [../]
+  [./1D_bc_ic_transient]
+    type = 'Exodiff'
+    input = 'T_1D_bc_ic_transient.i'
+    exodiff = 'T_1D_bc_ic_transient_out.e'
+  [../]
+  [./2D_bc_transient]
+    type = 'Exodiff'
+    input = 'T_2D_bc_transient.i'
+    exodiff = 'T_2D_bc_transient_out.e'
+  [../]
+[]

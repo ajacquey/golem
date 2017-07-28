@@ -27,10 +27,13 @@
 // Materials
 #include "GolemMaterialBase.h"
 #include "GolemMaterialH.h"
+#include "GolemMaterialT.h"
 
 // Kernels
 #include "GolemKernelTimeH.h"
+#include "GolemKernelTimeT.h"
 #include "GolemKernelH.h"
+#include "GolemKernelT.h"
 
 // UserObjects
 #include "GolemFluidDensityConstant.h"
@@ -83,10 +86,13 @@ GolemApp::registerObjects(Factory & factory)
   // Materials
   registerMaterial(GolemMaterialBase);
   registerMaterial(GolemMaterialH);
+  registerMaterial(GolemMaterialT);
 
   // Kernels
   registerKernel(GolemKernelTimeH);
+  registerKernel(GolemKernelTimeT);
   registerKernel(GolemKernelH);
+  registerKernel(GolemKernelT);
 
   // UserObjects
   registerUserObject(GolemFluidDensityConstant);
