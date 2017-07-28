@@ -18,68 +18,31 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemApp.h"
-#include "Moose.h"
-#include "AppFactory.h"
-#include "ModulesApp.h"
-#include "MooseSyntax.h"
+#ifndef GOLEMPERMEABILITY_H
+#define GOLEMPERMEABILITY_H
 
-// Materials
-#include "GolemMaterialBase.h"
+#include "GeneralUserObject.h"
+
+class GolemPermeability;
 
 template <>
-InputParameters
-validParams<GolemApp>()
-{
-  InputParameters params = validParams<MooseApp>();
-  return params;
-}
+InputParameters validParams<GolemPermeability>();
 
-GolemApp::GolemApp(InputParameters parameters) : MooseApp(parameters)
+class GolemPermeability : public GeneralUserObject
 {
-  Moose::registerObjects(_factory);
-  ModulesApp::registerObjects(_factory);
-  GolemApp::registerObjects(_factory);
+public:
+  GolemPermeability(const InputParameters & parameters);
+  void initialize() {}
+  void execute() {}
+  void finalize() {}
+  virtual std::vector<Real>
+  computePermeability(std::vector<Real> k0, Real phi0, Real porosity) const = 0;
+  virtual std::vector<Real>
+  computedPermeabilitydev(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dev) const = 0;
+  virtual std::vector<Real>
+  computedPermeabilitydpf(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dpf) const = 0;
+  virtual std::vector<Real>
+  computedPermeabilitydT(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dTs) const = 0;
+};
 
-  Moose::associateSyntax(_syntax, _action_factory);
-  ModulesApp::associateSyntax(_syntax, _action_factory);
-  GolemApp::associateSyntax(_syntax, _action_factory);
-}
-
-GolemApp::~GolemApp() {}
-
-// External entry point for dynamic application loading
-extern "C" void
-GolemApp__registerApps()
-{
-  GolemApp::registerApps();
-}
-void
-GolemApp::registerApps()
-{
-  registerApp(GolemApp);
-}
-
-// External entry point for dynamic object registration
-extern "C" void
-GolemApp__registerObjects(Factory & factory)
-{
-  GolemApp::registerObjects(factory);
-}
-void
-GolemApp::registerObjects(Factory & factory)
-{
-  // Materials
-  registerMaterial(GolemMaterialBase);
-}
-
-// External entry point for dynamic syntax association
-extern "C" void
-GolemApp__associateSyntax(Syntax & syntax, ActionFactory & action_factory)
-{
-  GolemApp::associateSyntax(syntax, action_factory);
-}
-void
-GolemApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
-{
-}
+#endif // GOLEMPERMEABILITY_H

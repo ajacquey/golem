@@ -18,68 +18,54 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemApp.h"
-#include "Moose.h"
-#include "AppFactory.h"
-#include "ModulesApp.h"
-#include "MooseSyntax.h"
+#ifndef GOLEMMATERIALBASE_H
+#define GOLEMMATERIALBASE_H
 
-// Materials
-#include "GolemMaterialBase.h"
+#include "Material.h"
+#include "RankTwoTensor.h"
+#include "UserObjectInterface.h"
+#include "GolemFluidDensity.h"
+#include "GolemFluidViscosity.h"
+#include "GolemPermeability.h"
+#include "GolemPorosity.h"
+#include "GolemScaling.h"
+
+class GolemMaterialBase;
 
 template <>
-InputParameters
-validParams<GolemApp>()
-{
-  InputParameters params = validParams<MooseApp>();
-  return params;
-}
+InputParameters validParams<GolemMaterialBase>();
 
-GolemApp::GolemApp(InputParameters parameters) : MooseApp(parameters)
+class GolemMaterialBase : public Material
 {
-  Moose::registerObjects(_factory);
-  ModulesApp::registerObjects(_factory);
-  GolemApp::registerObjects(_factory);
+public:
+  GolemMaterialBase(const InputParameters & parameters);
+  static MooseEnum materialType();
 
-  Moose::associateSyntax(_syntax, _action_factory);
-  ModulesApp::associateSyntax(_syntax, _action_factory);
-  GolemApp::associateSyntax(_syntax, _action_factory);
-}
+protected:
+  void computeGravity();
+  void computeRotationMatrix();
+  Real computeQpScaling();
+  bool _has_scaled_properties;
+  Real _rho0_f;
+  Real _rho0_s;
+  Real _phi0;
+  bool _has_gravity;
+  Real _g;
+  Real _scaling_factor0;
+  Real _alpha_T_f;
+  Real _alpha_T_s;
+  const GolemFluidDensity * _fluid_density_uo;
+  const GolemFluidViscosity * _fluid_viscosity_uo;
+  const GolemPermeability * _permeability_uo;
+  const GolemPorosity * _porosity_uo;
+  const GolemScaling * _scaling_uo;
+  MooseEnum _material_type;
+  MaterialProperty<Real> & _scaling_factor;
+  MaterialProperty<Real> & _porosity;
+  MaterialProperty<Real> & _fluid_density;
+  MaterialProperty<Real> & _fluid_viscosity;
+  RealVectorValue _gravity;
+  RankTwoTensor _rotation_matrix;
+};
 
-GolemApp::~GolemApp() {}
-
-// External entry point for dynamic application loading
-extern "C" void
-GolemApp__registerApps()
-{
-  GolemApp::registerApps();
-}
-void
-GolemApp::registerApps()
-{
-  registerApp(GolemApp);
-}
-
-// External entry point for dynamic object registration
-extern "C" void
-GolemApp__registerObjects(Factory & factory)
-{
-  GolemApp::registerObjects(factory);
-}
-void
-GolemApp::registerObjects(Factory & factory)
-{
-  // Materials
-  registerMaterial(GolemMaterialBase);
-}
-
-// External entry point for dynamic syntax association
-extern "C" void
-GolemApp__associateSyntax(Syntax & syntax, ActionFactory & action_factory)
-{
-  GolemApp::associateSyntax(syntax, action_factory);
-}
-void
-GolemApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
-{
-}
+#endif // GOLEMMATERIALBASE_H

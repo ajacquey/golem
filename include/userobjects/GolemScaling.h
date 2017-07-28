@@ -18,68 +18,47 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemApp.h"
-#include "Moose.h"
-#include "AppFactory.h"
-#include "ModulesApp.h"
-#include "MooseSyntax.h"
+#ifndef GOLEMSCALING_H
+#define GOLEMSCALING_H
 
-// Materials
-#include "GolemMaterialBase.h"
+#include "GeneralUserObject.h"
+
+class GolemScaling;
 
 template <>
-InputParameters
-validParams<GolemApp>()
-{
-  InputParameters params = validParams<MooseApp>();
-  return params;
-}
+InputParameters validParams<GolemScaling>();
 
-GolemApp::GolemApp(InputParameters parameters) : MooseApp(parameters)
+class GolemScaling : public GeneralUserObject
 {
-  Moose::registerObjects(_factory);
-  ModulesApp::registerObjects(_factory);
-  GolemApp::registerObjects(_factory);
+public:
+  GolemScaling(const InputParameters & parameters);
+  virtual void initialize() {}
+  virtual void execute() {}
+  virtual void finalize() {}
+  // Characteristic values
+  Real _s_time;
+  Real _s_length;
+  Real _s_temperature;
+  Real _s_stress;
+  // Secondary variables
+  Real _s_force;        // stress * area
+  Real _s_energy;       // force * length
+  Real _s_power;        // energy / time
+  Real _s_velocity;     // length / time
+  Real _s_acceleration; // lenght / time / time
+  Real _s_mass;         // force / acceleration
+  // Material parameters - T
+  Real _s_density;         // mass / volume
+  Real _s_specific_heat;   // energy / mass / temperature
+  Real _s_conductivity;    // power * length * temperature
+  Real _s_heat_production; // power / mass
+  Real _s_heat_flow;       // power / area
+  // Material parameters - H
+  Real _s_permeability;    //
+  Real _s_viscosity;       // stress * time
+  Real _s_compressibility; // stress
+  // Material parameters - M
+  Real _s_expansivity; // 1 / temperature
+};
 
-  Moose::associateSyntax(_syntax, _action_factory);
-  ModulesApp::associateSyntax(_syntax, _action_factory);
-  GolemApp::associateSyntax(_syntax, _action_factory);
-}
-
-GolemApp::~GolemApp() {}
-
-// External entry point for dynamic application loading
-extern "C" void
-GolemApp__registerApps()
-{
-  GolemApp::registerApps();
-}
-void
-GolemApp::registerApps()
-{
-  registerApp(GolemApp);
-}
-
-// External entry point for dynamic object registration
-extern "C" void
-GolemApp__registerObjects(Factory & factory)
-{
-  GolemApp::registerObjects(factory);
-}
-void
-GolemApp::registerObjects(Factory & factory)
-{
-  // Materials
-  registerMaterial(GolemMaterialBase);
-}
-
-// External entry point for dynamic syntax association
-extern "C" void
-GolemApp__associateSyntax(Syntax & syntax, ActionFactory & action_factory)
-{
-  GolemApp::associateSyntax(syntax, action_factory);
-}
-void
-GolemApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
-{
-}
+#endif // GOLEMSCALING_H

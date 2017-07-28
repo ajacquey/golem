@@ -18,68 +18,31 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemApp.h"
-#include "Moose.h"
-#include "AppFactory.h"
-#include "ModulesApp.h"
-#include "MooseSyntax.h"
+#ifndef GOLEMFLUIDVISCOSITY_H
+#define GOLEMFLUIDVISCOSITY_H
 
-// Materials
-#include "GolemMaterialBase.h"
+#include "GeneralUserObject.h"
+#include "GolemScaling.h"
+
+class GolemFluidViscosity;
 
 template <>
-InputParameters
-validParams<GolemApp>()
-{
-  InputParameters params = validParams<MooseApp>();
-  return params;
-}
+InputParameters validParams<GolemFluidViscosity>();
 
-GolemApp::GolemApp(InputParameters parameters) : MooseApp(parameters)
+class GolemFluidViscosity : public GeneralUserObject
 {
-  Moose::registerObjects(_factory);
-  ModulesApp::registerObjects(_factory);
-  GolemApp::registerObjects(_factory);
+public:
+  GolemFluidViscosity(const InputParameters & parameters);
+  void initialize() {}
+  void execute() {}
+  void finalize() {}
+  virtual Real computeViscosity(Real temperature, Real rho, Real mu0) const = 0;
+  virtual Real computedViscositydT(Real temperature, Real rho, Real drho_dT, Real mu0) const = 0;
+  virtual Real computedViscositydp(Real temperature, Real rho, Real drho_dp) const = 0;
 
-  Moose::associateSyntax(_syntax, _action_factory);
-  ModulesApp::associateSyntax(_syntax, _action_factory);
-  GolemApp::associateSyntax(_syntax, _action_factory);
-}
+protected:
+  bool _has_scaled_properties;
+  const GolemScaling * _scaling_uo;
+};
 
-GolemApp::~GolemApp() {}
-
-// External entry point for dynamic application loading
-extern "C" void
-GolemApp__registerApps()
-{
-  GolemApp::registerApps();
-}
-void
-GolemApp::registerApps()
-{
-  registerApp(GolemApp);
-}
-
-// External entry point for dynamic object registration
-extern "C" void
-GolemApp__registerObjects(Factory & factory)
-{
-  GolemApp::registerObjects(factory);
-}
-void
-GolemApp::registerObjects(Factory & factory)
-{
-  // Materials
-  registerMaterial(GolemMaterialBase);
-}
-
-// External entry point for dynamic syntax association
-extern "C" void
-GolemApp__associateSyntax(Syntax & syntax, ActionFactory & action_factory)
-{
-  GolemApp::associateSyntax(syntax, action_factory);
-}
-void
-GolemApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
-{
-}
+#endif // GOLEMFLUIDVISCOSITY_H
