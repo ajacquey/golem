@@ -33,7 +33,7 @@ validParams<GolemMaterialT>()
   params.addParam<Real>("fluid_heat_capacity_initial", 0.0, "The fluid heat capacity [J/m^3/K].");
   params.addParam<Real>("solid_heat_capacity_initial", 0.0, "The solid heat capacity [J/m^3/K].");
   params.addParam<Real>("heat_source_sink", 0.0, "The heat source or sink [W/m^3].");
-  params.addParam<UserObjectName>("fluid_density_uo", "The name of the fluid density user object");
+  params.addParam<UserObjectName>("fluid_density_uo", "The name of the fluid density user object.");
   params.addClassDescription(
       "This is the base class for thermal (conductive) Golem material properties.");
   return params;

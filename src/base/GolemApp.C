@@ -28,14 +28,24 @@
 #include "GolemMaterialBase.h"
 #include "GolemMaterialH.h"
 #include "GolemMaterialT.h"
+#include "GolemMaterialTH.h"
 
 // Kernels
 #include "GolemKernelTimeH.h"
 #include "GolemKernelTimeT.h"
 #include "GolemKernelH.h"
 #include "GolemKernelT.h"
+#include "GolemKernelTH.h"
+
+// AuxKernels
+#include "GolemDarcyVelocity.h"
+
+// BCs
+#include "GolemConvectiveTHBC.h"
 
 // UserObjects
+#include "GolemScaling.h"
+#include "GolemSUPG.h"
 #include "GolemFluidDensityConstant.h"
 #include "GolemFluidViscosityConstant.h"
 #include "GolemPorosityConstant.h"
@@ -87,14 +97,24 @@ GolemApp::registerObjects(Factory & factory)
   registerMaterial(GolemMaterialBase);
   registerMaterial(GolemMaterialH);
   registerMaterial(GolemMaterialT);
+  registerMaterial(GolemMaterialTH);
 
   // Kernels
   registerKernel(GolemKernelTimeH);
   registerKernel(GolemKernelTimeT);
   registerKernel(GolemKernelH);
   registerKernel(GolemKernelT);
+  registerKernel(GolemKernelTH);
+
+  // AuxKernels
+  registerAux(GolemDarcyVelocity);
+
+  // BCs
+  registerBoundaryCondition(GolemConvectiveTHBC);
 
   // UserObjects
+  registerUserObject(GolemScaling);
+  registerUserObject(GolemSUPG);
   registerUserObject(GolemFluidDensityConstant);
   registerUserObject(GolemFluidViscosityConstant);
   registerUserObject(GolemPorosityConstant);

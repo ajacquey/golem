@@ -125,6 +125,9 @@ framework/contrib/exodiff/exodiff
 .DS_Store
 *.dSYM
 
+# KDE garbage
+.directory
+
 # Unit testing stuff
 moose_unit/test_results.xml
 
