@@ -26,6 +26,17 @@
 
 // Materials
 #include "GolemMaterialBase.h"
+#include "GolemMaterialH.h"
+
+// Kernels
+#include "GolemKernelTimeH.h"
+#include "GolemKernelH.h"
+
+// UserObjects
+#include "GolemFluidDensityConstant.h"
+#include "GolemFluidViscosityConstant.h"
+#include "GolemPorosityConstant.h"
+#include "GolemPermeabilityConstant.h"
 
 template <>
 InputParameters
@@ -71,6 +82,17 @@ GolemApp::registerObjects(Factory & factory)
 {
   // Materials
   registerMaterial(GolemMaterialBase);
+  registerMaterial(GolemMaterialH);
+
+  // Kernels
+  registerKernel(GolemKernelTimeH);
+  registerKernel(GolemKernelH);
+
+  // UserObjects
+  registerUserObject(GolemFluidDensityConstant);
+  registerUserObject(GolemFluidViscosityConstant);
+  registerUserObject(GolemPorosityConstant);
+  registerUserObject(GolemPermeabilityConstant);
 }
 
 // External entry point for dynamic syntax association
