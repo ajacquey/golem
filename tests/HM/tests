@@ -1,0 +1,47 @@
+[Tests]
+  [./1D_steady]
+    type = 'Exodiff'
+    input = 'HM_1D_steady.i'
+    exodiff = 'HM_1D_steady_out.e'
+  [../]
+  [./2D_steady]
+    type = 'Exodiff'
+    input = 'HM_2D_steady.i'
+    exodiff = 'HM_2D_steady_out.e'
+  [../]
+  [./3D_steady]
+    type = 'Exodiff'
+    input = 'HM_3D_steady.i'
+    exodiff = 'HM_3D_steady_out.e'
+  [../]
+  [./3D_grav]
+    type = 'Exodiff'
+    input = 'HM_3D_grav.i'
+    exodiff = 'HM_3D_grav_out.e'
+  [../]
+  [./1D_transient]
+    type = 'Exodiff'
+    input = 'HM_1D_transient.i'
+    exodiff = 'HM_1D_transient_out.e'
+  [../]
+  [./1D_bc_transient]
+    type = 'Exodiff'
+    input = 'HM_1D_bc_transient.i'
+    exodiff = 'HM_1D_bc_transient_out.e'
+  [../]
+  [./1D_biot]
+    type = 'Exodiff'
+    input = 'HM_1D_biot.i'
+    exodiff = 'HM_1D_biot_out.e'
+  [../]
+  [./1D_terzaghi]
+    type = 'CSVDiff'
+    input = 'HM_1D_terzaghi.i'
+    csvdiff = 'HM_1D_terzaghi_csv.csv'
+  [../]
+  [./2D_mandel]
+    type = 'CSVDiff'
+    input = 'HM_2D_mandel.i'
+    csvdiff = 'HM_2D_mandel_csv.csv'
+  [../]
+[]

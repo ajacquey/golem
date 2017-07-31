@@ -36,6 +36,7 @@ public:
 
 protected:
   virtual Real computeValue();
+
   const VariableGradient & _grad_pf;
   const MaterialProperty<RankTwoTensor> & _H_kernel;
   const MaterialProperty<RealVectorValue> & _H_kernel_grav;

@@ -1,0 +1,17 @@
+[Tests]
+  [./1D_ax_load]
+    type = 'Exodiff'
+    input = 'M_1D_ax_load.i'
+    exodiff = 'M_1D_ax_load_out.e'
+  [../]
+  [./2D_shear]
+    type = 'Exodiff'
+    input = 'M_2D_shear.i'
+    exodiff = 'M_2D_shear_out.e'
+  [../]
+  [./3D_grav]
+    type = 'Exodiff'
+    input = 'M_3D_grav.i'
+    exodiff = 'M_3D_grav_out.e'
+  [../]
+[]

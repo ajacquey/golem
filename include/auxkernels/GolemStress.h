@@ -18,34 +18,29 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GMSMassResidual.h"
+#ifndef GOLEMSTRESS_H
+#define GOLEMSTRESS_H
+
+#include "AuxKernel.h"
+#include "RankTwoTensor.h"
+
+class GolemStress;
 
 template <>
-InputParameters
-validParams<GMSMassResidual>()
-{
-  InputParameters params = validParams<Kernel>();
-  return params;
-}
+InputParameters validParams<GolemStress>();
 
-GMSMassResidual::GMSMassResidual(const InputParameters & parameters)
-  : Kernel(parameters),
-    _bulk_density(getMaterialProperty<Real>("bulk_density")),
-    _gravity(getMaterialProperty<RealVectorValue>("gravity"))
+class GolemStress : public AuxKernel
 {
-}
+public:
+  GolemStress(const InputParameters & parameters);
 
-Real
-GMSMassResidual::computeQpResidual()
-{
-  return (_grad_u[_qp] - _bulk_density[_qp] * _gravity[_qp]) * _grad_test[_i][_qp];
-}
+protected:
+  virtual Real computeValue();
 
-/******************************************************************************/
-/*                                  JACOBIAN                                  */
-/******************************************************************************/
-Real
-GMSMassResidual::computeQpJacobian()
-{
-  return _grad_phi[_j][_qp] * _grad_test[_i][_qp];
-}
+private:
+  const MaterialProperty<RankTwoTensor> & _stress;
+  const unsigned int _i;
+  const unsigned int _j;
+};
+
+#endif // GOLEMSTRESS_H

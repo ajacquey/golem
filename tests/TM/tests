@@ -1,0 +1,32 @@
+[Tests]
+  [./1D_steady]
+    type = 'Exodiff'
+    input = 'TM_1D_steady.i'
+    exodiff = 'TM_1D_steady_out.e'
+  [../]
+  [./2D_steady]
+    type = 'Exodiff'
+    input = 'TM_2D_steady.i'
+    exodiff = 'TM_2D_steady_out.e'
+  [../]
+  [./3D_steady]
+    type = 'Exodiff'
+    input = 'TM_3D_steady.i'
+    exodiff = 'TM_3D_steady_out.e'
+  [../]
+  [./3D_grav]
+    type = 'Exodiff'
+    input = 'TM_3D_grav.i'
+    exodiff = 'TM_3D_grav_out.e'
+  [../]
+  [./1D_transient]
+    type = 'Exodiff'
+    input = 'TM_1D_transient.i'
+    exodiff = 'TM_1D_transient_out.e'
+  [../]
+  [./1D_bc_transient]
+    type = 'Exodiff'
+    input = 'TM_1D_bc_transient.i'
+    exodiff = 'TM_1D_bc_transient_out.e'
+  [../]
+[]

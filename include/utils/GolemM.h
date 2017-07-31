@@ -18,34 +18,41 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GMSMassResidual.h"
+#ifndef GOLEMM_H
+#define GOLEMM_H
 
-template <>
-InputParameters
-validParams<GMSMassResidual>()
+class RankFourTensor;
+
+namespace GolemM
 {
-  InputParameters params = validParams<Kernel>();
-  return params;
+
+/**
+ * This is used for the standard kernel stress_ij*d(test)/dx_j, when varied wrt u_k
+ * Jacobian entry: d(stress_ij*d(test)/dx_j)/du_k = d(C_ijmn*du_m/dx_n*dtest/dx_j)/du_k
+ */
+Real elasticJacobian(const RankFourTensor & r4t,
+                     unsigned int i,
+                     unsigned int k,
+                     const RealGradient & grad_test,
+                     const RealGradient & grad_phi);
+
+/**
+ * Get the shear modulus for an isotropic elasticity tensor
+ * param elasticity_tensor the tensor (must be isotropic, but not checked for efficiency)
+ */
+Real getIsotropicShearModulus(const RankFourTensor & elasticity_tensor);
+
+/**
+ * Get the bulk modulus for an isotropic elasticity tensor
+ * param elasticity_tensor the tensor (must be isotropic, but not checked for efficiency)
+ */
+Real getIsotropicBulkModulus(const RankFourTensor & elasticity_tensor);
+
+/**
+ * Get the Young's modulus for an isotropic elasticity tensor
+ * param elasticity_tensor the tensor (must be isotropic, but not checked for efficiency)
+ */
+Real getIsotropicYoungsModulus(const RankFourTensor & elasticity_tensor);
 }
 
-GMSMassResidual::GMSMassResidual(const InputParameters & parameters)
-  : Kernel(parameters),
-    _bulk_density(getMaterialProperty<Real>("bulk_density")),
-    _gravity(getMaterialProperty<RealVectorValue>("gravity"))
-{
-}
-
-Real
-GMSMassResidual::computeQpResidual()
-{
-  return (_grad_u[_qp] - _bulk_density[_qp] * _gravity[_qp]) * _grad_test[_i][_qp];
-}
-
-/******************************************************************************/
-/*                                  JACOBIAN                                  */
-/******************************************************************************/
-Real
-GMSMassResidual::computeQpJacobian()
-{
-  return _grad_phi[_j][_qp] * _grad_test[_i][_qp];
-}
+#endif // GOLEMM_H

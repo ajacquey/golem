@@ -18,34 +18,36 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GMSMassResidual.h"
+#include "GolemStress.h"
+#include "RankTwoTensor.h"
 
 template <>
 InputParameters
-validParams<GMSMassResidual>()
+validParams<GolemStress>()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = validParams<AuxKernel>();
+  params.addClassDescription("Access a component of the stress tensor.");
+  params.addRequiredRangeCheckedParam<unsigned int>(
+      "index_i",
+      "index_i >= 0 & index_i <= 2",
+      "The index i of ij for the stress tensor (0, 1, 2)");
+  params.addRequiredRangeCheckedParam<unsigned int>(
+      "index_j",
+      "index_j >= 0 & index_j <= 2",
+      "The index j of ij for the stress tensor (0, 1, 2)");
   return params;
 }
 
-GMSMassResidual::GMSMassResidual(const InputParameters & parameters)
-  : Kernel(parameters),
-    _bulk_density(getMaterialProperty<Real>("bulk_density")),
-    _gravity(getMaterialProperty<RealVectorValue>("gravity"))
+GolemStress::GolemStress(const InputParameters & parameters)
+  : AuxKernel(parameters),
+    _stress(getMaterialProperty<RankTwoTensor>("stress")),
+    _i(getParam<unsigned int>("index_i")),
+    _j(getParam<unsigned int>("index_j"))
 {
 }
 
 Real
-GMSMassResidual::computeQpResidual()
+GolemStress::computeValue()
 {
-  return (_grad_u[_qp] - _bulk_density[_qp] * _gravity[_qp]) * _grad_test[_i][_qp];
-}
-
-/******************************************************************************/
-/*                                  JACOBIAN                                  */
-/******************************************************************************/
-Real
-GMSMassResidual::computeQpJacobian()
-{
-  return _grad_phi[_j][_qp] * _grad_test[_i][_qp];
+  return _stress[_qp](_i, _j);
 }

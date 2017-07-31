@@ -18,34 +18,57 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GMSMassResidual.h"
+#include "GolemKernelHPoroElastic.h"
+#include "MooseMesh.h"
 
 template <>
 InputParameters
-validParams<GMSMassResidual>()
+validParams<GolemKernelHPoroElastic>()
 {
   InputParameters params = validParams<Kernel>();
+  params.addRequiredCoupledVar("displacements", "The displacement variables vector.");
   return params;
 }
 
-GMSMassResidual::GMSMassResidual(const InputParameters & parameters)
+GolemKernelHPoroElastic::GolemKernelHPoroElastic(const InputParameters & parameters)
   : Kernel(parameters),
-    _bulk_density(getMaterialProperty<Real>("bulk_density")),
-    _gravity(getMaterialProperty<RealVectorValue>("gravity"))
+    _ndisp(coupledComponents("displacements")),
+    _disp_var(_ndisp),
+    _biot(getMaterialProperty<Real>("biot_coefficient")),
+    _vol_strain_rate(getMaterialProperty<Real>("volumetric_strain_rate"))
 {
+  if (_ndisp != _mesh.dimension())
+    mooseError("The number of displacement variables supplied must match the mesh dimension.");
+  for (unsigned int i = 0; i < _ndisp; ++i)
+    _disp_var[i] = coupled("displacements", i);
 }
 
+/******************************************************************************/
+/*                                RESIDUAL                                    */
+/******************************************************************************/
 Real
-GMSMassResidual::computeQpResidual()
+GolemKernelHPoroElastic::computeQpResidual()
 {
-  return (_grad_u[_qp] - _bulk_density[_qp] * _gravity[_qp]) * _grad_test[_i][_qp];
+  return _biot[_qp] * _vol_strain_rate[_qp] * _test[_i][_qp];
 }
 
 /******************************************************************************/
 /*                                  JACOBIAN                                  */
 /******************************************************************************/
 Real
-GMSMassResidual::computeQpJacobian()
+GolemKernelHPoroElastic::computeQpJacobian()
 {
-  return _grad_phi[_j][_qp] * _grad_test[_i][_qp];
+  return 0.0;
+}
+
+/******************************************************************************/
+/*                            OFF DIAGONAL JACOBIAN                           */
+/******************************************************************************/
+Real
+GolemKernelHPoroElastic::computeQpOffDiagJacobian(unsigned int jvar)
+{
+  for (unsigned int i = 0; i < _ndisp; ++i)
+    if (jvar == _disp_var[i])
+      return _biot[_qp] * _grad_phi[_j][_qp](i) * _test[_i][_qp] / _dt;
+  return 0.0;
 }

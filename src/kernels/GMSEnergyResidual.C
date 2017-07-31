@@ -58,6 +58,9 @@ GMSEnergyResidual::computeQpResidual()
   return diff * _grad_u[_qp] * _grad_test[_i][_qp] - e_source * _test[_i][_qp];
 }
 
+/******************************************************************************/
+/*                                  JACOBIAN                                  */
+/******************************************************************************/
 Real
 GMSEnergyResidual::computeQpJacobian()
 {

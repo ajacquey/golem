@@ -110,7 +110,7 @@ GolemKernelTimeT::computeQpResidual()
 }
 
 /******************************************************************************/
-/*                          JACOBIAN                                          */
+/*                                  JACOBIAN                                  */
 /******************************************************************************/
 void
 GolemKernelTimeT::computeJacobian()
@@ -174,7 +174,7 @@ GolemKernelTimeT::computeQpJacobian()
 }
 
 /******************************************************************************/
-/*                     OFF DIAGONAL JACOBIAN                                  */
+/*                            OFF DIAGONAL JACOBIAN                           */
 /******************************************************************************/
 void
 GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)

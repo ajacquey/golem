@@ -70,7 +70,7 @@ GolemKernelH::computeQpResidual()
 }
 
 /******************************************************************************/
-/*                          JACOBIAN                                          */
+/*                                  JACOBIAN                                  */
 /******************************************************************************/
 Real
 GolemKernelH::computeQpJacobian()
@@ -83,7 +83,7 @@ GolemKernelH::computeQpJacobian()
 }
 
 /******************************************************************************/
-/*                     OFF DIAGONAL JACOBIAN                                  */
+/*                            OFF DIAGONAL JACOBIAN                           */
 /******************************************************************************/
 Real
 GolemKernelH::computeQpOffDiagJacobian(unsigned int jvar)

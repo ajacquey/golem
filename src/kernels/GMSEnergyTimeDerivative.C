@@ -39,6 +39,9 @@ GMSEnergyTimeDerivative::computeQpResidual()
   return TimeDerivative::computeQpResidual();
 }
 
+/******************************************************************************/
+/*                                  JACOBIAN                                  */
+/******************************************************************************/
 Real
 GMSEnergyTimeDerivative::computeQpJacobian()
 {

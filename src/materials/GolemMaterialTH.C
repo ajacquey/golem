@@ -32,7 +32,7 @@ validParams<GolemMaterialTH>()
   params.addCoupledVar("displacements", "The displacement vector");
   params.addParam<bool>(
       "has_heat_source_sink", false, "Has source/sink of temperature considered?");
-  params.addParam<bool>("has_lumped_mass_matrix", false, "Has lumped mass matrix");
+  params.addParam<bool>("has_lumped_mass_matrix", false, "Has lumped mass matrix?");
   params.addRequiredParam<Real>("fluid_thermal_conductivity_initial",
                                 "The fluid thermal conductivity [W/m/K].");
   params.addRequiredParam<Real>("solid_thermal_conductivity_initial",

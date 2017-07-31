@@ -18,34 +18,32 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GMSMassResidual.h"
+#ifndef GOLEMSTRAIN_H
+#define GOLEMSTRAIN_H
+
+#include "AuxKernel.h"
+#include "RankTwoTensor.h"
+
+class GolemStrain;
 
 template <>
-InputParameters
-validParams<GMSMassResidual>()
-{
-  InputParameters params = validParams<Kernel>();
-  return params;
-}
+InputParameters validParams<GolemStrain>();
 
-GMSMassResidual::GMSMassResidual(const InputParameters & parameters)
-  : Kernel(parameters),
-    _bulk_density(getMaterialProperty<Real>("bulk_density")),
-    _gravity(getMaterialProperty<RealVectorValue>("gravity"))
+class GolemStrain : public AuxKernel
 {
-}
+public:
+  GolemStrain(const InputParameters & parameters);
+  static MooseEnum strainType();
 
-Real
-GMSMassResidual::computeQpResidual()
-{
-  return (_grad_u[_qp] - _bulk_density[_qp] * _gravity[_qp]) * _grad_test[_i][_qp];
-}
+protected:
+  virtual Real computeValue();
 
-/******************************************************************************/
-/*                                  JACOBIAN                                  */
-/******************************************************************************/
-Real
-GMSMassResidual::computeQpJacobian()
-{
-  return _grad_phi[_j][_qp] * _grad_test[_i][_qp];
-}
+  MooseEnum _strain_type;
+
+private:
+  const unsigned int _i;
+  const unsigned int _j;
+  const MaterialProperty<RankTwoTensor> * _strain;
+};
+
+#endif // GOLEMSTRAIN_H

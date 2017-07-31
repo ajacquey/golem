@@ -30,6 +30,7 @@
 #include "GolemMaterialH.h"
 #include "GolemMaterialT.h"
 #include "GolemMaterialTH.h"
+#include "GolemMaterialMElastic.h"
 
 // Kernels
 #include "GMSEnergyTimeDerivative.h"
@@ -40,9 +41,13 @@
 #include "GolemKernelH.h"
 #include "GolemKernelT.h"
 #include "GolemKernelTH.h"
+#include "GolemKernelM.h"
+#include "GolemKernelHPoroElastic.h"
 
 // AuxKernels
 #include "GolemDarcyVelocity.h"
+#include "GolemStress.h"
+#include "GolemStrain.h"
 
 // BCs
 #include "GolemConvectiveTHBC.h"
@@ -108,6 +113,7 @@ GolemApp::registerObjects(Factory & factory)
   registerMaterial(GolemMaterialH);
   registerMaterial(GolemMaterialT);
   registerMaterial(GolemMaterialTH);
+  registerMaterial(GolemMaterialMElastic);
 
   // Kernels
   registerKernel(GMSEnergyTimeDerivative);
@@ -118,9 +124,13 @@ GolemApp::registerObjects(Factory & factory)
   registerKernel(GolemKernelH);
   registerKernel(GolemKernelT);
   registerKernel(GolemKernelTH);
+  registerKernel(GolemKernelM);
+  registerKernel(GolemKernelHPoroElastic);
 
   // AuxKernels
   registerAux(GolemDarcyVelocity);
+  registerAux(GolemStress);
+  registerAux(GolemStrain);
 
   // BCs
   registerBoundaryCondition(GolemConvectiveTHBC);

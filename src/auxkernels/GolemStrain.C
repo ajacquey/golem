@@ -18,34 +18,58 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GMSMassResidual.h"
+#include "GolemStrain.h"
+#include "RankTwoTensor.h"
 
 template <>
 InputParameters
-validParams<GMSMassResidual>()
+validParams<GolemStrain>()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = validParams<AuxKernel>();
+  params.addClassDescription(
+      "Access a component of the strain (total, inelastic or plastic) tensor.");
+  params.addParam<MooseEnum>("strain_type",
+                             GolemStrain::strainType() = "total",
+                             "The component of the strain tensor to output.");
+  params.addRequiredRangeCheckedParam<unsigned int>(
+      "index_i",
+      "index_i >= 0 & index_i <= 2",
+      "The index i of ij for the stress tensor (0, 1, 2)");
+  params.addRequiredRangeCheckedParam<unsigned int>(
+      "index_j",
+      "index_j >= 0 & index_j <= 2",
+      "The index j of ij for the stress tensor (0, 1, 2)");
   return params;
 }
 
-GMSMassResidual::GMSMassResidual(const InputParameters & parameters)
-  : Kernel(parameters),
-    _bulk_density(getMaterialProperty<Real>("bulk_density")),
-    _gravity(getMaterialProperty<RealVectorValue>("gravity"))
+GolemStrain::GolemStrain(const InputParameters & parameters)
+  : AuxKernel(parameters),
+    _strain_type(getParam<MooseEnum>("strain_type")),
+    _i(getParam<unsigned int>("index_i")),
+    _j(getParam<unsigned int>("index_j"))
 {
+  switch (_strain_type)
+  {
+    case 1:
+      _strain = &getMaterialProperty<RankTwoTensor>("mechanical_strain");
+      break;
+    case 2:
+      _strain = &getMaterialProperty<RankTwoTensor>("inelastic_strain");
+      break;
+    case 3:
+      _strain = &getMaterialProperty<RankTwoTensor>("plastic_strain");
+      break;
+  }
+}
+
+MooseEnum
+GolemStrain::strainType()
+{
+  return MooseEnum("total=1 inelastic=2 plastic=3");
 }
 
 Real
-GMSMassResidual::computeQpResidual()
+GolemStrain::computeValue()
 {
-  return (_grad_u[_qp] - _bulk_density[_qp] * _gravity[_qp]) * _grad_test[_i][_qp];
-}
-
-/******************************************************************************/
-/*                                  JACOBIAN                                  */
-/******************************************************************************/
-Real
-GMSMassResidual::computeQpJacobian()
-{
-  return _grad_phi[_j][_qp] * _grad_test[_i][_qp];
+  return (*_strain)[_qp](_i, _j);
 }

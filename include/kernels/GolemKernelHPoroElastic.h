@@ -18,34 +18,30 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GMSMassResidual.h"
+#ifndef GOLEMKERNELHPOROELASTIC_H
+#define GOLEMKERNELHPOROELASTIC_H
+
+#include "Kernel.h"
+
+class GolemKernelHPoroElastic;
 
 template <>
-InputParameters
-validParams<GMSMassResidual>()
-{
-  InputParameters params = validParams<Kernel>();
-  return params;
-}
+InputParameters validParams<GolemKernelHPoroElastic>();
 
-GMSMassResidual::GMSMassResidual(const InputParameters & parameters)
-  : Kernel(parameters),
-    _bulk_density(getMaterialProperty<Real>("bulk_density")),
-    _gravity(getMaterialProperty<RealVectorValue>("gravity"))
+class GolemKernelHPoroElastic : public Kernel
 {
-}
+public:
+  GolemKernelHPoroElastic(const InputParameters & parameters);
 
-Real
-GMSMassResidual::computeQpResidual()
-{
-  return (_grad_u[_qp] - _bulk_density[_qp] * _gravity[_qp]) * _grad_test[_i][_qp];
-}
+protected:
+  virtual Real computeQpResidual();
+  virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-/******************************************************************************/
-/*                                  JACOBIAN                                  */
-/******************************************************************************/
-Real
-GMSMassResidual::computeQpJacobian()
-{
-  return _grad_phi[_j][_qp] * _grad_test[_i][_qp];
-}
+  unsigned int _ndisp;
+  std::vector<unsigned int> _disp_var;
+  const MaterialProperty<Real> & _biot;
+  const MaterialProperty<Real> & _vol_strain_rate;
+};
+
+#endif // GOLEMKERNELHPOROELASTIC_H

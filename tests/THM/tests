@@ -1,0 +1,12 @@
+[Tests]
+  [./1D_transient]
+    type = 'Exodiff'
+    input = 'THM_1D_transient.i'
+    exodiff = 'THM_1D_transient_out.e'
+  [../]
+  [./3D_grav]
+    type = 'Exodiff'
+    input = 'THM_3D_grav.i'
+    exodiff = 'THM_3D_grav_out.e'
+  [../]
+[]
