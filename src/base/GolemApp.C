@@ -25,12 +25,16 @@
 #include "MooseSyntax.h"
 
 // Materials
+#include "GMSMaterial.h"
 #include "GolemMaterialBase.h"
 #include "GolemMaterialH.h"
 #include "GolemMaterialT.h"
 #include "GolemMaterialTH.h"
 
 // Kernels
+#include "GMSEnergyTimeDerivative.h"
+#include "GMSEnergyResidual.h"
+#include "GMSMassResidual.h"
 #include "GolemKernelTimeH.h"
 #include "GolemKernelTimeT.h"
 #include "GolemKernelH.h"
@@ -43,9 +47,14 @@
 // BCs
 #include "GolemConvectiveTHBC.h"
 
+// Functions
+#include "GolemFunctionBCFromFile.h"
+#include "GolemFunctionReadFile.h"
+
 // UserObjects
 #include "GolemScaling.h"
 #include "GolemSUPG.h"
+#include "GolemPropertyReadFile.h"
 #include "GolemFluidDensityConstant.h"
 #include "GolemFluidViscosityConstant.h"
 #include "GolemPorosityConstant.h"
@@ -94,12 +103,16 @@ void
 GolemApp::registerObjects(Factory & factory)
 {
   // Materials
+  registerMaterial(GMSMaterial);
   registerMaterial(GolemMaterialBase);
   registerMaterial(GolemMaterialH);
   registerMaterial(GolemMaterialT);
   registerMaterial(GolemMaterialTH);
 
   // Kernels
+  registerKernel(GMSEnergyTimeDerivative);
+  registerKernel(GMSEnergyResidual);
+  registerKernel(GMSMassResidual);
   registerKernel(GolemKernelTimeH);
   registerKernel(GolemKernelTimeT);
   registerKernel(GolemKernelH);
@@ -112,9 +125,14 @@ GolemApp::registerObjects(Factory & factory)
   // BCs
   registerBoundaryCondition(GolemConvectiveTHBC);
 
+  // Functions
+  registerFunction(GolemFunctionBCFromFile);
+  registerFunction(GolemFunctionReadFile);
+
   // UserObjects
   registerUserObject(GolemScaling);
   registerUserObject(GolemSUPG);
+  registerUserObject(GolemPropertyReadFile);
   registerUserObject(GolemFluidDensityConstant);
   registerUserObject(GolemFluidViscosityConstant);
   registerUserObject(GolemPorosityConstant);

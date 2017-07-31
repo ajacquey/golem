@@ -1,0 +1,7 @@
+[Tests]
+  [./GMS]
+    type = 'Exodiff'
+    input = 'GMS.i'
+    exodiff = 'GMS_out.e'
+  [../]
+[]
