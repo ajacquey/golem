@@ -31,6 +31,8 @@
 #include "GolemMaterialT.h"
 #include "GolemMaterialTH.h"
 #include "GolemMaterialMElastic.h"
+#include "GolemMaterialMInelastic.h"
+#include "GolemDruckerPrager.h"
 
 // Kernels
 #include "GMSEnergyTimeDerivative.h"
@@ -51,6 +53,7 @@
 
 // BCs
 #include "GolemConvectiveTHBC.h"
+#include "GolemVelocityBC.h"
 
 // Functions
 #include "GolemFunctionBCFromFile.h"
@@ -64,6 +67,7 @@
 #include "GolemFluidViscosityConstant.h"
 #include "GolemPorosityConstant.h"
 #include "GolemPermeabilityConstant.h"
+#include "GolemHardeningConstant.h"
 
 template <>
 InputParameters
@@ -114,6 +118,8 @@ GolemApp::registerObjects(Factory & factory)
   registerMaterial(GolemMaterialT);
   registerMaterial(GolemMaterialTH);
   registerMaterial(GolemMaterialMElastic);
+  registerMaterial(GolemMaterialMInelastic);
+  registerMaterial(GolemDruckerPrager);
 
   // Kernels
   registerKernel(GMSEnergyTimeDerivative);
@@ -134,6 +140,7 @@ GolemApp::registerObjects(Factory & factory)
 
   // BCs
   registerBoundaryCondition(GolemConvectiveTHBC);
+  registerBoundaryCondition(GolemVelocityBC);
 
   // Functions
   registerFunction(GolemFunctionBCFromFile);
@@ -147,6 +154,7 @@ GolemApp::registerObjects(Factory & factory)
   registerUserObject(GolemFluidViscosityConstant);
   registerUserObject(GolemPorosityConstant);
   registerUserObject(GolemPermeabilityConstant);
+  registerUserObject(GolemHardeningConstant);
 }
 
 // External entry point for dynamic syntax association
