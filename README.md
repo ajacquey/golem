@@ -1,13 +1,24 @@
-<a href="https://github.com/ajacquey/Golem">
-    <img src="images/golem_logo.png" alt="GOLEM logo" title="GOLEM: a MOOSE-based simulator" align="right" height="60" />
+<!-- <a href="https://github.com/ajacquey/Golem">
+    <img src="images/golem_logo.png" alt="GOLEM logo" title="GOLEM: a MOOSE-based simulator" align="right" height="100" />
 </a>
 
-# GOLEM: a MOOSE-based simulator
+# GOLEM: a MOOSE-based simulator -->
 
-GOLEM is a numerical simulator for modelling coupled Thermo-Hydro-Mechanical processes in faulted geothermal reservoirs.
-The simulator is developed by [Antoine Jacquey](http://www.gfz-potsdam.de/en/staff/antoine-jacquey/) <a href="https://orcid.org/0000-0002-6259-4305" target="orcid.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" style="width:1em;margin-right:.5em;" alt="ORCID iD icon"></a><a href="https://github.com/ajacquey/" target="github.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="images/GitHub-Mark-32px.png" style="width:0.5em;margin-right:.5em;" alt="GitHub icon id"></a> and [Mauro Cacace](http://www.gfz-potsdam.de/en/section/basin-modeling/staff/profil/mauro-cacace/) <a href="https://orcid.org/0000-0001-6101-9918" target="orcid.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" style="width:1em;margin-right:.5em;" alt="ORCID iD icon"></a><a href="https://github.com/mcacace" target="github.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="images/GitHub-Mark-32px.png" style="width:0.5em;margin-right:.5em;" alt="GitHub icon id"></a> at the [GFZ German Research Centre for Geosciences](http://www.gfz-potsdam.de/en/home/) from the section [Basin Modelling](http://www.gfz-potsdam.de/en/section/basin-modeling/).
+<h1 align="center">
+  <br>
+  <a href="https://github.com/ajacquey/Golem"><img src="images/golem_logo.png" alt="GOLEM" width="600"></a>
+  <br>
+  A MOOSE-based application
+  <br>
+</h1>
+
+<h4 align="center">A numerical simulator for modelling coupled THM processes in faulted geothermal reservoirs based on <a href="http://mooseframework.org/" target="blank">MOOSE</a>.</h4>
 
 ## About
+GOLEM is a numerical simulator for modelling coupled Thermo-Hydro-Mechanical processes in faulted geothermal reservoirs.
+The simulator is developed by [Antoine Jacquey](http://www.gfz-potsdam.de/en/staff/antoine-jacquey/) <a href="https://orcid.org/0000-0002-6259-4305" target="orcid.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" style="width:1em;margin-right:.5em;" alt="ORCID iD icon"></a><a href="https://github.com/ajacquey/" target="github.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="images/GitHub-Mark-32px.png" width="16" margin-right=".5em;" alt="GitHub icon id"></a> and [Mauro Cacace](http://www.gfz-potsdam.de/en/section/basin-modeling/staff/profil/mauro-cacace/) <a href="https://orcid.org/0000-0001-6101-9918" target="orcid.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" style="width:1em;margin-right:.5em;" alt="ORCID iD icon"></a><a href="https://github.com/mcacace" target="github.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="images/GitHub-Mark-32px.png" width="16" margin-right=".5em;" alt="GitHub icon id"></a> at the [GFZ German Research Centre for Geosciences](http://www.gfz-potsdam.de/en/home/) from the section [Basin Modelling](http://www.gfz-potsdam.de/en/section/basin-modeling/).
+
+
 GOLEM is a MOOSE-based application. Visit the [MOOSE framework](http://mooseframework.org) page for more information.
 
 ## Licence
