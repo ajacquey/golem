@@ -51,6 +51,9 @@
 #include "GolemStress.h"
 #include "GolemStrain.h"
 
+// DiracKernels
+#include "GolemDiracKernelTH.h"
+
 // BCs
 #include "GolemConvectiveTHBC.h"
 #include "GolemVelocityBC.h"
@@ -139,6 +142,9 @@ GolemApp::registerObjects(Factory & factory)
   registerAux(GolemDarcyVelocity);
   registerAux(GolemStress);
   registerAux(GolemStrain);
+
+  // DiracKernels
+  registerDiracKernel(GolemDiracKernelTH);
 
   // BCs
   registerBoundaryCondition(GolemConvectiveTHBC);

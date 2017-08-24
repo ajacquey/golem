@@ -49,4 +49,8 @@
     input = 'H_3D_grav.i'
     exodiff = 'H_3D_grav_out.e'
   [../]
+  [./3D_injection]
+    type = 'Exodiff'
+    input = 'H_3D_injection.i'
+    exodiff = 'H_3D_injection_out.e'
 []

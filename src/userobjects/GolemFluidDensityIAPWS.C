@@ -20,7 +20,6 @@
 
 #include "GolemFluidDensityIAPWS.h"
 #include "GolemGlobals.h"
-#include <cmath>
 
 Real n_gibbs[34] = {
     0.14632971213167e0,    -0.84548187169114e0,  -0.37563603672040e1,   0.33855169168385e1,
