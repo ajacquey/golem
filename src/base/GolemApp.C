@@ -51,6 +51,7 @@
 #include "GolemFluidVelocity.h"
 #include "GolemStress.h"
 #include "GolemStrain.h"
+#include "GolemEqvInelasticStrain.h"
 
 // DiracKernels
 #include "GolemDiracKernelTH.h"
@@ -144,6 +145,7 @@ GolemApp::registerObjects(Factory & factory)
   registerAux(GolemFluidVelocity);
   registerAux(GolemStress);
   registerAux(GolemStrain);
+  registerAux(GolemEqvInelasticStrain);
 
   // DiracKernels
   registerDiracKernel(GolemDiracKernelTH);
