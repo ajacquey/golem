@@ -18,57 +18,28 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemStrain.h"
+#ifndef GOLEMTHERMALSTRESS_H
+#define GOLEMTHERMALSTRESS_H
+
+#include "AuxKernel.h"
+#include "RankTwoTensor.h"
+
+class GolemThermalStress;
 
 template <>
-InputParameters
-validParams<GolemStrain>()
-{
-  InputParameters params = validParams<AuxKernel>();
-  params.addClassDescription(
-      "Access a component of the strain (total, inelastic or plastic) tensor.");
-  params.addParam<MooseEnum>("strain_type",
-                             GolemStrain::strainType() = "total",
-                             "The component of the strain tensor to output.");
-  params.addRequiredRangeCheckedParam<unsigned int>(
-      "index_i",
-      "index_i >= 0 & index_i <= 2",
-      "The index i of ij for the stress tensor (0, 1, 2)");
-  params.addRequiredRangeCheckedParam<unsigned int>(
-      "index_j",
-      "index_j >= 0 & index_j <= 2",
-      "The index j of ij for the stress tensor (0, 1, 2)");
-  return params;
-}
+InputParameters validParams<GolemThermalStress>();
 
-GolemStrain::GolemStrain(const InputParameters & parameters)
-  : AuxKernel(parameters),
-    _strain_type(getParam<MooseEnum>("strain_type")),
-    _i(getParam<unsigned int>("index_i")),
-    _j(getParam<unsigned int>("index_j"))
+class GolemThermalStress : public AuxKernel
 {
-  switch (_strain_type)
-  {
-    case 1:
-      _strain = &getMaterialProperty<RankTwoTensor>("mechanical_strain");
-      break;
-    case 2:
-      _strain = &getMaterialProperty<RankTwoTensor>("inelastic_strain");
-      break;
-    case 3:
-      _strain = &getMaterialProperty<RankTwoTensor>("plastic_strain");
-      break;
-  }
-}
+public:
+  GolemThermalStress(const InputParameters & parameters);
 
-MooseEnum
-GolemStrain::strainType()
-{
-  return MooseEnum("total=1 inelastic=2 plastic=3");
-}
+protected:
+  virtual Real computeValue();
+  const VariableValue & _temp;
+  const VariableValue * _temp_old;
+  const unsigned int _i;
+  const MaterialProperty<RankTwoTensor> & _TM_jacobian;
+};
 
-Real
-GolemStrain::computeValue()
-{
-  return (*_strain)[_qp](_i, _j);
-}
+#endif // GOLEMTHERMALSTRESS_H

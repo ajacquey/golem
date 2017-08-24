@@ -19,7 +19,6 @@
 /******************************************************************************/
 
 #include "GolemStress.h"
-#include "RankTwoTensor.h"
 
 template <>
 InputParameters

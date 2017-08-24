@@ -18,57 +18,34 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemStrain.h"
+#include "GolemThermalStress.h"
 
 template <>
 InputParameters
-validParams<GolemStrain>()
+validParams<GolemThermalStress>()
 {
   InputParameters params = validParams<AuxKernel>();
-  params.addClassDescription(
-      "Access a component of the strain (total, inelastic or plastic) tensor.");
-  params.addParam<MooseEnum>("strain_type",
-                             GolemStrain::strainType() = "total",
-                             "The component of the strain tensor to output.");
+  params.addRequiredCoupledVar("temperature", "The temperature");
   params.addRequiredRangeCheckedParam<unsigned int>(
-      "index_i",
-      "index_i >= 0 & index_i <= 2",
-      "The index i of ij for the stress tensor (0, 1, 2)");
-  params.addRequiredRangeCheckedParam<unsigned int>(
-      "index_j",
-      "index_j >= 0 & index_j <= 2",
-      "The index j of ij for the stress tensor (0, 1, 2)");
+      "index", "index >= 0 & index <= 2", "The index i of ij for the tensor to output (0, 1, 2).");
   return params;
 }
 
-GolemStrain::GolemStrain(const InputParameters & parameters)
+GolemThermalStress::GolemThermalStress(const InputParameters & parameters)
   : AuxKernel(parameters),
-    _strain_type(getParam<MooseEnum>("strain_type")),
-    _i(getParam<unsigned int>("index_i")),
-    _j(getParam<unsigned int>("index_j"))
+    _temp(coupledValue("temperature")),
+    _i(getParam<unsigned int>("index")),
+    _TM_jacobian(getMaterialProperty<RankTwoTensor>("TM_jacobian"))
 {
-  switch (_strain_type)
-  {
-    case 1:
-      _strain = &getMaterialProperty<RankTwoTensor>("mechanical_strain");
-      break;
-    case 2:
-      _strain = &getMaterialProperty<RankTwoTensor>("inelastic_strain");
-      break;
-    case 3:
-      _strain = &getMaterialProperty<RankTwoTensor>("plastic_strain");
-      break;
-  }
-}
-
-MooseEnum
-GolemStrain::strainType()
-{
-  return MooseEnum("total=1 inelastic=2 plastic=3");
+  if (!_c_fe_problem.isTransient())
+    mooseError("You cannot use GolemThermalStress in Steady simulations!");
+  else
+    _temp_old = &coupledValueOld("temperature");
 }
 
 Real
-GolemStrain::computeValue()
+GolemThermalStress::computeValue()
 {
-  return (*_strain)[_qp](_i, _j);
+  RankTwoTensor dstressT = _TM_jacobian[_qp] * (_temp[_qp] - (*_temp_old)[_qp]);
+  return _u_old[_qp] + dstressT(_i, _i);
 }
