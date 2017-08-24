@@ -63,6 +63,9 @@
 #include "GolemHeatFlowBC.h"
 #include "GolemPressureBC.h"
 
+// Controls
+#include "GolemTimeControl.h"
+
 // Functions
 #include "GolemFunctionBCFromFile.h"
 #include "GolemFunctionReadFile.h"
@@ -159,6 +162,9 @@ GolemApp::registerObjects(Factory & factory)
   registerBoundaryCondition(GolemVelocityBC);
   registerBoundaryCondition(GolemHeatFlowBC);
   registerBoundaryCondition(GolemPressureBC);
+
+  // Controls
+  registerControl(GolemTimeControl);
 
   // Functions
   registerFunction(GolemFunctionBCFromFile);
