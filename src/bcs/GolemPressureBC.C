@@ -18,38 +18,50 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemHeatFlowBC.h"
+#include "GolemPressureBC.h"
 #include "Function.h"
 #include "GolemScaling.h"
 
 template <>
 InputParameters
-validParams<GolemHeatFlowBC>()
+validParams<GolemPressureBC>()
 {
   InputParameters params = validParams<NeumannBC>();
-  params.addParam<FunctionName>("function", "The function of the heat flow value.");
+  params.addClassDescription("Applies a pressure on a given boundary in a given direction.");
+  params.addRequiredParam<unsigned int>("component", "The component for the pressure.");
+  params.addParam<FunctionName>("function", "The function that describes the pressure.");
   params.addParam<UserObjectName>("scaling_uo", "The name of the scaling user object.");
+  params.set<bool>("use_displaced_mesh") = true;
   return params;
 }
 
-GolemHeatFlowBC::GolemHeatFlowBC(const InputParameters & parameters)
+GolemPressureBC::GolemPressureBC(const InputParameters & parameters)
   : NeumannBC(parameters),
     _has_scaled_properties(isParamValid("scaling_uo") ? true : false),
+    _component(getParam<unsigned int>("component")),
     _function(isParamValid("function") ? &getFunction("function") : NULL),
     _scaling_uo(_has_scaled_properties ? &getUserObject<GolemScaling>("scaling_uo") : NULL)
 {
+  if (_component > 2)
+    mooseError("Invalid component given GolemPressureBC: ", _component, ".\n");
   if (_has_scaled_properties)
   {
     if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point()) / _scaling_uo->_s_heat_flow;
-    _scaled_value = _value / _scaling_uo->_s_heat_flow;
+      _scaled_value = _function->value(_t, Point()) / _scaling_uo->_s_stress;
+    _scaled_value = _value / _scaling_uo->_s_stress;
   }
   else
     _scaled_value = _value;
 }
 
 Real
-GolemHeatFlowBC::computeQpResidual()
+GolemPressureBC::computeQpResidual()
 {
-  return -_test[_i][_qp] * _scaled_value;
+  return _scaled_value * (_normals[_qp](_component) * _test[_i][_qp]);
+}
+
+Real
+GolemPressureBC::computeQpJacobian()
+{
+  return 0.0;
 }

@@ -18,38 +18,33 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemHeatFlowBC.h"
-#include "Function.h"
-#include "GolemScaling.h"
+#ifndef GOLEMPRESSUREBC_H
+#define GOLEMPRESSUREBC_H
+
+#include "NeumannBC.h"
+
+class GolemPressureBC;
+class Function;
+class GolemScaling;
 
 template <>
-InputParameters
-validParams<GolemHeatFlowBC>()
-{
-  InputParameters params = validParams<NeumannBC>();
-  params.addParam<FunctionName>("function", "The function of the heat flow value.");
-  params.addParam<UserObjectName>("scaling_uo", "The name of the scaling user object.");
-  return params;
-}
+InputParameters validParams<GolemPressureBC>();
 
-GolemHeatFlowBC::GolemHeatFlowBC(const InputParameters & parameters)
-  : NeumannBC(parameters),
-    _has_scaled_properties(isParamValid("scaling_uo") ? true : false),
-    _function(isParamValid("function") ? &getFunction("function") : NULL),
-    _scaling_uo(_has_scaled_properties ? &getUserObject<GolemScaling>("scaling_uo") : NULL)
+class GolemPressureBC : public NeumannBC
 {
-  if (_has_scaled_properties)
-  {
-    if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point()) / _scaling_uo->_s_heat_flow;
-    _scaled_value = _value / _scaling_uo->_s_heat_flow;
-  }
-  else
-    _scaled_value = _value;
-}
+public:
+  GolemPressureBC(const InputParameters & parameters);
 
-Real
-GolemHeatFlowBC::computeQpResidual()
-{
-  return -_test[_i][_qp] * _scaled_value;
-}
+protected:
+  virtual Real computeQpResidual();
+  virtual Real computeQpJacobian();
+  bool _has_scaled_properties;
+  const int _component;
+  Function * _function;
+
+private:
+  const GolemScaling * _scaling_uo;
+  Real _scaled_value;
+};
+
+#endif // GOLEMPRESSUREBC_H
