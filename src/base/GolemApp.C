@@ -60,6 +60,7 @@
 // BCs
 #include "GolemConvectiveTHBC.h"
 #include "GolemVelocityBC.h"
+#include "GolemHeatFlowBC.h"
 
 // Functions
 #include "GolemFunctionBCFromFile.h"
@@ -155,6 +156,7 @@ GolemApp::registerObjects(Factory & factory)
   // BCs
   registerBoundaryCondition(GolemConvectiveTHBC);
   registerBoundaryCondition(GolemVelocityBC);
+  registerBoundaryCondition(GolemHeatFlowBC);
 
   // Functions
   registerFunction(GolemFunctionBCFromFile);
