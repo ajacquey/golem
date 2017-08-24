@@ -79,7 +79,9 @@
 #include "GolemFluidViscosityConstant.h"
 #include "GolemFluidViscosityIAPWS.h"
 #include "GolemPorosityConstant.h"
+#include "GolemPorosityTHM.h"
 #include "GolemPermeabilityConstant.h"
+#include "GolemPermeabilityKC.h"
 #include "GolemHardeningConstant.h"
 
 template <>
@@ -179,7 +181,9 @@ GolemApp::registerObjects(Factory & factory)
   registerUserObject(GolemFluidViscosityConstant);
   registerUserObject(GolemFluidViscosityIAPWS);
   registerUserObject(GolemPorosityConstant);
+  registerUserObject(GolemPorosityTHM);
   registerUserObject(GolemPermeabilityConstant);
+  registerUserObject(GolemPermeabilityKC);
   registerUserObject(GolemHardeningConstant);
 }
 

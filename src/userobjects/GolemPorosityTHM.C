@@ -18,45 +18,42 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemHeatFlowBC.h"
-#include "Function.h"
-#include "GolemScaling.h"
+#include "GolemPorosityTHM.h"
 
 template <>
 InputParameters
-validParams<GolemHeatFlowBC>()
+validParams<GolemPorosityTHM>()
 {
-  InputParameters params = validParams<NeumannBC>();
-  params.addParam<FunctionName>("function", "The function of the heat flow value.");
-  params.addParam<UserObjectName>("scaling_uo", "The name of the scaling user object.");
+  InputParameters params = validParams<GolemPorosity>();
+  params.addClassDescription("Porosity formulation for thermo-hydro-mechanical coupling.");
   return params;
 }
 
-GolemHeatFlowBC::GolemHeatFlowBC(const InputParameters & parameters)
-  : NeumannBC(parameters),
-    _has_scaled_properties(isParamValid("scaling_uo") ? true : false),
-    _function(isParamValid("function") ? &getFunction("function") : NULL),
-    _scaling_uo(_has_scaled_properties ? &getUserObject<GolemScaling>("scaling_uo") : NULL)
+GolemPorosityTHM::GolemPorosityTHM(const InputParameters & parameters) : GolemPorosity(parameters)
 {
 }
 
 Real
-GolemHeatFlowBC::computeQpResidual()
+GolemPorosityTHM::computePorosity(
+    Real phi_old, Real dphi_dev, Real dphi_dpf, Real dphi_dT, Real dev, Real dpf, Real dT) const
 {
-  if (_has_scaled_properties)
-  {
-    if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point()) / _scaling_uo->_s_heat_flow;
-    else
-      _scaled_value = _value / _scaling_uo->_s_heat_flow;
-  }
-  else
-  {
-    if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point());
-    else
-      _scaled_value = _value;
-  }
+  return phi_old + dphi_dev * dev + dphi_dpf * dpf + dphi_dT * dT;
+}
 
-  return -_test[_i][_qp] * _scaled_value;
+Real
+GolemPorosityTHM::computedPorositydev(Real phi_old, Real biot) const
+{
+  return (biot - phi_old);
+}
+
+Real
+GolemPorosityTHM::computedPorositydpf(Real phi_old, Real biot, Real Ks) const
+{
+  return (biot - phi_old) / Ks;
+}
+
+Real
+GolemPorosityTHM::computedPorositydT(Real phi_old, Real biot, Real beta_f, Real beta_s) const
+{
+  return phi_old * (1.0 - biot) * beta_f - biot * (1.0 - phi_old) * beta_s;
 }

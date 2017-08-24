@@ -44,19 +44,25 @@ GolemPressureBC::GolemPressureBC(const InputParameters & parameters)
 {
   if (_component > 2)
     mooseError("Invalid component given GolemPressureBC: ", _component, ".\n");
-  if (_has_scaled_properties)
-  {
-    if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point()) / _scaling_uo->_s_stress;
-    _scaled_value = _value / _scaling_uo->_s_stress;
-  }
-  else
-    _scaled_value = _value;
 }
 
 Real
 GolemPressureBC::computeQpResidual()
 {
+  if (_has_scaled_properties)
+  {
+    if (isParamValid("function"))
+      _scaled_value = _function->value(_t, Point()) / _scaling_uo->_s_stress;
+    else
+      _scaled_value = _value / _scaling_uo->_s_stress;
+  }
+  else
+  {
+    if (isParamValid("function"))
+      _scaled_value = _function->value(_t, Point());
+    else
+      _scaled_value = _value;
+  }
   return _scaled_value * (_normals[_qp](_component) * _test[_i][_qp]);
 }
 

@@ -18,45 +18,27 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemHeatFlowBC.h"
-#include "Function.h"
-#include "GolemScaling.h"
+#ifndef GOLEMPERMEABILITYKC_H
+#define GOLEMPERMEABILITYKC_H
+
+#include "GolemPermeability.h"
+
+class GolemPermeabilityKC;
 
 template <>
-InputParameters
-validParams<GolemHeatFlowBC>()
-{
-  InputParameters params = validParams<NeumannBC>();
-  params.addParam<FunctionName>("function", "The function of the heat flow value.");
-  params.addParam<UserObjectName>("scaling_uo", "The name of the scaling user object.");
-  return params;
-}
+InputParameters validParams<GolemPermeabilityKC>();
 
-GolemHeatFlowBC::GolemHeatFlowBC(const InputParameters & parameters)
-  : NeumannBC(parameters),
-    _has_scaled_properties(isParamValid("scaling_uo") ? true : false),
-    _function(isParamValid("function") ? &getFunction("function") : NULL),
-    _scaling_uo(_has_scaled_properties ? &getUserObject<GolemScaling>("scaling_uo") : NULL)
+class GolemPermeabilityKC : public GolemPermeability
 {
-}
+public:
+  GolemPermeabilityKC(const InputParameters & parameters);
+  std::vector<Real> computePermeability(std::vector<Real> k0, Real phi0, Real porosity) const;
+  std::vector<Real>
+  computedPermeabilitydev(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dev) const;
+  std::vector<Real>
+  computedPermeabilitydpf(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dpf) const;
+  std::vector<Real>
+  computedPermeabilitydT(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dT) const;
+};
 
-Real
-GolemHeatFlowBC::computeQpResidual()
-{
-  if (_has_scaled_properties)
-  {
-    if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point()) / _scaling_uo->_s_heat_flow;
-    else
-      _scaled_value = _value / _scaling_uo->_s_heat_flow;
-  }
-  else
-  {
-    if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point());
-    else
-      _scaled_value = _value;
-  }
-
-  return -_test[_i][_qp] * _scaled_value;
-}
+#endif // GOLEMPERMEABILITYKC_H

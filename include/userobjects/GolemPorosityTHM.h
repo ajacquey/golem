@@ -18,45 +18,25 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemHeatFlowBC.h"
-#include "Function.h"
-#include "GolemScaling.h"
+#ifndef GOLEMPOROSITYTHM_H
+#define GOLEMPOROSITYTHM_H
+
+#include "GolemPorosity.h"
+
+class GolemPorosityTHM;
 
 template <>
-InputParameters
-validParams<GolemHeatFlowBC>()
-{
-  InputParameters params = validParams<NeumannBC>();
-  params.addParam<FunctionName>("function", "The function of the heat flow value.");
-  params.addParam<UserObjectName>("scaling_uo", "The name of the scaling user object.");
-  return params;
-}
+InputParameters validParams<GolemPorosityTHM>();
 
-GolemHeatFlowBC::GolemHeatFlowBC(const InputParameters & parameters)
-  : NeumannBC(parameters),
-    _has_scaled_properties(isParamValid("scaling_uo") ? true : false),
-    _function(isParamValid("function") ? &getFunction("function") : NULL),
-    _scaling_uo(_has_scaled_properties ? &getUserObject<GolemScaling>("scaling_uo") : NULL)
+class GolemPorosityTHM : public GolemPorosity
 {
-}
+public:
+  GolemPorosityTHM(const InputParameters & parameters);
+  Real computePorosity(
+      Real phi_old, Real dphi_dev, Real dphi_dpf, Real dphi_dT, Real dev, Real dpf, Real dT) const;
+  Real computedPorositydev(Real phi_old, Real biot) const;
+  Real computedPorositydpf(Real phi_old, Real biot, Real Ks) const;
+  Real computedPorositydT(Real phi_old, Real biot, Real beta_f, Real beta_s) const;
+};
 
-Real
-GolemHeatFlowBC::computeQpResidual()
-{
-  if (_has_scaled_properties)
-  {
-    if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point()) / _scaling_uo->_s_heat_flow;
-    else
-      _scaled_value = _value / _scaling_uo->_s_heat_flow;
-  }
-  else
-  {
-    if (isParamValid("function"))
-      _scaled_value = _function->value(_t, Point());
-    else
-      _scaled_value = _value;
-  }
-
-  return -_test[_i][_qp] * _scaled_value;
-}
+#endif // GOLEMPOROSITYTHM_H
