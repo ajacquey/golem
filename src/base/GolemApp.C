@@ -83,6 +83,9 @@
 #include "GolemPermeabilityConstant.h"
 #include "GolemPermeabilityKC.h"
 #include "GolemHardeningConstant.h"
+#include "GolemHardeningCubic.h"
+#include "GolemHardeningExponential.h"
+#include "GolemHardeningPlasticSaturation.h"
 
 template <>
 InputParameters
@@ -185,6 +188,9 @@ GolemApp::registerObjects(Factory & factory)
   registerUserObject(GolemPermeabilityConstant);
   registerUserObject(GolemPermeabilityKC);
   registerUserObject(GolemHardeningConstant);
+  registerUserObject(GolemHardeningCubic);
+  registerUserObject(GolemHardeningExponential);
+  registerUserObject(GolemHardeningPlasticSaturation);
 }
 
 // External entry point for dynamic syntax association
