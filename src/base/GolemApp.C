@@ -64,7 +64,9 @@
 #include "GolemSUPG.h"
 #include "GolemPropertyReadFile.h"
 #include "GolemFluidDensityConstant.h"
+#include "GolemFluidDensityIAPWS.h"
 #include "GolemFluidViscosityConstant.h"
+#include "GolemFluidViscosityIAPWS.h"
 #include "GolemPorosityConstant.h"
 #include "GolemPermeabilityConstant.h"
 #include "GolemHardeningConstant.h"
@@ -151,7 +153,9 @@ GolemApp::registerObjects(Factory & factory)
   registerUserObject(GolemSUPG);
   registerUserObject(GolemPropertyReadFile);
   registerUserObject(GolemFluidDensityConstant);
+  registerUserObject(GolemFluidDensityIAPWS);
   registerUserObject(GolemFluidViscosityConstant);
+  registerUserObject(GolemFluidViscosityIAPWS);
   registerUserObject(GolemPorosityConstant);
   registerUserObject(GolemPermeabilityConstant);
   registerUserObject(GolemHardeningConstant);

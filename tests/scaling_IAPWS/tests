@@ -1,0 +1,7 @@
+[Tests]
+  [./TH]
+    type = 'Exodiff'
+    input = 'scaling_TH_IAPWS.i'
+    exodiff = 'scaling_TH_IAPWS_out.e'
+  [../]
+[]
