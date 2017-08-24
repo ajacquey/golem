@@ -48,6 +48,7 @@
 
 // AuxKernels
 #include "GolemDarcyVelocity.h"
+#include "GolemFluidVelocity.h"
 #include "GolemStress.h"
 #include "GolemStrain.h"
 
@@ -140,6 +141,7 @@ GolemApp::registerObjects(Factory & factory)
 
   // AuxKernels
   registerAux(GolemDarcyVelocity);
+  registerAux(GolemFluidVelocity);
   registerAux(GolemStress);
   registerAux(GolemStrain);
 
