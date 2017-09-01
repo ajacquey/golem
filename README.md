@@ -14,7 +14,7 @@
          alt="GitHub License">
   </a>
   <a href="https://gitter.im/link-to-add">
-    <img src="https://img.shields.io/badge/chat-on%20gitter-lightgrey.svg"
+    <img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg"
          alt="Gitter">
   </a>
 </p>

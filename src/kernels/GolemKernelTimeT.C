@@ -131,7 +131,8 @@ GolemKernelTimeT::computeJacobian()
         return;
       Real weight =
           (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
-      _local_ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * inv_dt * _T_kernel_time[_qp_nodal];
+      _local_ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * inv_dt *
+                           _T_kernel_time[_qp_nodal] * _phi[_j][_qp_nodal];
       if (_has_pf)
         for (_j = 0; _j < _phi.size(); ++_j)
           _local_ke(_i, _j) +=
