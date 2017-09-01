@@ -131,13 +131,11 @@ GolemKernelTimeT::computeJacobian()
         return;
       Real weight =
           (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
-      _local_ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * inv_dt *
-                           _T_kernel_time[_qp_nodal] * _phi[_j][_qp_nodal];
+      _local_ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * inv_dt * _T_kernel_time[_qp_nodal];
       if (_has_pf)
-        for (_j = 0; _j < _phi.size(); ++_j)
-          _local_ke(_i, _j) +=
-              _scaling_factor[_qp_nodal] * weight * inv_dt * _dT_kernel_time_dT[_qp_nodal] *
-              ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) * _phi[_j][_qp_nodal];
+        _local_ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * inv_dt *
+                             _dT_kernel_time_dT[_qp_nodal] *
+                             ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]);
     }
   }
   else
@@ -197,20 +195,16 @@ GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)
         return;
       Real weight =
           (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
-      for (_j = 0; _j < _phi.size(); ++_j)
-      {
-        if (_has_pf && (jvar == _pf_var))
-          ke(_i, _j) +=
-              _scaling_factor[_qp_nodal] * weight * inv_dt * _dT_kernel_time_dpf[_qp_nodal] *
-              ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) * _phi[_j][_qp_nodal];
+      if (_has_pf && (jvar == _pf_var))
+        ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * inv_dt *
+                      _dT_kernel_time_dpf[_qp_nodal] *
+                      ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]);
 
-        for (unsigned i = 0; i < _ndisp; ++i)
-          if ((_has_disp && _has_pf) && (jvar == _disp_var[i]))
-            ke(_i, _j) += _scaling_factor[_qp_nodal] * weight * inv_dt *
-                          _dT_kernel_time_dev[_qp_nodal] *
-                          ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) *
-                          _grad_phi[_j][_qp_nodal](i);
-      }
+      for (unsigned i = 0; i < _ndisp; ++i)
+        if ((_has_disp && _has_pf) && (jvar == _disp_var[i]))
+          ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * inv_dt *
+                        _dT_kernel_time_dev[_qp_nodal] *
+                        ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]);
     }
   }
   else
