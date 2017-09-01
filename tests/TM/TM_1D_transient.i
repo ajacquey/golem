@@ -105,6 +105,7 @@
     value = 'T1*t'
     vars = 'T1'
     vals = '1.0'
+  [../]
 []
 
 [BCs]

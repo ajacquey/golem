@@ -99,6 +99,7 @@
     value = 'q1*t'
     vars = 'q1'
     vals = '4.465e-06'
+  [../]
 []
 
 [BCs]
