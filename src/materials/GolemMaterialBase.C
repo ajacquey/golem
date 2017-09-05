@@ -88,6 +88,12 @@ GolemMaterialBase::GolemMaterialBase(const InputParameters & parameters)
   computeGravity();
 }
 
+void
+GolemMaterialBase::initQpStatefulProperties()
+{
+  _porosity[_qp] = _phi0;
+}
+
 Real
 GolemMaterialBase::computeQpScaling()
 {

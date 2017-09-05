@@ -28,6 +28,7 @@ InputParameters
 validParams<GolemMaterialH>()
 {
   InputParameters params = validParams<GolemMaterialBase>();
+  params.addCoupledVar("displacements", "The displacement vector");
   params.addParam<MooseEnum>(
       "permeability_type",
       GolemMaterialH::permeabilityType() = "isotropic",
@@ -48,6 +49,7 @@ validParams<GolemMaterialH>()
 
 GolemMaterialH::GolemMaterialH(const InputParameters & parameters)
   : GolemMaterialBase(parameters),
+    _has_disp(isCoupled("displacements")),
     _permeability_type(getParam<MooseEnum>("permeability_type")),
     _k0(getParam<std::vector<Real>>("permeability_initial")),
     _mu0(getParam<Real>("fluid_viscosity_initial")),
@@ -69,6 +71,18 @@ GolemMaterialH::GolemMaterialH(const InputParameters & parameters)
   _fluid_density_uo = &getUserObject<GolemFluidDensity>("fluid_density_uo");
   _fluid_viscosity_uo = &getUserObject<GolemFluidViscosity>("fluid_viscosity_uo");
   _permeability_uo = &getUserObject<GolemPermeability>("permeability_uo");
+
+  if (_has_disp)
+  {
+    // Declare some property when this material is used for fractures or faults in a HM simulation
+    _dH_kernel_dev = &declareProperty<RankTwoTensor>("dH_kernel_dev");
+    _dH_kernel_dpf = &declareProperty<RankTwoTensor>("dH_kernel_dpf");
+    if (_fe_problem.isTransient())
+    {
+      _dH_kernel_time_dev = &declareProperty<Real>("dH_kernel_time_dev");
+      _dH_kernel_time_dpf = &declareProperty<Real>("dH_kernel_time_dpf");
+    }
+  }
 }
 
 MooseEnum
@@ -94,6 +108,17 @@ GolemMaterialH::computeQpProperties()
   _porosity[_qp] = _porosity_uo->computePorosity(_phi0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   _permeability[_qp] = _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp]);
   GolemPropertiesH();
+  if (_has_disp)
+  {
+    // Declare some property when this material is used for fractures or faults in a HM simulation
+    (*_dH_kernel_dev)[_qp] = RankTwoTensor();
+    (*_dH_kernel_dpf)[_qp] = RankTwoTensor();
+    if (_fe_problem.isTransient())
+    {
+      (*_dH_kernel_time_dev)[_qp] = 0.0;
+      (*_dH_kernel_time_dpf)[_qp] = 0.0;
+    }
+  }
 }
 
 void

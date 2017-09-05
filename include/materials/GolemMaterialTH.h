@@ -47,7 +47,6 @@ protected:
   bool _has_T_source_sink;
   bool _has_SUPG_upwind;
   bool _has_lumped_mass_matrix;
-  bool _has_disp;
   const VariableValue & _temp;
   const VariableValue & _pf;
   const VariableGradient & _grad_pf;
@@ -70,7 +69,6 @@ protected:
   MaterialProperty<Real> & _dmu_dpf;
   MaterialProperty<Real> & _dmu_dT;
   // H_kernel derivatives
-  MaterialProperty<RankTwoTensor> & _dH_kernel_dpf;
   MaterialProperty<RankTwoTensor> & _dH_kernel_dT;
   // H_kernel_grav derivatives
   MaterialProperty<RealVectorValue> & _dH_kernel_grav_dpf;
@@ -99,10 +97,7 @@ protected:
   MaterialProperty<Real> * _dT_kernel_diff_dpf;
   MaterialProperty<Real> * _dT_kernel_diff_dT;
   MaterialProperty<RankTwoTensor> * _dTH_kernel_dev;
-  MaterialProperty<RankTwoTensor> * _dH_kernel_dev;
   MaterialProperty<Real> * _dT_kernel_time_dev;
-  MaterialProperty<Real> * _dH_kernel_time_dev;
-  MaterialProperty<Real> * _dH_kernel_time_dpf;
   MaterialProperty<Real> * _dH_kernel_time_dT;
   MaterialProperty<RealVectorValue> * _SUPG_dtau_dev;
 };

@@ -176,6 +176,8 @@ GolemMaterialMElastic::setStrainModel()
     for (unsigned int i = 0; i < _ndisp; ++i)
       if (_fe_problem.isTransient())
         (*_grad_disp_old)[i] = &coupledGradientOld("displacements", i);
+      else
+        (*_grad_disp_old)[i] = &_grad_zero;
     _mechanical_strain_old = &getMaterialPropertyOld<RankTwoTensor>("mechanical_strain");
     _strain_increment = new std::vector<RankTwoTensor>;
     (*_strain_increment).resize(_fe_problem.getMaxQps());

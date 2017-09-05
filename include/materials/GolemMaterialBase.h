@@ -42,6 +42,7 @@ public:
   static MooseEnum materialType();
 
 protected:
+  virtual void initQpStatefulProperties();
   void computeGravity();
   void computeRotationMatrix();
   Real computeQpScaling();

@@ -29,7 +29,6 @@ validParams<GolemMaterialTH>()
   InputParameters params = validParams<GolemMaterialH>();
   params.addRequiredCoupledVar("temperature", "The temperature");
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure");
-  params.addCoupledVar("displacements", "The displacement vector");
   params.addParam<bool>(
       "has_heat_source_sink", false, "Has source/sink of temperature considered?");
   params.addParam<bool>("has_lumped_mass_matrix", false, "Has lumped mass matrix?");
@@ -56,7 +55,6 @@ GolemMaterialTH::GolemMaterialTH(const InputParameters & parameters)
     _has_T_source_sink(getParam<bool>("has_heat_source_sink")),
     _has_SUPG_upwind(isParamValid("supg_uo") ? true : false),
     _has_lumped_mass_matrix(getParam<bool>("has_lumped_mass_matrix")),
-    _has_disp(isCoupled("displacements")),
     _temp(coupledValue("temperature")),
     _pf(coupledValue("pore_pressure")),
     _grad_pf(coupledGradient("pore_pressure")),
@@ -73,7 +71,6 @@ GolemMaterialTH::GolemMaterialTH(const InputParameters & parameters)
     _drho_dT(declareProperty<Real>("drho_dT")),
     _dmu_dpf(declareProperty<Real>("dmu_dp")),
     _dmu_dT(declareProperty<Real>("dmu_dT")),
-    _dH_kernel_dpf(declareProperty<RankTwoTensor>("dH_kernel_dpf")),
     _dH_kernel_dT(declareProperty<RankTwoTensor>("dH_kernel_dT")),
     _dH_kernel_grav_dpf(declareProperty<RealVectorValue>("dH_kernel_grav_dpf")),
     _dH_kernel_grav_dT(declareProperty<RealVectorValue>("dH_kernel_grav_dT")),
@@ -122,16 +119,15 @@ GolemMaterialTH::GolemMaterialTH(const InputParameters & parameters)
     _dT_kernel_diff_dpf = &declareProperty<Real>("dT_kernel_diff_dpf");
     _dT_kernel_diff_dT = &declareProperty<Real>("dT_kernel_diff_dT");
     _dTH_kernel_dev = &declareProperty<RankTwoTensor>("dTH_kernel_dev");
-    _dH_kernel_dev = &declareProperty<RankTwoTensor>("dH_kernel_dev");
     if (_fe_problem.isTransient())
     {
       _dT_kernel_time_dev = &declareProperty<Real>("dT_kernel_time_dev");
-      _dH_kernel_time_dev = &declareProperty<Real>("dH_kernel_time_dev");
-      _dH_kernel_time_dpf = &declareProperty<Real>("dH_kernel_time_dpf");
       _dH_kernel_time_dT = &declareProperty<Real>("dH_kernel_time_dT");
     }
     _SUPG_dtau_dev = &declareProperty<RealVectorValue>("SUPG_dtau_dev");
   }
+  else
+    _dH_kernel_dpf = &declareProperty<RankTwoTensor>("dH_kernel_dpf");
 }
 
 void
@@ -170,7 +166,7 @@ GolemMaterialTH::computeQpProperties()
         _porosity[_qp] * _fluid_density[_qp] * _c_f + (1 - _porosity[_qp]) * _rho0_s * _c_s;
   // Properties derivatives
   // H_kernel derivatives
-  _dH_kernel_dpf[_qp] = -_H_kernel[_qp] * _dmu_dpf[_qp] / _fluid_viscosity[_qp];
+  (*_dH_kernel_dpf)[_qp] = -_H_kernel[_qp] * _dmu_dpf[_qp] / _fluid_viscosity[_qp];
   _dH_kernel_dT[_qp] = -_H_kernel[_qp] * _dmu_dT[_qp] / _fluid_viscosity[_qp];
   // H_kernel_grav derivatives
   _dH_kernel_grav_dpf[_qp] = -_drho_dpf[_qp] * _gravity;
@@ -182,8 +178,8 @@ GolemMaterialTH::computeQpProperties()
     (*_dT_kernel_time_dT)[_qp] = _drho_dT[_qp] * _porosity[_qp] * _c_f;
   }
   // TH_kernel derivatives
-  _dTH_kernel_dpf[_qp] =
-      -(_fluid_density[_qp] * _c_f * _dH_kernel_dpf[_qp] + _H_kernel[_qp] * _c_f * _drho_dpf[_qp]);
+  _dTH_kernel_dpf[_qp] = -(_fluid_density[_qp] * _c_f * (*_dH_kernel_dpf)[_qp] +
+                           _H_kernel[_qp] * _c_f * _drho_dpf[_qp]);
   _dTH_kernel_dT[_qp] =
       -(_fluid_density[_qp] * _c_f * _dH_kernel_dT[_qp] + _H_kernel[_qp] * _c_f * _drho_dT[_qp]);
   if (_has_SUPG_upwind)
@@ -191,6 +187,7 @@ GolemMaterialTH::computeQpProperties()
   if (_has_disp)
   {
     // Declare some property when this material is used for fractures or faults in a THM simulation
+    (*_dH_kernel_dev)[_qp] = RankTwoTensor();
     (*_dT_kernel_diff_dev)[_qp] = 0.0;
     (*_dT_kernel_diff_dpf)[_qp] = 0.0;
     (*_dT_kernel_diff_dT)[_qp] = 0.0;
@@ -244,7 +241,7 @@ GolemMaterialTH::computeQpSUPG()
 {
   RealVectorValue vel = -_H_kernel[_qp] * (_grad_pf[_qp] + _H_kernel_grav[_qp]);
   RankTwoTensor dvel_dgradp = -_H_kernel[_qp];
-  RealVectorValue dvel_dp = -_dH_kernel_dpf[_qp] * (_grad_pf[_qp] + _H_kernel_grav[_qp]) -
+  RealVectorValue dvel_dp = -(*_dH_kernel_dpf)[_qp] * (_grad_pf[_qp] + _H_kernel_grav[_qp]) -
                             _H_kernel[_qp] * _dH_kernel_grav_dpf[_qp];
   RealVectorValue dvel_dT = -_dH_kernel_dT[_qp] * (_grad_pf[_qp] + _H_kernel_grav[_qp]) -
                             _H_kernel[_qp] * _dH_kernel_grav_dT[_qp];
