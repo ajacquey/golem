@@ -90,6 +90,7 @@ GolemKernelTimeT::computeResidual()
   Real weight = 0.0;
   Real dT_dt = 0.0;
   Real dp_dt = 0.0;
+  Real res = 0.0;
   if (_has_lumped_mass_matrix)
   {
     _qp_map.assign(_test.size(), -1);
@@ -102,16 +103,17 @@ GolemKernelTimeT::computeResidual()
         return;
       weight = (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
       dT_dt = ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) * inv_dt;
-      _local_re(_i) += _T_kernel_time[_qp_nodal] * dT_dt;
+      res = 0.0;
+      res += _T_kernel_time[_qp_nodal] * dT_dt;
       if (_has_boussinesq)
       {
         dp_dt = ((*_nodal_pf)[_qp_nodal] - (*_nodal_pf_old)[_qp_nodal]) * inv_dt;
         // Add pressure term
-        _local_re(_i) += _dT_kernel_time_dpf[_qp_nodal] * (*_nodal_temp)[_qp_nodal] * dp_dt;
+        res += _dT_kernel_time_dpf[_qp_nodal] * (*_nodal_temp)[_qp_nodal] * dp_dt;
         // Add temperature term
-        _local_re(_i) += _dT_kernel_time_dT[_qp_nodal] * (*_nodal_temp)[_qp_nodal] * dT_dt;
+        res += _dT_kernel_time_dT[_qp_nodal] * (*_nodal_temp)[_qp_nodal] * dT_dt;
       }
-      _local_re(i) *= _scaling_factor[_qp_nodal] * weight;
+      _local_re(_i) += _scaling_factor[_qp_nodal] * weight * res;
     }
   }
   else
@@ -121,16 +123,17 @@ GolemKernelTimeT::computeResidual()
       {
         weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp];
         dT_dt = (_u[_qp] - _u_old[_qp]) * inv_dt;
-        _local_re(_i) += _T_kernel_time[_qp] * dT_dt;
+        res = 0.0;
+        res += _T_kernel_time[_qp] * dT_dt;
         if (_has_boussinesq)
         {
           dp_dt = ((*_pf)[_qp] - (*_pf_old)[_qp]) * inv_dt;
           // Add pressure term
-          _local_re(_i) += _dT_kernel_time_dpf[_qp] * _u[_qp] * dp_dt;
+          res += _dT_kernel_time_dpf[_qp] * _u[_qp] * dp_dt;
           // Add temperature term
-          _local_re(_i) += _dT_kernel_time_dT[_qp] * _u[_qp] * dT_dt;
+          res += _dT_kernel_time_dT[_qp] * _u[_qp] * dT_dt;
         }
-        _local_re(_i) *= _scaling_factor[_qp] * weight;
+        _local_re(_i) += _scaling_factor[_qp] * weight * res;
       }
   }
   re += _local_re;
@@ -162,6 +165,7 @@ GolemKernelTimeT::computeJacobian()
   Real weight = 0.0;
   Real dT_dt = 0.0;
   Real dp_dt = 0.0;
+  Real jac = 0.0;
   if (_has_lumped_mass_matrix)
   {
     _qp_map.assign(_test.size(), -1);
@@ -173,22 +177,23 @@ GolemKernelTimeT::computeJacobian()
       if (_qp_nodal == -1)
         return;
       weight = (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
-      _local_ke(_i, _i) += inv_dt * _T_kernel_time[_qp_nodal];
+      jac = 0.0;
+      jac += inv_dt * _T_kernel_time[_qp_nodal];
       if (_has_pf)
       {
         dT_dt = ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) * inv_dt;
-        _local_ke(_i, _i) += _dT_kernel_time_dT[_qp_nodal] * dT_dt;
+        jac += _dT_kernel_time_dT[_qp_nodal] * dT_dt;
         if (_has_boussinesq)
         {
           dp_dt = ((*_nodal_pf)[_qp_nodal] - (*_nodal_pf_old)[_qp_nodal]) * inv_dt;
           // Add pressure term --> we assume that second order terms are negligible
-          _local_ke(_i, _i) += _dT_kernel_time_dpf[_qp_nodal] * dp_dt;
+          jac += _dT_kernel_time_dpf[_qp_nodal] * dp_dt;
           // Add temperature terms --> we assume that second order terms are negligible
-          _local_ke(_i, _i) += _dT_kernel_time_dT[_qp_nodal] * dT_dt;
-          _local_ke(_i, _i) += _dT_kernel_time_dT[_qp_nodal] * (*_nodal_temp)[_qp_nodal] * inv_dt;
+          jac += _dT_kernel_time_dT[_qp_nodal] * dT_dt;
+          jac += _dT_kernel_time_dT[_qp_nodal] * (*_nodal_temp)[_qp_nodal] * inv_dt;
         }
       }
-      _local_ke(_i, _i) *= _scaling_factor[_qp_nodal] * weight;
+      _local_ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * jac;
     }
   }
   else
@@ -198,22 +203,23 @@ GolemKernelTimeT::computeJacobian()
         for (_j = 0; _j < _phi.size(); ++_j)
         {
           weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp] * _phi[_j][_qp];
-          _local_ke(_i, _j) += _T_kernel_time[_qp] * inv_dt;
+          jac = 0.0;
+          jac += _T_kernel_time[_qp] * inv_dt;
           if (_has_pf)
           {
             dT_dt = (_u[_qp] - _u_old[_qp]) * inv_dt;
-            _local_ke(_i, _j) += _dT_kernel_time_dT[_qp] * dT_dt;
+            jac += _dT_kernel_time_dT[_qp] * dT_dt;
             if (_has_boussinesq)
             {
               dp_dt = ((*_pf)[_qp] - (*_pf_old)[_qp]) * inv_dt;
               // Add pressure term --> we assume that second order terms are negligible
-              _local_ke(_i, _j) += _dT_kernel_time_dpf[_qp] * dp_dt;
+              jac += _dT_kernel_time_dpf[_qp] * dp_dt;
               // Add temperature terms --> we assume that second order terms are negligible
-              _local_ke(_i, _j) += _dT_kernel_time_dT[_qp] * dT_dt;
-              _local_ke(_i, _j) += _dT_kernel_time_dT[_qp] * _u[_qp] * inv_dt;
+              jac += _dT_kernel_time_dT[_qp] * dT_dt;
+              jac += _dT_kernel_time_dT[_qp] * _u[_qp] * inv_dt;
             }
           }
-          _local_ke(_i, _j) *= _scaling_factor[_qp] * weight;
+          _local_ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
         }
   }
   ke += _local_ke;
@@ -249,6 +255,7 @@ GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)
   Real inv_dt = 1.0 / _dt;
   Real weight = 0.0;
   Real dT_dt = 0.0;
+  Real jac = 0.0;
   if (_has_lumped_mass_matrix)
   {
     _qp_map.assign(_test.size(), -1);
@@ -261,17 +268,18 @@ GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)
         return;
       weight = (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
       dT_dt = ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) * inv_dt;
+      jac = 0.0;
       if (_has_pf && (jvar == _pf_var))
       {
-        ke(_i, _i) += _dT_kernel_time_dpf[_qp_nodal] * dT_dt;
+        jac += _dT_kernel_time_dpf[_qp_nodal] * dT_dt;
         if (_has_boussinesq)
-          ke(_i, _i) += _dT_kernel_time_dpf[_qp_nodal] * inv_dt * (*_nodal_temp)[_qp_nodal];
+          jac += _dT_kernel_time_dpf[_qp_nodal] * inv_dt * (*_nodal_temp)[_qp_nodal];
       }
       for (unsigned i = 0; i < _ndisp; ++i)
         if ((_has_disp && _has_pf) && (jvar == _disp_var[i]))
-          ke(_i, _i) += _dT_kernel_time_dev[_qp_nodal] * dT_dt;
+          jac += _dT_kernel_time_dev[_qp_nodal] * dT_dt;
 
-      ke(_i, _i) *= _scaling_factor[_qp_nodal] * weight;
+      ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * jac;
     }
   }
   else
@@ -282,19 +290,20 @@ GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)
         {
           weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp];
           dT_dt = (_u[_qp] - _u_old[_qp]) * inv_dt;
+          jac = 0.0;
           if (_has_pf && (jvar == _pf_var))
           {
-            ke(_i, _j) += _dT_kernel_time_dpf[_qp] * dT_dt * _phi[_j][_qp];
+            jac += _dT_kernel_time_dpf[_qp] * dT_dt * _phi[_j][_qp];
             if (_has_boussinesq)
             {
-              ke(_i, _j) += _dT_kernel_time_dpf[_qp] * inv_dt * _u[_qp] * _phi[_j][_qp];
+              jac += _dT_kernel_time_dpf[_qp] * inv_dt * _u[_qp] * _phi[_j][_qp];
             }
           }
           for (unsigned i = 0; i < _ndisp; ++i)
             if ((_has_disp && _has_pf) && (jvar == _disp_var[i]))
-              ke(_i, _j) += _dT_kernel_time_dev[_qp] * dT_dt * _grad_phi[_j][_qp](i);
+              jac += _dT_kernel_time_dev[_qp] * dT_dt * _grad_phi[_j][_qp](i);
 
-          ke(_i, _j) *= _scaling_factor[_qp] * weight;
+          ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
         }
   }
 }
