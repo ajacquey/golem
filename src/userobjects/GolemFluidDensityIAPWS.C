@@ -42,11 +42,12 @@ validParams<GolemFluidDensityIAPWS>()
 {
   InputParameters params = validParams<GolemFluidDensity>();
   params.addClassDescription("IAPWS fluid density formulation for region 1.");
+  params.addParam<bool>("has_kelvin", false, "Is the temperature in Kelvin?");
   return params;
 }
 
 GolemFluidDensityIAPWS::GolemFluidDensityIAPWS(const InputParameters & parameters)
-  : GolemFluidDensity(parameters)
+  : GolemFluidDensity(parameters), _has_kelvin(getParam<bool>("has_kelvin"))
 {
 }
 
@@ -58,9 +59,9 @@ GolemFluidDensityIAPWS::computeDensity(Real pressure, Real temperature, Real) co
     pressure *= _scaling_uo->_s_stress;
     temperature *= _scaling_uo->_s_temperature;
   }
-  Real _rw = R / MH20;
+  Real rw = R / MH20;
   Real pi = pressure / PSTAR;
-  Real temp_k = temperature + KELVIN;
+  Real temp_k = _has_kelvin ? temperature : temperature + KELVIN;
   Real tau = TSTAR / temp_k;
   Real arg_pi = 7.1 - pi;
   Real arg_tau = tau - 1.222;
@@ -69,9 +70,9 @@ GolemFluidDensityIAPWS::computeDensity(Real pressure, Real temperature, Real) co
     gamma -=
         n_gibbs[i] * I_gibbs[i] * std::pow(arg_pi, I_gibbs[i] - 1) * std::pow(arg_tau, J_gibbs[i]);
   if (_has_scaled_properties)
-    return (PSTAR / (_rw * temp_k * gamma)) / _scaling_uo->_s_density;
+    return (PSTAR / (rw * temp_k * gamma)) / _scaling_uo->_s_density;
   else
-    return PSTAR / (_rw * temp_k * gamma);
+    return PSTAR / (rw * temp_k * gamma);
 }
 
 Real
@@ -82,9 +83,9 @@ GolemFluidDensityIAPWS::computedDensitydT(Real pressure, Real temperature, Real)
     pressure *= _scaling_uo->_s_stress;
     temperature *= _scaling_uo->_s_temperature;
   }
-  Real _rw = R / MH20;
+  Real rw = R / MH20;
   Real pi = pressure / PSTAR;
-  Real temp_k = temperature + KELVIN;
+  Real temp_k = _has_kelvin ? temperature : temperature + KELVIN;
   Real tau = TSTAR / temp_k;
   Real arg_pi = 7.1 - pi;
   Real arg_tau = tau - 1.222;
@@ -97,7 +98,7 @@ GolemFluidDensityIAPWS::computedDensitydT(Real pressure, Real temperature, Real)
     gamma_pi_tau -= n_gibbs[i] * I_gibbs[i] * std::pow(arg_pi, I_gibbs[i] - 1) * J_gibbs[i] *
                     std::pow(arg_tau, J_gibbs[i] - 1);
   }
-  Real a = PSTAR / (_rw * temp_k * temp_k * gamma_pi * gamma_pi);
+  Real a = PSTAR / (rw * temp_k * temp_k * gamma_pi * gamma_pi);
   Real b = (gamma_pi - tau * gamma_pi_tau);
   if (_has_scaled_properties)
     return _scaling_uo->_s_temperature * (-a * b) / _scaling_uo->_s_density;
@@ -113,9 +114,9 @@ GolemFluidDensityIAPWS::computedDensitydp(Real pressure, Real temperature) const
     pressure *= _scaling_uo->_s_stress;
     temperature *= _scaling_uo->_s_temperature;
   }
-  Real _rw = R / MH20;
+  Real rw = R / MH20;
   Real pi = pressure / PSTAR;
-  Real temp_k = temperature + KELVIN;
+  Real temp_k = _has_kelvin ? temperature : temperature + KELVIN;
   Real tau = TSTAR / temp_k;
   Real arg_pi = 7.1 - pi;
   Real arg_tau = tau - 1.222;
@@ -129,8 +130,8 @@ GolemFluidDensityIAPWS::computedDensitydp(Real pressure, Real temperature) const
                    std::pow(arg_tau, J_gibbs[i]);
   }
   if (_has_scaled_properties)
-    return _scaling_uo->_s_stress * (-gamma_pi_pi / (_rw * temp_k * gamma_pi * gamma_pi)) /
+    return _scaling_uo->_s_stress * (-gamma_pi_pi / (rw * temp_k * gamma_pi * gamma_pi)) /
            _scaling_uo->_s_density;
   else
-    return -gamma_pi_pi / (_rw * temp_k * gamma_pi * gamma_pi);
+    return -gamma_pi_pi / (rw * temp_k * gamma_pi * gamma_pi);
 }

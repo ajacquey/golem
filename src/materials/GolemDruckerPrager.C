@@ -20,7 +20,6 @@
 
 #include "GolemDruckerPrager.h"
 #include "libmesh/utility.h"
-// #include <math.h>
 
 template <>
 InputParameters

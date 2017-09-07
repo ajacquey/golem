@@ -19,6 +19,7 @@
 /******************************************************************************/
 
 #include "GolemKernelH.h"
+#include "libmesh/utility.h"
 
 template <>
 InputParameters
@@ -26,16 +27,16 @@ validParams<GolemKernelH>()
 {
   InputParameters params = validParams<Kernel>();
   params.addCoupledVar("temperature", "The temperature variable.");
-  // params.addCoupledVar("brine_mass", "The brine_mass variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");
+  params.addParam<bool>("has_boussinesq", false, "Has Boussinesq terms?");
   return params;
 }
 
 GolemKernelH::GolemKernelH(const InputParameters & parameters)
   : DerivativeMaterialInterface<Kernel>(parameters),
     _has_T(isCoupled("temperature")),
-    //  _has_brine(isCoupled("brine_mass")),
     _has_disp(isCoupled("displacements")),
+    _has_boussinesq(getParam<bool>("has_boussinesq")),
     _scaling_factor(getMaterialProperty<Real>("scaling_factor")),
     _H_kernel_grav(getMaterialProperty<RealVectorValue>("H_kernel_grav")),
     _H_kernel(getMaterialProperty<RankTwoTensor>("H_kernel")),
@@ -44,10 +45,11 @@ GolemKernelH::GolemKernelH(const InputParameters & parameters)
     _dH_kernel_dev(getDefaultMaterialProperty<RankTwoTensor>("dH_kernel_dev")),
     _dH_kernel_dpf(getDefaultMaterialProperty<RankTwoTensor>("dH_kernel_dpf")),
     _dH_kernel_dT(getDefaultMaterialProperty<RankTwoTensor>("dH_kernel_dT")),
-    //  _drho_dbrine_gravity(getDefaultMaterialProperty<RealVectorValue>("drho_dbrine_kernel_gravity")),
-    //  _dmu_dbrine_kernel(getDefaultMaterialProperty<Real>("dmu_dbrine_kernel_H")),
+    _grad_temp(_has_boussinesq ? &coupledGradient("temperature") : NULL),
+    _fluid_density(_has_boussinesq ? &getMaterialProperty<Real>("fluid_density") : NULL),
+    _drho_dpf(_has_boussinesq ? &getMaterialProperty<Real>("drho_dp") : NULL),
+    _drho_dT(_has_boussinesq ? &getMaterialProperty<Real>("drho_dT") : NULL),
     _T_var(_has_T ? coupled("temperature") : zero),
-    //  _brine_var(_has_brine ? coupled("brine_mass") : zero),
     _ndisp(_has_disp ? coupledComponents("displacements") : 0),
     _disp_var(_ndisp)
 {
@@ -66,7 +68,12 @@ Real
 GolemKernelH::computeQpResidual()
 {
   RealVectorValue vel = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
-  return _scaling_factor[_qp] * vel * _grad_test[_i][_qp];
+
+  Real boussinesq = 0.0;
+  if (_has_boussinesq)
+    boussinesq += (vel / (*_fluid_density)[_qp]) *
+                  ((*_drho_dpf)[_qp] * _grad_u[_qp] + (*_drho_dT)[_qp] * (*_grad_temp)[_qp]);
+  return _scaling_factor[_qp] * (vel * _grad_test[_i][_qp] + boussinesq * _test[_i][_qp]);
 }
 
 /******************************************************************************/
@@ -75,11 +82,31 @@ GolemKernelH::computeQpResidual()
 Real
 GolemKernelH::computeQpJacobian()
 {
+  Real jac = 0.0;
   RealVectorValue coeff_1 = _dH_kernel_dpf[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
   RealVectorValue coeff_2 = _H_kernel[_qp] * _dH_kernel_grav_dpf[_qp];
   RealVectorValue coeff_3 = _H_kernel[_qp] * _grad_phi[_j][_qp];
-  return _scaling_factor[_qp] * ((coeff_1 + coeff_2) * _phi[_j][_qp] + coeff_3) *
-         _grad_test[_i][_qp];
+  jac +=
+      _scaling_factor[_qp] * ((coeff_1 + coeff_2) * _phi[_j][_qp] + coeff_3) * _grad_test[_i][_qp];
+
+  if (_has_boussinesq)
+  {
+    // first term related to qd
+    RealVectorValue dqp_dp = (coeff_1 + coeff_2) * _phi[_j][_qp] + coeff_3;
+    RealVectorValue boussinesq =
+        (*_drho_dpf)[_qp] * _grad_u[_qp] + (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
+    jac += _scaling_factor[_qp] * (dqp_dp / (*_fluid_density)[_qp]) * boussinesq * _test[_i][_qp];
+    // second term related to boussinesq
+    RealVectorValue qd = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
+    RealVectorValue b_1 = ((*_drho_dpf)[_qp] / (*_fluid_density)[_qp]) * _grad_phi[_j][_qp];
+    RealVectorValue b_2 =
+        (-1.0 * Utility::pow<2>((*_drho_dpf)[_qp] / (*_fluid_density)[_qp])) * _grad_u[_qp];
+    RealVectorValue b_3 = (-1.0 / Utility::pow<2>((*_fluid_density)[_qp])) * (*_drho_dpf)[_qp] *
+                          (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
+    jac += _scaling_factor[_qp] * qd * (b_1 + (b_2 + b_3) * _phi[_j][_qp]) * _test[_i][_qp];
+  }
+
+  return jac;
 }
 
 /******************************************************************************/
@@ -96,12 +123,24 @@ GolemKernelH::computeQpOffDiagJacobian(unsigned int jvar)
     coeff_1 = _dH_kernel_dT[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
     coeff_2 = _H_kernel[_qp] * _dH_kernel_grav_dT[_qp];
     jac += _scaling_factor[_qp] * (coeff_1 + coeff_2) * _phi[_j][_qp] * _grad_test[_i][_qp];
+
+    if (_has_boussinesq)
+    {
+      // first term related to qd
+      RealVectorValue dqd_dT = coeff_1 + coeff_2;
+      RealVectorValue boussinesq =
+          (*_drho_dpf)[_qp] * _grad_u[_qp] + (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
+      jac += _scaling_factor[_qp] * (dqd_dT / (*_fluid_density)[_qp]) * boussinesq * _phi[_j][_qp] *
+             _test[_i][_qp];
+      // second term related to boussinesq
+      RealVectorValue qd = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
+      RealVectorValue b_1 =
+          (-1.0 * Utility::pow<2>((*_drho_dT)[_qp] / (*_fluid_density)[_qp])) * (*_grad_temp)[_qp];
+      RealVectorValue b_2 = (-1.0 / Utility::pow<2>((*_fluid_density)[_qp])) * (*_drho_dT)[_qp] *
+                            (*_drho_dpf)[_qp] * _grad_u[_qp];
+      jac += _scaling_factor[_qp] * qd * (b_1 + b_2) * _phi[_j][_qp] * _test[_i][_qp];
+    }
   }
-  // else if ((jvar == _brine_var) && _has_brine)
-  // {
-  // coeff_1 += _H_kernel[_qp] * (*_drho_dbrine_gravity)[_qp] * _grad_test[_i][_qp] * _phi[_j][_qp];
-  // coeff_2 += (*_dmu_dbrine_kernel)[_qp] * vel * _grad_test[_i][_qp] * _phi[_j][_qp];
-  // }
   for (unsigned i = 0; i < _ndisp; ++i)
     if (jvar == _disp_var[i])
     {

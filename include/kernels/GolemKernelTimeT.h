@@ -43,6 +43,7 @@ protected:
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   bool _has_lumped_mass_matrix;
+  bool _has_boussinesq;
   const VariableValue & _u_old;
   bool _has_pf;
   bool _has_disp;
@@ -56,6 +57,12 @@ protected:
   const MaterialProperty<unsigned int> * _node_number;
   const MaterialProperty<Real> * _nodal_temp;
   const MaterialProperty<Real> * _nodal_temp_old;
+  // boussinesq related material properties --> lumped
+  const MaterialProperty<Real> * _nodal_pf;
+  const MaterialProperty<Real> * _nodal_pf_old;
+  // boussinesq related material properties --> not lumped
+  const VariableValue * _pf;
+  const VariableValue * _pf_old;
 
 private:
   unsigned int _pf_var;

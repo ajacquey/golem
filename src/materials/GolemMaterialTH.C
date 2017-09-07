@@ -32,6 +32,7 @@ validParams<GolemMaterialTH>()
   params.addParam<bool>(
       "has_heat_source_sink", false, "Has source/sink of temperature considered?");
   params.addParam<bool>("has_lumped_mass_matrix", false, "Has lumped mass matrix?");
+  params.addParam<bool>("has_boussinesq", false, "Has Boussinesq terms?");
   params.addRequiredParam<Real>("fluid_thermal_conductivity_initial",
                                 "The fluid thermal conductivity [W/m/K].");
   params.addRequiredParam<Real>("solid_thermal_conductivity_initial",
@@ -55,6 +56,7 @@ GolemMaterialTH::GolemMaterialTH(const InputParameters & parameters)
     _has_T_source_sink(getParam<bool>("has_heat_source_sink")),
     _has_SUPG_upwind(isParamValid("supg_uo") ? true : false),
     _has_lumped_mass_matrix(getParam<bool>("has_lumped_mass_matrix")),
+    _has_boussinesq(getParam<bool>("has_boussinesq")),
     _temp(coupledValue("temperature")),
     _pf(coupledValue("pore_pressure")),
     _grad_pf(coupledGradient("pore_pressure")),
@@ -104,11 +106,20 @@ GolemMaterialTH::GolemMaterialTH(const InputParameters & parameters)
       mooseError("_has_lumped_mass_matrix is set to ",
                  _has_lumped_mass_matrix,
                  " but simulation is Steady State");
+
+    // Set the mapping from qps to nodes
+    _node_number = &declareProperty<unsigned int>("node_number");
+    // Pressure nodal
     _nodal_pf_var = &coupledNodalValue("pore_pressure");
+    _nodal_pf = &declareProperty<Real>("nodal_pf");
+    if (_has_boussinesq)
+    {
+      _nodal_pf_var_old = &coupledNodalValueOld("pore_pressure");
+      _nodal_pf_old = &declareProperty<Real>("nodal_pf_old");
+    }
+    // Temperature nodal
     _nodal_temp_var = &coupledNodalValue("temperature");
     _nodal_temp_var_old = &coupledNodalValueOld("temperature");
-    _node_number = &declareProperty<unsigned int>("node_number");
-    _nodal_pf = &declareProperty<Real>("nodal_pf");
     _nodal_temp = &declareProperty<Real>("nodal_temp");
     _nodal_temp_old = &declareProperty<Real>("nodal_temp_old");
   }
@@ -148,13 +159,15 @@ GolemMaterialTH::computeQpProperties()
     (*_nodal_temp)[_qp] = (*_nodal_temp_var)[(*_node_number)[_qp]];
     (*_nodal_temp_old)[_qp] = (*_nodal_temp_var_old)[(*_node_number)[_qp]];
     (*_nodal_pf)[_qp] = (*_nodal_pf_var)[(*_node_number)[_qp]];
+    if (_has_boussinesq)
+      (*_nodal_pf_old)[_qp] = (*_nodal_pf_var_old)[(*_node_number)[_qp]];
   }
   computeDensity();
   computeViscosity();
   _porosity[_qp] = _porosity_uo->computePorosity(_phi0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   _permeability[_qp] = _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp]);
   // GolemKernelT related properties
-  _T_kernel_diff[_qp] = _porosity[_qp] * _lambda_f + (1 - _porosity[_qp]) * _lambda_s;
+  _T_kernel_diff[_qp] = _porosity[_qp] * _lambda_f + (1.0 - _porosity[_qp]) * _lambda_s;
   if (_has_T_source_sink)
     (*_T_kernel_source)[_qp] = -1.0 * _T_source_sink;
   // GolemKernelH related properties
@@ -162,8 +175,13 @@ GolemMaterialTH::computeQpProperties()
   // GolemkernelTH related poperties
   _TH_kernel[_qp] = -_H_kernel[_qp] * _fluid_density[_qp] * _c_f;
   if (_fe_problem.isTransient())
+  {
+    // Correct H_kernel_time
+    if (_drho_dpf[_qp] != 0.0)
+      (*_H_kernel_time)[_qp] = (_porosity[_qp] * _drho_dpf[_qp]) / _fluid_density[_qp];
     (*_T_kernel_time)[_qp] =
-        _porosity[_qp] * _fluid_density[_qp] * _c_f + (1 - _porosity[_qp]) * _rho0_s * _c_s;
+        _porosity[_qp] * _fluid_density[_qp] * _c_f + (1.0 - _porosity[_qp]) * _rho0_s * _c_s;
+  }
   // Properties derivatives
   // H_kernel derivatives
   (*_dH_kernel_dpf)[_qp] = -_H_kernel[_qp] * _dmu_dpf[_qp] / _fluid_viscosity[_qp];

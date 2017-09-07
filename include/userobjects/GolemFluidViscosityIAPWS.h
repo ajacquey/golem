@@ -43,6 +43,8 @@ private:
   Real dmu0dTRegion1(Real temp) const;
   Real dmu1dTRegion1(Real temp, Real rho, Real drho_dT) const;
   Real dmu1dpRegion1(Real temp, Real rho, Real drho_dp) const;
+
+  bool _has_kelvin;
 };
 
 #endif // GOLEMFLUIDVISCOSITYIAPWS_H

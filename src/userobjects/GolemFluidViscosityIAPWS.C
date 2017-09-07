@@ -35,11 +35,12 @@ validParams<GolemFluidViscosityIAPWS>()
 {
   InputParameters params = validParams<GolemFluidViscosity>();
   params.addClassDescription("IAPWS fluid viscosity formulation for region 1.");
+  params.addParam<bool>("has_kelvin", false, "Is the temperature in Kelvin?");
   return params;
 }
 
 GolemFluidViscosityIAPWS::GolemFluidViscosityIAPWS(const InputParameters & parameters)
-  : GolemFluidViscosity(parameters)
+  : GolemFluidViscosity(parameters), _has_kelvin(getParam<bool>("has_kelvin"))
 {
 }
 
@@ -51,8 +52,9 @@ GolemFluidViscosityIAPWS::computeViscosity(Real temperature, Real rho, Real) con
     rho *= _scaling_uo->_s_density;
     temperature *= _scaling_uo->_s_temperature;
   }
-  Real mu0 = GolemFluidViscosityIAPWS::mu0Region1(temperature);
-  Real mu1 = GolemFluidViscosityIAPWS::mu1Region1(temperature, rho);
+  Real temp_k = _has_kelvin ? temperature : temperature + KELVIN;
+  Real mu0 = GolemFluidViscosityIAPWS::mu0Region1(temp_k);
+  Real mu1 = GolemFluidViscosityIAPWS::mu1Region1(temp_k, rho);
   Real enh = GolemFluidViscosityIAPWS::critical_enhancement();
   if (_has_scaled_properties)
     return (MUSTAR * mu0 * mu1 * enh) / _scaling_uo->_s_viscosity;
@@ -69,10 +71,11 @@ GolemFluidViscosityIAPWS::computedViscositydT(Real temperature, Real rho, Real d
     temperature *= _scaling_uo->_s_temperature;
     drho_dT *= _scaling_uo->_s_density / _scaling_uo->_s_temperature;
   }
-  Real mu0 = GolemFluidViscosityIAPWS::mu1Region1(temperature, rho);
-  Real dmu0 = GolemFluidViscosityIAPWS::dmu0dTRegion1(temperature);
-  Real mu1 = GolemFluidViscosityIAPWS::mu0Region1(temperature);
-  Real dmu1 = GolemFluidViscosityIAPWS::dmu1dTRegion1(temperature, rho, drho_dT);
+  Real temp_k = _has_kelvin ? temperature : temperature + KELVIN;
+  Real mu0 = GolemFluidViscosityIAPWS::mu1Region1(temp_k, rho);
+  Real dmu0 = GolemFluidViscosityIAPWS::dmu0dTRegion1(temp_k);
+  Real mu1 = GolemFluidViscosityIAPWS::mu0Region1(temp_k);
+  Real dmu1 = GolemFluidViscosityIAPWS::dmu1dTRegion1(temp_k, rho, drho_dT);
   if (_has_scaled_properties)
     return _scaling_uo->_s_temperature * (MUSTAR * (dmu0 * mu1 + dmu1 * mu0)) /
            _scaling_uo->_s_viscosity;
@@ -89,8 +92,9 @@ GolemFluidViscosityIAPWS::computedViscositydp(Real temperature, Real rho, Real d
     temperature *= _scaling_uo->_s_temperature;
     drho_dp *= _scaling_uo->_s_density / _scaling_uo->_s_stress;
   }
-  Real mu0 = GolemFluidViscosityIAPWS::mu0Region1(temperature);
-  Real dmu1 = GolemFluidViscosityIAPWS::dmu1dpRegion1(temperature, rho, drho_dp);
+  Real temp_k = _has_kelvin ? temperature : temperature + KELVIN;
+  Real mu0 = GolemFluidViscosityIAPWS::mu0Region1(temp_k);
+  Real dmu1 = GolemFluidViscosityIAPWS::dmu1dpRegion1(temp_k, rho, drho_dp);
   if (_has_scaled_properties)
     return _scaling_uo->_s_stress * (MUSTAR * dmu1 * mu0) / _scaling_uo->_s_viscosity;
   else
@@ -100,8 +104,7 @@ GolemFluidViscosityIAPWS::computedViscositydp(Real temperature, Real rho, Real d
 Real
 GolemFluidViscosityIAPWS::mu0Region1(Real temp) const
 {
-  Real tempK = temp + KELVIN;
-  Real tau = tempK / TCRIT;
+  Real tau = temp / TCRIT;
   Real t0[4];
   Real sum = 0.0;
   t0[0] = 1.0;
@@ -117,8 +120,7 @@ Real
 GolemFluidViscosityIAPWS::mu1Region1(Real temp, Real rho) const
 {
   Real del = rho / DCRIT;
-  Real tempK = temp + KELVIN;
-  Real one_on_tau = TCRIT / tempK;
+  Real one_on_tau = TCRIT / temp;
   Real t1[6];
   Real d1[7];
   Real sum = 0.0;
@@ -149,9 +151,8 @@ GolemFluidViscosityIAPWS::critical_enhancement() const
 Real
 GolemFluidViscosityIAPWS::dmu0dTRegion1(Real temp) const
 {
-  Real tempK = (temp + KELVIN);
-  Real tau = tempK / TCRIT;
-  Real done_on_tau_dT = -1.0 * TCRIT / (tempK * tempK);
+  Real tau = temp / TCRIT;
+  Real done_on_tau_dT = -1.0 * TCRIT / (temp * temp);
   Real t0[4];
   Real dt0[4];
   Real sum = 0.0;
@@ -170,7 +171,7 @@ GolemFluidViscosityIAPWS::dmu0dTRegion1(Real temp) const
     dsum += H0_visc[i] * dt0[i];
   }
   Real a = 1.0e2 * std::sqrt(tau);
-  Real da = 0.5e2 * std::sqrt(1 / (TCRIT * tempK));
+  Real da = 0.5e2 * std::sqrt(1 / (TCRIT * temp));
   return (da * sum + dsum * a) / (sum * sum);
 }
 
@@ -179,9 +180,8 @@ GolemFluidViscosityIAPWS::dmu1dTRegion1(Real temp, Real rho, Real drho_dT) const
 {
   Real del = rho / DCRIT;
   Real ddel = drho_dT / DCRIT;
-  Real tempK = temp + KELVIN;
-  Real one_on_tau = TCRIT / tempK;
-  Real done_on_1_tau_dT = -1.0 * TCRIT / (tempK * tempK);
+  Real one_on_tau = TCRIT / temp;
+  Real done_on_1_tau_dT = -1.0 * TCRIT / (temp * temp);
   Real t1[6];
   Real dt1[6];
   Real d1[7];
@@ -229,8 +229,7 @@ GolemFluidViscosityIAPWS::dmu1dpRegion1(Real temp, Real rho, Real drho_dp) const
 {
   Real del = rho / DCRIT;
   Real ddel = drho_dp / DCRIT;
-  Real tempK = temp + KELVIN;
-  Real one_on_tau = TCRIT / tempK;
+  Real one_on_tau = TCRIT / temp;
   Real t1[6];
   Real d1[7];
   Real dd1[7];

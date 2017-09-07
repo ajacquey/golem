@@ -47,6 +47,7 @@ protected:
   bool _has_T_source_sink;
   bool _has_SUPG_upwind;
   bool _has_lumped_mass_matrix;
+  bool _has_boussinesq;
   const VariableValue & _temp;
   const VariableValue & _pf;
   const VariableGradient & _grad_pf;
@@ -87,9 +88,11 @@ protected:
   // nodal values related material properties --> for lumping the mass matrix
   MaterialProperty<unsigned int> * _node_number;
   MaterialProperty<Real> * _nodal_pf;
+  MaterialProperty<Real> * _nodal_pf_old;
   MaterialProperty<Real> * _nodal_temp;
   MaterialProperty<Real> * _nodal_temp_old;
   const VariableValue * _nodal_pf_var;
+  const VariableValue * _nodal_pf_var_old;
   const VariableValue * _nodal_temp_var;
   const VariableValue * _nodal_temp_var_old;
   // Additional properties when using this material for frac and fault in THM simulations

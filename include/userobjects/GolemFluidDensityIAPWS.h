@@ -35,6 +35,8 @@ public:
   Real computeDensity(Real pressure, Real temperature, Real) const;
   Real computedDensitydT(Real pressure, Real temperature, Real) const;
   Real computedDensitydp(Real pressure, Real temperature) const;
+
+  bool _has_kelvin;
 };
 
 #endif // GOLEMFLUIDDENSITYIAPWS_H
