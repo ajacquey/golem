@@ -83,27 +83,46 @@ Real
 GolemKernelH::computeQpJacobian()
 {
   Real jac = 0.0;
+
   RealVectorValue coeff_1 = _dH_kernel_dpf[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
   RealVectorValue coeff_2 = _H_kernel[_qp] * _dH_kernel_grav_dpf[_qp];
   RealVectorValue coeff_3 = _H_kernel[_qp] * _grad_phi[_j][_qp];
-  jac +=
-      _scaling_factor[_qp] * ((coeff_1 + coeff_2) * _phi[_j][_qp] + coeff_3) * _grad_test[_i][_qp];
+  RealVectorValue dvel_dpf = (coeff_1 + coeff_2) * _phi[_j][_qp] + coeff_3;
+
+  jac += _scaling_factor[_qp] * dvel_dpf * _grad_test[_i][_qp];
+
+  // jac +=
+  //     _scaling_factor[_qp] * ((coeff_1 + coeff_2) * _phi[_j][_qp] + coeff_3) *
+  //     _grad_test[_i][_qp];
 
   if (_has_boussinesq)
   {
-    // first term related to qd
-    RealVectorValue dqp_dp = (coeff_1 + coeff_2) * _phi[_j][_qp] + coeff_3;
+    RealVectorValue vel = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
     RealVectorValue boussinesq =
         (*_drho_dpf)[_qp] * _grad_u[_qp] + (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
-    jac += _scaling_factor[_qp] * (dqp_dp / (*_fluid_density)[_qp]) * boussinesq * _test[_i][_qp];
-    // second term related to boussinesq
-    RealVectorValue qd = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
-    RealVectorValue b_1 = ((*_drho_dpf)[_qp] / (*_fluid_density)[_qp]) * _grad_phi[_j][_qp];
-    RealVectorValue b_2 =
-        (-1.0 * Utility::pow<2>((*_drho_dpf)[_qp] / (*_fluid_density)[_qp])) * _grad_u[_qp];
-    RealVectorValue b_3 = (-1.0 / Utility::pow<2>((*_fluid_density)[_qp])) * (*_drho_dpf)[_qp] *
-                          (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
-    jac += _scaling_factor[_qp] * qd * (b_1 + (b_2 + b_3) * _phi[_j][_qp]) * _test[_i][_qp];
+    Real dboussinesq_dpf = 0.0;
+    // First term related to dvel_dpf
+    dboussinesq_dpf += (dvel_dpf / (*_fluid_density)[_qp]) * boussinesq * _phi[_j][_qp];
+    // Second term related to drho_dpf
+    dboussinesq_dpf += -(vel * (*_drho_dpf)[_qp] / Utility::pow<2>((*_fluid_density)[_qp])) *
+                       boussinesq * _phi[_j][_qp];
+    // Third term related to dgrad_u_dpf
+    dboussinesq_dpf += (vel / (*_fluid_density)[_qp]) * ((*_drho_dpf)[_qp] * _grad_phi[_j][_qp]);
+    // // first term related to qd
+    // RealVectorValue dqp_dp = (coeff_1 + coeff_2) * _phi[_j][_qp] + coeff_3;
+    // RealVectorValue boussinesq =
+    //     (*_drho_dpf)[_qp] * _grad_u[_qp] + (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
+    // jac += _scaling_factor[_qp] * (dqp_dp / (*_fluid_density)[_qp]) * boussinesq *
+    // _test[_i][_qp];
+    // // second term related to boussinesq
+    // RealVectorValue qd = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
+    // RealVectorValue b_1 = ((*_drho_dpf)[_qp] / (*_fluid_density)[_qp]) * _grad_phi[_j][_qp];
+    // RealVectorValue b_2 =
+    //     (-1.0 * Utility::pow<2>((*_drho_dpf)[_qp] / (*_fluid_density)[_qp])) * _grad_u[_qp];
+    // RealVectorValue b_3 = (-1.0 / Utility::pow<2>((*_fluid_density)[_qp])) * (*_drho_dpf)[_qp] *
+    //                       (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
+    // jac += _scaling_factor[_qp] * qd * (b_1 + (b_2 + b_3) * _phi[_j][_qp]) * _test[_i][_qp];
+    jac += _scaling_factor[_qp] * dboussinesq_dpf * _test[_i][_qp];
   }
 
   return jac;
@@ -122,23 +141,39 @@ GolemKernelH::computeQpOffDiagJacobian(unsigned int jvar)
   {
     coeff_1 = _dH_kernel_dT[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
     coeff_2 = _H_kernel[_qp] * _dH_kernel_grav_dT[_qp];
-    jac += _scaling_factor[_qp] * (coeff_1 + coeff_2) * _phi[_j][_qp] * _grad_test[_i][_qp];
+    RealVectorValue dvel_dT = (coeff_1 + coeff_2) * _phi[_j][_qp];
+
+    jac += _scaling_factor[_qp] * dvel_dT * _grad_test[_i][_qp];
 
     if (_has_boussinesq)
     {
-      // first term related to qd
-      RealVectorValue dqd_dT = coeff_1 + coeff_2;
+      RealVectorValue vel = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
       RealVectorValue boussinesq =
           (*_drho_dpf)[_qp] * _grad_u[_qp] + (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
-      jac += _scaling_factor[_qp] * (dqd_dT / (*_fluid_density)[_qp]) * boussinesq * _phi[_j][_qp] *
-             _test[_i][_qp];
-      // second term related to boussinesq
-      RealVectorValue qd = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
-      RealVectorValue b_1 =
-          (-1.0 * Utility::pow<2>((*_drho_dT)[_qp] / (*_fluid_density)[_qp])) * (*_grad_temp)[_qp];
-      RealVectorValue b_2 = (-1.0 / Utility::pow<2>((*_fluid_density)[_qp])) * (*_drho_dT)[_qp] *
-                            (*_drho_dpf)[_qp] * _grad_u[_qp];
-      jac += _scaling_factor[_qp] * qd * (b_1 + b_2) * _phi[_j][_qp] * _test[_i][_qp];
+      Real dboussinesq_dT = 0.0;
+      // First term related to dvel_dT
+      dboussinesq_dT += (dvel_dT / (*_fluid_density)[_qp]) * boussinesq * _phi[_j][_qp];
+      // Second term related to drho_dT
+      dboussinesq_dT += -(vel * (*_drho_dT)[_qp] / Utility::pow<2>((*_fluid_density)[_qp])) *
+                        boussinesq * _phi[_j][_qp];
+      // Third term related to dgrad_T_dpf
+      dboussinesq_dT += (vel / (*_fluid_density)[_qp]) * ((*_drho_dT)[_qp] * _grad_phi[_j][_qp]);
+      // // first term related to qd
+      // RealVectorValue dqd_dT = coeff_1 + coeff_2;
+      // RealVectorValue boussinesq =
+      //     (*_drho_dpf)[_qp] * _grad_u[_qp] + (*_drho_dT)[_qp] * (*_grad_temp)[_qp];
+      // jac += _scaling_factor[_qp] * (dqd_dT / (*_fluid_density)[_qp]) * boussinesq *
+      // _phi[_j][_qp] *
+      //        _test[_i][_qp];
+      // // second term related to boussinesq
+      // RealVectorValue qd = _H_kernel[_qp] * (_grad_u[_qp] + _H_kernel_grav[_qp]);
+      // RealVectorValue b_1 =
+      //     (-1.0 * Utility::pow<2>((*_drho_dT)[_qp] / (*_fluid_density)[_qp])) *
+      //     (*_grad_temp)[_qp];
+      // RealVectorValue b_2 = (-1.0 / Utility::pow<2>((*_fluid_density)[_qp])) * (*_drho_dT)[_qp] *
+      //                       (*_drho_dpf)[_qp] * _grad_u[_qp];
+      // jac += _scaling_factor[_qp] * qd * (b_1 + b_2) * _phi[_j][_qp] * _test[_i][_qp];
+      jac += _scaling_factor[_qp] * dboussinesq_dT * _test[_i][_qp];
     }
   }
   for (unsigned i = 0; i < _ndisp; ++i)
