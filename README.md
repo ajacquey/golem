@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg"
          alt="GitHub License">
   </a>
-  <a href="https://gitter.im/link-to-add">
+  <a href="https://gitter.im/Golem-Moose/golem">
     <img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg"
          alt="Gitter">
   </a>
