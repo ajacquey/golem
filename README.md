@@ -83,7 +83,10 @@ If you use GOLEM for your work please cite:
 * This repository:  
 (add DOI of the release)
 * The publication presenting GOLEM:  
-Cacace, M. and Jacquey, A. B.: Flexible parallel implicit modelling of coupled Thermal-Hydraulic-Mechanical processes in fractured rocks, Solid Earth Discuss., https://doi.org/10.5194/se-2017-33, 2017.
+ Cacace, M. and Jacquey, A. B.: Flexible parallel implicit modelling of coupled thermal–hydraulic–mechanical processes in fractured rocks, Solid Earth, 8, 921-941, https://doi.org/10.5194/se-8-921-2017, 2017.  
+
+
+Please read the [CITATION](https://github.com/ajacquey/Golem/blob/master/CITATION) file for more information.
 
 ## Publications using GOLEM
 

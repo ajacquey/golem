@@ -1,0 +1,21 @@
+You are welcome to use and modify the GOLEM simulator.
+See the README.md for details.
+
+If you use GOLEM for your research, we would appreciate appropriate citation.
+This includes a reference to the repository: (to add here)
+
+And also a reference to the publication describing the theory and implementation of the GOLEM simulator:
+Cacace, M. and Jacquey, A. B.: Flexible parallel implicit modelling of coupled thermal–hydraulic–mechanical processes in fractured rocks, Solid Earth, 8, 921-941, https://doi.org/10.5194/se-8-921-2017, 2017.
+A BibTeX entry for LaTeX users is:
+
+@Article{Golem,
+AUTHOR = {Cacace, M. and Jacquey, A. B.},
+TITLE = {Flexible parallel implicit modelling of coupled thermal--hydraulic--mechanical processes in fractured rocks},
+JOURNAL = {Solid Earth},
+VOLUME = {8},
+YEAR = {2017},
+NUMBER = {5},
+PAGES = {921--941},
+URL = {https://www.solid-earth.net/8/921/2017/},
+DOI = {10.5194/se-8-921-2017}
+}
