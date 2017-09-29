@@ -85,7 +85,7 @@ Information about the structure of the GOLEM input files can be found in the doc
 
 If you use GOLEM for your work please cite:
 * This repository:  
-Antoine B. Jacquey, & Mauro Cacace. (2017, September 29). ajacquey/Golem: GOLEM v1.0. Zenodo. http://doi.org/10.5281/zenodo.999401
+Antoine B. Jacquey, & Mauro Cacace. (2017, September 29). GOLEM, a MOOSE-based application v1.0. Zenodo. http://doi.org/10.5281/zenodo.999401
 * The publication presenting GOLEM:  
  Cacace, M. and Jacquey, A. B.: Flexible parallel implicit modelling of coupled thermal–hydraulic–mechanical processes in fractured rocks, Solid Earth, 8, 921-941, https://doi.org/10.5194/se-8-921-2017, 2017.  
 
