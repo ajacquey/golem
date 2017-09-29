@@ -24,6 +24,7 @@
 #include "Material.h"
 #include "RankTwoTensor.h"
 #include "UserObjectInterface.h"
+#include "Function.h"
 #include "GolemFluidDensity.h"
 #include "GolemFluidViscosity.h"
 #include "GolemPermeability.h"
@@ -31,6 +32,7 @@
 #include "GolemScaling.h"
 
 class GolemMaterialBase;
+class Function;
 
 template <>
 InputParameters validParams<GolemMaterialBase>();
@@ -53,6 +55,7 @@ protected:
   bool _has_gravity;
   Real _g;
   Real _scaling_factor0;
+  Function * _function_scaling;
   Real _alpha_T_f;
   Real _alpha_T_s;
   const GolemFluidDensity * _fluid_density_uo;

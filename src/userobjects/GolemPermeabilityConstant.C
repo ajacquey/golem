@@ -35,7 +35,7 @@ GolemPermeabilityConstant::GolemPermeabilityConstant(const InputParameters & par
 }
 
 std::vector<Real>
-GolemPermeabilityConstant::computePermeability(std::vector<Real> k0, Real, Real) const
+GolemPermeabilityConstant::computePermeability(std::vector<Real> k0, Real, Real, Real) const
 {
   return k0;
 }

@@ -617,6 +617,7 @@ GolemMaterialMElastic::GolemCrackClosure()
 void
 GolemMaterialMElastic::GolemMatPropertiesHM()
 {
+  _scaling_factor[_qp] = computeQpScaling();
   // Fluid density
   _fluid_density[_qp] = _fluid_density_uo->computeDensity(0.0, 0.0, _rho0_f);
   // Fluid viscosity
@@ -633,7 +634,8 @@ GolemMaterialMElastic::GolemMatPropertiesHM()
   _porosity[_qp] = _porosity_uo->computePorosity(
       _porosity_old[_qp], (*_dphi_dev)[_qp], (*_dphi_dpf)[_qp], 0.0, dev, dpf, 0.0);
   // Permeability
-  (*_permeability)[_qp] = _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp]);
+  (*_permeability)[_qp] =
+      _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp], _scaling_factor[_qp]);
   (*_dk_dev)[_qp] =
       _permeability_uo->computedPermeabilitydev(_k0, _phi0, _porosity[_qp], (*_dphi_dev)[_qp]);
   (*_dk_dpf)[_qp] =
@@ -644,7 +646,6 @@ void
 GolemMaterialMElastic::GolemKernelPropertiesHM()
 {
   Real one_on_visc = 1.0 / _fluid_viscosity[_qp];
-  _scaling_factor[_qp] = computeQpScaling();
   if (_fe_problem.isTransient())
     (*_H_kernel_time)[_qp] = _porosity[_qp] / _Kf + ((*_biot)[_qp] - _porosity[_qp]) / _Ks;
   (*_H_kernel)[_qp] =
@@ -678,6 +679,7 @@ GolemMaterialMElastic::GolemKernelPropertiesDerivativesHM()
 void
 GolemMaterialMElastic::GolemMatPropertiesTM()
 {
+  _scaling_factor[_qp] = computeQpScaling();
   // Fluid density
   _fluid_density[_qp] = _fluid_density_uo->computeDensity(0.0, 0.0, _rho0_f);
   // Fluid viscosity
@@ -689,7 +691,6 @@ GolemMaterialMElastic::GolemMatPropertiesTM()
 void
 GolemMaterialMElastic::GolemKernelPropertiesTM()
 {
-  _scaling_factor[_qp] = computeQpScaling();
   (*_T_kernel_diff)[_qp] = _porosity[_qp] * _lambda_f + (1.0 - _porosity[_qp]) * _lambda_s;
   if (_fe_problem.isTransient())
     (*_T_kernel_time)[_qp] =
@@ -734,6 +735,7 @@ GolemMaterialMElastic::GolemMatPropertiesTHM()
     dpf = (*_nodal_pf)[_qp] - (*_nodal_pf_old)[_qp];
     dT = (*_nodal_temp)[_qp] - (*_nodal_temp_old)[_qp];
   }
+  _scaling_factor[_qp] = computeQpScaling();
   (*_drho_dpf)[_qp] = _fluid_density_uo->computedDensitydp(pres, temp);
   (*_drho_dT)[_qp] = _fluid_density_uo->computedDensitydT(pres, temp, _rho0_f);
   _fluid_density[_qp] = _fluid_density_uo->computeDensity(pres, temp, _rho0_f);
@@ -754,7 +756,8 @@ GolemMaterialMElastic::GolemMatPropertiesTHM()
   _porosity[_qp] = _porosity_uo->computePorosity(
       _porosity_old[_qp], (*_dphi_dev)[_qp], (*_dphi_dpf)[_qp], (*_dphi_dT)[_qp], dev, dpf, dT);
   // Permeability
-  (*_permeability)[_qp] = _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp]);
+  (*_permeability)[_qp] =
+      _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp], _scaling_factor[_qp]);
   (*_dk_dev)[_qp] =
       _permeability_uo->computedPermeabilitydev(_k0, _phi0, _porosity[_qp], (*_dphi_dev)[_qp]);
   (*_dk_dpf)[_qp] =

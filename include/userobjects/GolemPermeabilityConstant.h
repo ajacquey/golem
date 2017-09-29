@@ -32,7 +32,8 @@ class GolemPermeabilityConstant : public GolemPermeability
 {
 public:
   GolemPermeabilityConstant(const InputParameters & parameters);
-  std::vector<Real> computePermeability(std::vector<Real> k0, Real phi0, Real porosity) const;
+  std::vector<Real>
+  computePermeability(std::vector<Real> k0, Real phi0, Real porosity, Real aperture) const;
   std::vector<Real>
   computedPermeabilitydev(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dev) const;
   std::vector<Real>

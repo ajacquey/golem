@@ -162,10 +162,12 @@ GolemMaterialTH::computeQpProperties()
     if (_has_boussinesq)
       (*_nodal_pf_old)[_qp] = (*_nodal_pf_var_old)[(*_node_number)[_qp]];
   }
+  _scaling_factor[_qp] = computeQpScaling();
   computeDensity();
   computeViscosity();
   _porosity[_qp] = _porosity_uo->computePorosity(_phi0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-  _permeability[_qp] = _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp]);
+  _permeability[_qp] =
+      _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp], _scaling_factor[_qp]);
   // GolemKernelT related properties
   _T_kernel_diff[_qp] = _porosity[_qp] * _lambda_f + (1.0 - _porosity[_qp]) * _lambda_s;
   if (_has_T_source_sink)

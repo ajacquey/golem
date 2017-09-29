@@ -103,10 +103,12 @@ GolemMaterialH::computeProperties()
 void
 GolemMaterialH::computeQpProperties()
 {
+  _scaling_factor[_qp] = computeQpScaling();
   _fluid_density[_qp] = _fluid_density_uo->computeDensity(0.0, 0.0, _rho0_f);
   _fluid_viscosity[_qp] = _fluid_viscosity_uo->computeViscosity(0.0, 0.0, _mu0);
   _porosity[_qp] = _porosity_uo->computePorosity(_phi0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-  _permeability[_qp] = _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp]);
+  _permeability[_qp] =
+      _permeability_uo->computePermeability(_k0, _phi0, _porosity[_qp], _scaling_factor[_qp]);
   GolemPropertiesH();
   if (_has_disp)
   {
@@ -125,7 +127,6 @@ void
 GolemMaterialH::GolemPropertiesH()
 {
   Real one_on_visc = 1.0 / _fluid_viscosity[_qp];
-  _scaling_factor[_qp] = computeQpScaling();
   if (_fe_problem.isTransient())
     (*_H_kernel_time)[_qp] = _porosity[_qp] / _Kf;
   _H_kernel[_qp] =

@@ -38,6 +38,8 @@ validParams<GolemMaterialBase>()
       "gravity_acceleration", 9.81, "The magnitude of the gravity acceleration [m/s^2].");
   params.addParam<Real>(
       "scaling_factor_initial", 1.0, "The scaling factor for lower dimensional element [m].");
+  params.addParam<FunctionName>("function_scaling",
+                                "The name of the function for updating the scaling_factor.");
   params.addParam<Real>("fluid_thermal_expansion",
                         0.0,
                         "The volumetric thermal expansion coefficient of the fluid [1/K].");
@@ -63,6 +65,7 @@ GolemMaterialBase::GolemMaterialBase(const InputParameters & parameters)
     _has_gravity(getParam<bool>("has_gravity")),
     _g(getParam<Real>("gravity_acceleration")),
     _scaling_factor0(getParam<Real>("scaling_factor_initial")),
+    _function_scaling(isParamValid("function_scaling") ? &getFunction("function_scaling") : NULL),
     _alpha_T_f(getParam<Real>("fluid_thermal_expansion")),
     _alpha_T_s(getParam<Real>("solid_thermal_expansion")),
     _fluid_density_uo(NULL),
@@ -107,6 +110,12 @@ GolemMaterialBase::computeQpScaling()
     case 3:
       scaling_factor += _scaling_factor0;
       break;
+  }
+  if (isParamValid("function_scaling"))
+  {
+    scaling_factor = _function_scaling->value(_t, Point());
+    if (_has_scaled_properties)
+      scaling_factor /= _scaling_uo->_s_length;
   }
   return scaling_factor;
 }

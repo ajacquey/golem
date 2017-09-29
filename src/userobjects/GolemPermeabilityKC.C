@@ -36,7 +36,7 @@ GolemPermeabilityKC::GolemPermeabilityKC(const InputParameters & parameters)
 }
 
 std::vector<Real>
-GolemPermeabilityKC::computePermeability(std::vector<Real> k0, Real phi0, Real porosity) const
+GolemPermeabilityKC::computePermeability(std::vector<Real> k0, Real phi0, Real porosity, Real) const
 {
   std::vector<Real> k;
   if (phi0 != 1.0)

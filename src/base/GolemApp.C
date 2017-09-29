@@ -84,6 +84,7 @@
 #include "GolemPorosityTHM.h"
 #include "GolemPermeabilityConstant.h"
 #include "GolemPermeabilityKC.h"
+#include "GolemPermeabilityCubicLaw.h"
 #include "GolemHardeningConstant.h"
 #include "GolemHardeningCubic.h"
 #include "GolemHardeningExponential.h"
@@ -191,6 +192,7 @@ GolemApp::registerObjects(Factory & factory)
   registerUserObject(GolemPorosityTHM);
   registerUserObject(GolemPermeabilityConstant);
   registerUserObject(GolemPermeabilityKC);
+  registerUserObject(GolemPermeabilityCubicLaw);
   registerUserObject(GolemHardeningConstant);
   registerUserObject(GolemHardeningCubic);
   registerUserObject(GolemHardeningExponential);

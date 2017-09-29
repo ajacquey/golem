@@ -18,31 +18,52 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPERMEABILITY_H
-#define GOLEMPERMEABILITY_H
-
-#include "GeneralUserObject.h"
-
-class GolemPermeability;
+#include "GolemPermeabilityCubicLaw.h"
+#include "libmesh/utility.h"
 
 template <>
-InputParameters validParams<GolemPermeability>();
-
-class GolemPermeability : public GeneralUserObject
+InputParameters
+validParams<GolemPermeabilityCubicLaw>()
 {
-public:
-  GolemPermeability(const InputParameters & parameters);
-  void initialize() {}
-  void execute() {}
-  void finalize() {}
-  virtual std::vector<Real>
-  computePermeability(std::vector<Real> k0, Real phi0, Real porosity, Real aperture) const = 0;
-  virtual std::vector<Real>
-  computedPermeabilitydev(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dev) const = 0;
-  virtual std::vector<Real>
-  computedPermeabilitydpf(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dpf) const = 0;
-  virtual std::vector<Real>
-  computedPermeabilitydT(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dTs) const = 0;
-};
+  InputParameters params = validParams<GolemPermeability>();
+  params.addClassDescription("Cubic law permeability formulation.");
+  return params;
+}
 
-#endif // GOLEMPERMEABILITY_H
+GolemPermeabilityCubicLaw::GolemPermeabilityCubicLaw(const InputParameters & parameters)
+  : GolemPermeability(parameters)
+{
+}
+
+std::vector<Real>
+GolemPermeabilityCubicLaw::computePermeability(std::vector<Real> k0,
+                                               Real,
+                                               Real,
+                                               Real aperture) const
+{
+  Real cl = Utility::pow<2>(aperture) / 8.0;
+  for (unsigned int i = 0; i < k0.size(); ++i)
+    k0[i] = cl;
+  return k0;
+}
+
+std::vector<Real>
+GolemPermeabilityCubicLaw::computedPermeabilitydev(std::vector<Real> k0, Real, Real, Real) const
+{
+  std::vector<Real> dk_dev(k0.size(), 0.0);
+  return dk_dev;
+}
+
+std::vector<Real>
+GolemPermeabilityCubicLaw::computedPermeabilitydpf(std::vector<Real> k0, Real, Real, Real) const
+{
+  std::vector<Real> dk_dpf(k0.size(), 0.0);
+  return dk_dpf;
+}
+
+std::vector<Real>
+GolemPermeabilityCubicLaw::computedPermeabilitydT(std::vector<Real> k0, Real, Real, Real) const
+{
+  std::vector<Real> dk_dT(k0.size(), 0.0);
+  return dk_dT;
+}

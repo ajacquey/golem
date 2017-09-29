@@ -18,31 +18,28 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPERMEABILITY_H
-#define GOLEMPERMEABILITY_H
+#ifndef GOLEMPERMEABILITYCUBICLAW_H
+#define GOLEMPERMEABILITYCUBICLAW_H
 
-#include "GeneralUserObject.h"
+#include "GolemPermeability.h"
 
-class GolemPermeability;
+class GolemPermeabilityCubicLaw;
 
 template <>
-InputParameters validParams<GolemPermeability>();
+InputParameters validParams<GolemPermeabilityCubicLaw>();
 
-class GolemPermeability : public GeneralUserObject
+class GolemPermeabilityCubicLaw : public GolemPermeability
 {
 public:
-  GolemPermeability(const InputParameters & parameters);
-  void initialize() {}
-  void execute() {}
-  void finalize() {}
-  virtual std::vector<Real>
-  computePermeability(std::vector<Real> k0, Real phi0, Real porosity, Real aperture) const = 0;
-  virtual std::vector<Real>
-  computedPermeabilitydev(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dev) const = 0;
-  virtual std::vector<Real>
-  computedPermeabilitydpf(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dpf) const = 0;
-  virtual std::vector<Real>
-  computedPermeabilitydT(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dTs) const = 0;
+  GolemPermeabilityCubicLaw(const InputParameters & parameters);
+  std::vector<Real>
+  computePermeability(std::vector<Real> k0, Real phi0, Real porosity, Real aperture) const;
+  std::vector<Real>
+  computedPermeabilitydev(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dev) const;
+  std::vector<Real>
+  computedPermeabilitydpf(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dpf) const;
+  std::vector<Real>
+  computedPermeabilitydT(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dT) const;
 };
 
-#endif // GOLEMPERMEABILITY_H
+#endif // GOLEMPERMEABILITYCUBICLAW_H
