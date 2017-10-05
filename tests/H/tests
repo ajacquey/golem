@@ -53,4 +53,5 @@
     type = 'Exodiff'
     input = 'H_3D_injection.i'
     exodiff = 'H_3D_injection_out.e'
+  [../]
 []
