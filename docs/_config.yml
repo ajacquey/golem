@@ -29,10 +29,10 @@ noreferrer" style="vertical-align:top;"><img src="images/GitHub-Mark-32px.png"
 width="16" margin-right=".5em;" alt="GitHub icon id"></a> at the [GFZ German
 Research Centre for Geosciences](http://www.gfz-potsdam.de/en/home/) from the
 section [Basin Modelling](http://www.gfz-potsdam.de/en/section/basin-modeling/).
-baseurl: "/jekyll-simple" # the subpath of your site, e.g. /blog
-url: "http://wildflame.me" # the base hostname & protocol for your site
-twitter_username: Taffyer 
-github_username:  wild-flame 
+baseurl: "/home" # the subpath of your site, e.g. /blog
+url: "https://ajacquey.github.io/Golem/" # the base hostname & protocol for your site
+twitter_username: antoine_jacquey 
+github_username:  ajacquey
 
 # Build settings
 markdown: kramdown
