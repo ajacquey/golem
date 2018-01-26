@@ -27,7 +27,7 @@
 class GMSMaterial;
 
 template <>
-InputParameters validParams<Material>();
+InputParameters validParams<GMSMaterial>();
 
 class GMSMaterial : public Material
 {
