@@ -123,6 +123,11 @@ GolemApp::registerApps()
   registerApp(GolemApp);
 }
 
+void
+GolemApp::registerObjectDepends(Factory & /*factory*/)
+{
+}
+
 // External entry point for dynamic object registration
 extern "C" void
 GolemApp__registerObjects(Factory & factory)
@@ -197,6 +202,11 @@ GolemApp::registerObjects(Factory & factory)
   registerUserObject(GolemHardeningCubic);
   registerUserObject(GolemHardeningExponential);
   registerUserObject(GolemHardeningPlasticSaturation);
+}
+
+void
+GolemApp::associateSyntaxDepends(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
+{
 }
 
 // External entry point for dynamic syntax association
