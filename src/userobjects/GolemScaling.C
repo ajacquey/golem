@@ -56,7 +56,7 @@ GolemScaling::GolemScaling(const InputParameters & parameters)
   _s_density = _s_mass / volume;
   _s_specific_heat = _s_energy / _s_mass / _s_temperature;
   _s_conductivity = _s_power / _s_length / _s_temperature;
-  _s_heat_production = _s_power / _s_mass;
+  _s_heat_production = _s_power / volume;
   _s_heat_flow = _s_power / area;
   // Material properties - H
   _s_permeability = area;
