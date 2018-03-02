@@ -24,6 +24,9 @@
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
 
+// Actions
+#include "GolemPressureAction.h"
+
 // Materials
 #include "GMSMaterial.h"
 #include "GolemMaterialBase.h"
@@ -216,6 +219,10 @@ GolemApp__associateSyntax(Syntax & syntax, ActionFactory & action_factory)
   GolemApp::associateSyntax(syntax, action_factory);
 }
 void
-GolemApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
+GolemApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
 {
+  registerSyntax("EmptyAction", "BCs/GolemPressure");
+  registerSyntax("GolemPressureAction", "BCs/GolemPressure/*");
+
+  registerAction(GolemPressureAction, "add_bc");
 }
