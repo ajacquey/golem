@@ -20,6 +20,7 @@
 
 #include "GolemPQPlasticity.h"
 #include "libmesh/utility.h" // for Utility::pow
+#include <petscblaslapack.h> // LAPACKgesv_
 
 template <>
 InputParameters
