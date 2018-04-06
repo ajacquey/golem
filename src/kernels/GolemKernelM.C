@@ -125,16 +125,17 @@ GolemKernelM::computeQpJacobian()
 /*                            OFF DIAGONAL JACOBIAN                           */
 /******************************************************************************/
 void
-GolemKernelM::computeOffDiagJacobian(unsigned int jvar)
+GolemKernelM::computeOffDiagJacobian(MooseVariableFE & jvar)
 {
+  size_t jvar_num = jvar.number();
   if (_use_finite_deform_jacobian)
   {
     _finite_deform_jacobian.resize(_qrule->n_points());
     for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
       computeFiniteDeformJacobian();
-    _fe_problem.prepareShapes(jvar, _tid);
+    _fe_problem.prepareShapes(jvar_num, _tid);
   }
-  Kernel::computeOffDiagJacobian(jvar);
+  Kernel::computeOffDiagJacobian(jvar_num);
 }
 
 Real

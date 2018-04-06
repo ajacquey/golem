@@ -39,7 +39,7 @@ protected:
   virtual Real computeQpResidual();
   virtual void computeJacobian();
   virtual Real computeQpJacobian();
-  virtual void computeOffDiagJacobian(unsigned int jvar);
+  virtual void computeOffDiagJacobian(MooseVariableFE & jvar);
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   bool _has_lumped_mass_matrix;
