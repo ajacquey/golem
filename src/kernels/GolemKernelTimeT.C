@@ -246,12 +246,13 @@ GolemKernelTimeT::computeQpJacobian()
 /*                            OFF DIAGONAL JACOBIAN                           */
 /******************************************************************************/
 void
-GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)
+GolemKernelTimeT::computeOffDiagJacobian(MooseVariableFE & jvar)
 {
-  if (jvar == _var.number())
+  size_t jvar_num = jvar.number();
+  if (jvar_num == _var.number())
     computeJacobian();
 
-  DenseMatrix<Number> & ke = _assembly.jacobianBlock(_var.number(), jvar);
+  DenseMatrix<Number> & ke = _assembly.jacobianBlock(_var.number(), jvar_num);
   Real inv_dt = 1.0 / _dt;
   Real weight = 0.0;
   Real dT_dt = 0.0;
@@ -269,14 +270,14 @@ GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)
       weight = (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
       dT_dt = ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) * inv_dt;
       jac = 0.0;
-      if (_has_pf && (jvar == _pf_var))
+      if (_has_pf && (jvar_num == _pf_var))
       {
         jac += _dT_kernel_time_dpf[_qp_nodal] * dT_dt;
         if (_has_boussinesq)
           jac += _dT_kernel_time_dpf[_qp_nodal] * inv_dt * (*_nodal_temp)[_qp_nodal];
       }
       for (unsigned i = 0; i < _ndisp; ++i)
-        if ((_has_disp && _has_pf) && (jvar == _disp_var[i]))
+        if ((_has_disp && _has_pf) && (jvar_num == _disp_var[i]))
           jac += _dT_kernel_time_dev[_qp_nodal] * dT_dt;
 
       ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * jac;
@@ -291,7 +292,7 @@ GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)
           weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp];
           dT_dt = (_u[_qp] - _u_old[_qp]) * inv_dt;
           jac = 0.0;
-          if (_has_pf && (jvar == _pf_var))
+          if (_has_pf && (jvar_num == _pf_var))
           {
             jac += _dT_kernel_time_dpf[_qp] * dT_dt * _phi[_j][_qp];
             if (_has_boussinesq)
@@ -300,7 +301,7 @@ GolemKernelTimeT::computeOffDiagJacobian(unsigned int jvar)
             }
           }
           for (unsigned i = 0; i < _ndisp; ++i)
-            if ((_has_disp && _has_pf) && (jvar == _disp_var[i]))
+            if ((_has_disp && _has_pf) && (jvar_num == _disp_var[i]))
               jac += _dT_kernel_time_dev[_qp] * dT_dt * _grad_phi[_j][_qp](i);
 
           ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
