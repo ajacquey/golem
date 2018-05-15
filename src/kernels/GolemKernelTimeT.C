@@ -83,7 +83,7 @@ GolemKernelTimeT::GolemKernelTimeT(const InputParameters & parameters)
 void
 GolemKernelTimeT::computeResidual()
 {
-  DenseVector<Number> & re = _assembly.residualBlock(_var.number(), Moose::KT_TIME);
+  DenseVector<Number> & re = _assembly.residualBlock(_var.number());
   _local_re.resize(re.size());
   _local_re.zero();
   Real inv_dt = 1.0 / _dt;
@@ -246,7 +246,7 @@ GolemKernelTimeT::computeQpJacobian()
 /*                            OFF DIAGONAL JACOBIAN                           */
 /******************************************************************************/
 void
-GolemKernelTimeT::computeOffDiagJacobian(MooseVariableFE & jvar)
+GolemKernelTimeT::computeOffDiagJacobian(MooseVariableFEBase & jvar)
 {
   size_t jvar_num = jvar.number();
   if (jvar_num == _var.number())
