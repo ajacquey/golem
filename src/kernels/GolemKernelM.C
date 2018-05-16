@@ -125,7 +125,7 @@ GolemKernelM::computeQpJacobian()
 /*                            OFF DIAGONAL JACOBIAN                           */
 /******************************************************************************/
 void
-GolemKernelM::computeOffDiagJacobian(MooseVariableFE & jvar)
+GolemKernelM::computeOffDiagJacobian(MooseVariableFEBase & jvar)
 {
   size_t jvar_num = jvar.number();
   if (_use_finite_deform_jacobian)
