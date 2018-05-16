@@ -135,7 +135,7 @@ GolemKernelM::computeOffDiagJacobian(MooseVariableFEBase & jvar)
       computeFiniteDeformJacobian();
     _fe_problem.prepareShapes(jvar_num, _tid);
   }
-  Kernel::computeOffDiagJacobian(jvar_num);
+  Kernel::computeOffDiagJacobian(jvar);
 }
 
 Real
