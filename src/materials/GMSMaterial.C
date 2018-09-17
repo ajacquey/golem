@@ -70,7 +70,6 @@ GMSMaterial::GMSMaterial(const InputParameters & parameters)
 {
   if (!_has_read_prop_uo)
   {
-    mooseError("Should not be here!");
     _rho_b = (_is_load_coupled || _fe_problem.isTransient() ? getParam<Real>("density") : 0.);
     _lambda_b = (_is_temp_coupled ? getParam<Real>("thermal_conductivity") : 0.);
     _c_b = (_is_temp_coupled && _fe_problem.isTransient() ? getParam<Real>("heat_capacity") : 0.);
@@ -98,7 +97,6 @@ GMSMaterial::computeQpProperties()
   }
   else
   {
-    mooseError("Should not be here!");
     _bulk_density[_qp] = _rho_b;
     if (!_has_lambda_pT)
       _bulk_thermal_conductivity[_qp] = _lambda_b;
