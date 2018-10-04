@@ -22,6 +22,8 @@
 #include "GolemInelasticBase.h"
 #include "MooseException.h"
 
+registerMooseObject("GolemApp", GolemMaterialMInelastic);
+
 template <>
 InputParameters
 validParams<GolemMaterialMInelastic>()

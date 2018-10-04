@@ -21,6 +21,8 @@
 #include "GolemDruckerPrager.h"
 #include "libmesh/utility.h"
 
+registerMooseObject("GolemApp", GolemDruckerPrager);
+
 template <>
 InputParameters
 validParams<GolemDruckerPrager>()

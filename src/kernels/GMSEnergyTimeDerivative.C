@@ -20,6 +20,8 @@
 
 #include "GMSEnergyTimeDerivative.h"
 
+registerMooseObject("GolemApp", GMSEnergyTimeDerivative);
+
 template <>
 InputParameters
 validParams<GMSEnergyTimeDerivative>()

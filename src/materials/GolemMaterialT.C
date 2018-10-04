@@ -20,6 +20,8 @@
 
 #include "GolemMaterialT.h"
 
+registerMooseObject("GolemApp", GolemMaterialT);
+
 template <>
 InputParameters
 validParams<GolemMaterialT>()

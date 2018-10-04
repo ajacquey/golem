@@ -29,6 +29,8 @@ Real H1_visc[21] = {
     1.26613e+00, 1.20573e-01, -2.81378e-01, -9.06851e-01, -7.72479e-01, -4.89837e-01, -2.57040e-01,
     1.61913e-01, 2.57399e-01, -3.25372e-02, 6.98452e-02,  8.72102e-03,  -4.35673e-03, -5.93264e-04};
 
+registerMooseObject("GolemApp", GolemFluidViscosityIAPWS);
+
 template <>
 InputParameters
 validParams<GolemFluidViscosityIAPWS>()

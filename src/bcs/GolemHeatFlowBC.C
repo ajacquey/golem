@@ -22,6 +22,8 @@
 #include "Function.h"
 #include "GolemScaling.h"
 
+registerMooseObject("GolemApp", GolemHeatFlowBC);
+
 template <>
 InputParameters
 validParams<GolemHeatFlowBC>()

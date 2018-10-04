@@ -36,6 +36,8 @@ int I_gibbs[34] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,  1,  1,  2,  2,  2,
 int J_gibbs[34] = {-2, -1, 0,  1, 2, 3,  4,  5,  -9, -7,  -1, 0,   1,   3,   -3,  0,   1,
                    3,  17, -4, 0, 6, -5, -2, 10, -8, -11, -6, -29, -31, -38, -39, -40, -41};
 
+registerMooseObject("GolemApp", GolemFluidDensityIAPWS);
+
 template <>
 InputParameters
 validParams<GolemFluidDensityIAPWS>()

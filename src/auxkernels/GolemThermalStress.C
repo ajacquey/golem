@@ -20,6 +20,8 @@
 
 #include "GolemThermalStress.h"
 
+registerMooseObject("GolemApp", GolemThermalStress);
+
 template <>
 InputParameters
 validParams<GolemThermalStress>()

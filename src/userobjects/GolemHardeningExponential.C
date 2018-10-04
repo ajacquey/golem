@@ -20,6 +20,8 @@
 
 #include "GolemHardeningExponential.h"
 
+registerMooseObject("GolemApp", GolemHardeningExponential);
+
 template <>
 InputParameters
 validParams<GolemHardeningExponential>()

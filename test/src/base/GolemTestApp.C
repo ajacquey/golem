@@ -14,30 +14,22 @@ validParams<GolemTestApp>()
 
 GolemTestApp::GolemTestApp(InputParameters parameters) : MooseApp(parameters)
 {
-  Moose::registerObjects(_factory);
-  GolemApp::registerObjectDepends(_factory);
-  GolemApp::registerObjects(_factory);
-
-  Moose::associateSyntax(_syntax, _action_factory);
-  GolemApp::associateSyntaxDepends(_syntax, _action_factory);
-  GolemApp::associateSyntax(_syntax, _action_factory);
-
-  bool use_test_objs = getParam<bool>("allow_test_objects");
-  if (use_test_objs)
-  {
-    GolemTestApp::registerObjects(_factory);
-    GolemTestApp::associateSyntax(_syntax, _action_factory);
-  }
+  GolemTestApp::registerAll(_factory, _action_factory, _syntax, getParam<bool>("allow_test_objects"));
 }
 
 GolemTestApp::~GolemTestApp() {}
 
-// External entry point for dynamic application loading
-extern "C" void
-GolemTestApp__registerApps()
+void
+GolemTestApp::registerAll(Factory & f, ActionFactory & af, Syntax & s, bool use_test_objs)
 {
-  GolemTestApp::registerApps();
+  GolemApp::registerAll(f, af, s);
+  if (use_test_objs)
+  {
+    Registry::registerObjectsTo(f, {"GolemTestApp"});
+    Registry::registerActionsTo(af, {"GolemTestApp"});
+  }
 }
+
 void
 GolemTestApp::registerApps()
 {
@@ -45,24 +37,23 @@ GolemTestApp::registerApps()
   registerApp(GolemTestApp);
 }
 
-// External entry point for dynamic object registration
-extern "C" void
-GolemTestApp__registerObjects(Factory & factory)
-{
-  GolemTestApp::registerObjects(factory);
-}
 void
 GolemTestApp::registerObjects(Factory & /*factory*/)
 {
 }
 
-// External entry point for dynamic syntax association
-extern "C" void
-GolemTestApp__associateSyntax(Syntax & syntax, ActionFactory & action_factory)
-{
-  GolemTestApp::associateSyntax(syntax, action_factory);
-}
 void
 GolemTestApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
 {
+}
+
+extern "C" void
+GolemTestApp__registerAll(Factory & f, ActionFactory & af, Syntax & s)
+{
+  GolemTestApp::registerAll(f, af, s);
+}
+extern "C" void
+GolemTestApp__registerApps()
+{
+  GolemTestApp::registerApps();
 }

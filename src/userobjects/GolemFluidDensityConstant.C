@@ -20,6 +20,8 @@
 
 #include "GolemFluidDensityConstant.h"
 
+registerMooseObject("GolemApp", GolemFluidDensityConstant);
+
 template <>
 InputParameters
 validParams<GolemFluidDensityConstant>()

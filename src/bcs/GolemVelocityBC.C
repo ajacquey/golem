@@ -20,6 +20,8 @@
 
 #include "GolemVelocityBC.h"
 
+registerMooseObject("GolemApp", GolemVelocityBC);
+
 template <>
 InputParameters
 validParams<GolemVelocityBC>()

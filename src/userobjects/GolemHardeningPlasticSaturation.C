@@ -21,6 +21,8 @@
 #include "GolemHardeningPlasticSaturation.h"
 #include "libmesh/utility.h"
 
+registerMooseObject("GolemApp", GolemHardeningPlasticSaturation);
+
 template <>
 InputParameters
 validParams<GolemHardeningPlasticSaturation>()

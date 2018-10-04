@@ -20,6 +20,8 @@
 
 #include "GolemKernelTimeH.h"
 
+registerMooseObject("GolemApp", GolemKernelTimeH);
+
 template <>
 InputParameters
 validParams<GolemKernelTimeH>()

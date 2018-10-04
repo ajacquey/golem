@@ -20,6 +20,8 @@
 
 #include "GolemFunctionReadFile.h"
 
+registerMooseObject("GolemApp", GolemFunctionReadFile);
+
 template <>
 InputParameters
 validParams<GolemFunctionReadFile>()

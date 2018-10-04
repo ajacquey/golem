@@ -21,6 +21,8 @@
 #include "GolemPermeabilityKC.h"
 #include "libmesh/utility.h"
 
+registerMooseObject("GolemApp", GolemPermeabilityKC);
+
 template <>
 InputParameters
 validParams<GolemPermeabilityKC>()

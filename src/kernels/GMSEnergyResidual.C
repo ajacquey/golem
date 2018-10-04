@@ -20,6 +20,8 @@
 
 #include "GMSEnergyResidual.h"
 
+registerMooseObject("GolemApp", GMSEnergyResidual);
+
 template <>
 InputParameters
 validParams<GMSEnergyResidual>()

@@ -23,6 +23,8 @@
 #include "FEProblem.h"
 #include "Conversion.h"
 
+registerMooseAction("GolemApp",GolemPressureAction, "add_bc");
+
 template <>
 InputParameters
 validParams<GolemPressureAction>()

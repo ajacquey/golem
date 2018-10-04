@@ -21,6 +21,8 @@
 #include "GolemKernelHPoroElastic.h"
 #include "MooseMesh.h"
 
+registerMooseObject("GolemApp", GolemKernelHPoroElastic);
+
 template <>
 InputParameters
 validParams<GolemKernelHPoroElastic>()

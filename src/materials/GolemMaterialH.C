@@ -23,6 +23,8 @@
 #include "MooseMesh.h"
 #include "libmesh/quadrature.h"
 
+registerMooseObject("GolemApp", GolemMaterialH);
+
 template <>
 InputParameters
 validParams<GolemMaterialH>()

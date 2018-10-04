@@ -20,6 +20,8 @@
 
 #include "GolemPermeabilityConstant.h"
 
+registerMooseObject("GolemApp", GolemPermeabilityConstant);
+
 template <>
 InputParameters
 validParams<GolemPermeabilityConstant>()

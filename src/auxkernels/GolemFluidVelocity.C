@@ -20,6 +20,8 @@
 
 #include "GolemFluidVelocity.h"
 
+registerMooseObject("GolemApp", GolemFluidVelocity);
+
 template <>
 InputParameters
 validParams<GolemFluidVelocity>()

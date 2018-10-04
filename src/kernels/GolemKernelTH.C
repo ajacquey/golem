@@ -28,6 +28,8 @@
 #include "MooseMesh.h"
 #include "MooseError.h"
 
+registerMooseObject("GolemApp", GolemKernelTH);
+
 template <>
 InputParameters
 validParams<GolemKernelTH>()

@@ -20,6 +20,8 @@
 
 #include "GolemEqvInelasticStrain.h"
 
+registerMooseObject("GolemApp", GolemEqvInelasticStrain);
+
 template <>
 InputParameters
 validParams<GolemEqvInelasticStrain>()

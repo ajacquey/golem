@@ -22,6 +22,8 @@
 #include "libmesh/utility.h"
 #include <math.h>
 
+registerMooseObject("GolemApp", GolemHardeningConstant);
+
 template <>
 InputParameters
 validParams<GolemHardeningConstant>()

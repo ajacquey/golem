@@ -20,6 +20,8 @@
 
 #include "GolemPorosityConstant.h"
 
+registerMooseObject("GolemApp", GolemPorosityConstant);
+
 template <>
 InputParameters
 validParams<GolemPorosityConstant>()
