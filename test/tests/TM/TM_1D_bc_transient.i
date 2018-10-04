@@ -192,6 +192,6 @@
   interval = 5
   execute_on = 'timestep_end'
   print_linear_residuals = true
-  print_perf_log = true
+  perf_graph = true
   exodus = true
 []

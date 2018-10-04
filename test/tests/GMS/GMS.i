@@ -101,7 +101,7 @@
 
 [Outputs]
   print_linear_residuals = true
-  print_perf_log = true
+  perf_graph = true
   [./out]
     type = Exodus
   [../]
