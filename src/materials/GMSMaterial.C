@@ -25,6 +25,8 @@
 #define KELVIN 272.15
 #define GIGAPA 1e9
 
+registerMooseObject("GolemApp", GMSMaterial);
+
 template <>
 InputParameters
 validParams<GMSMaterial>()

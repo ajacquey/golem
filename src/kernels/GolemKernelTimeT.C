@@ -22,6 +22,8 @@
 #include "Assembly.h"
 #include "libmesh/quadrature.h"
 
+registerMooseObject("GolemApp", GolemKernelTimeT);
+
 template <>
 InputParameters
 validParams<GolemKernelTimeT>()

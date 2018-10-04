@@ -21,6 +21,8 @@
 #include "GolemPermeabilityCubicLaw.h"
 #include "libmesh/utility.h"
 
+registerMooseObject("GolemApp", GolemPermeabilityCubicLaw);
+
 template <>
 InputParameters
 validParams<GolemPermeabilityCubicLaw>()

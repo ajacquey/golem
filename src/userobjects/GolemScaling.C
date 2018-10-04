@@ -21,6 +21,8 @@
 #include "GolemScaling.h"
 #include "MooseError.h"
 
+registerMooseObject("GolemApp", GolemScaling);
+
 template <>
 InputParameters
 validParams<GolemScaling>()

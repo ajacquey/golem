@@ -25,6 +25,8 @@
 #include "Function.h"
 #include "GolemH.h"
 
+registerMooseObject("GolemApp", GolemMaterialMElastic);
+
 template <>
 InputParameters
 validParams<GolemMaterialMElastic>()

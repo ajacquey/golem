@@ -21,6 +21,8 @@
 #include "GolemDarcyVelocity.h"
 #include "RankTwoTensor.h"
 
+registerMooseObject("GolemApp", GolemDarcyVelocity);
+
 template <>
 InputParameters
 validParams<GolemDarcyVelocity>()

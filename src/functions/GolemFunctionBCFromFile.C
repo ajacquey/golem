@@ -20,6 +20,8 @@
 
 #include "GolemFunctionBCFromFile.h"
 
+registerMooseObject("GolemApp", GolemFunctionBCFromFile);
+
 template <>
 InputParameters
 validParams<GolemFunctionBCFromFile>()

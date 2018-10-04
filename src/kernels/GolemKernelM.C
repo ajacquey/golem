@@ -25,6 +25,8 @@
 #include "GolemM.h"
 #include "libmesh/quadrature.h"
 
+registerMooseObject("GolemApp", GolemKernelM);
+
 template <>
 InputParameters
 validParams<GolemKernelM>()

@@ -20,6 +20,8 @@
 
 #include "GMSMassResidual.h"
 
+registerMooseObject("GolemApp", GMSMassResidual);
+
 template <>
 InputParameters
 validParams<GMSMassResidual>()

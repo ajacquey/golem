@@ -21,6 +21,8 @@
 #include "GolemKernelH.h"
 #include "libmesh/utility.h"
 
+registerMooseObject("GolemApp", GolemKernelH);
+
 template <>
 InputParameters
 validParams<GolemKernelH>()

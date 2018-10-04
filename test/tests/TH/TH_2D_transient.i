@@ -167,7 +167,7 @@
                              -snes_type -snes_linesearch_type
                              -snes_atol -snes_rtol -snes_max_it'
       petsc_options_value = 'fgmres
-                             1.0e-12 50
+                             1.0e-12 20
                              newtonls basic
                              1.0e-04 1.0e-12 25'
     [../]
@@ -196,6 +196,6 @@
 [Outputs]
   interval = 5
   print_linear_residuals = true
-  print_perf_log = true
+  perf_graph = true
   exodus = true
 []

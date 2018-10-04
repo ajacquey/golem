@@ -20,6 +20,8 @@
 
 #include "GolemSUPG.h"
 
+registerMooseObject("GolemApp", GolemSUPG);
+
 template <>
 InputParameters
 validParams<GolemSUPG>()

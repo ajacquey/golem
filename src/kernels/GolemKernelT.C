@@ -20,6 +20,8 @@
 
 #include "GolemKernelT.h"
 
+registerMooseObject("GolemApp", GolemKernelT);
+
 template <>
 InputParameters
 validParams<GolemKernelT>()

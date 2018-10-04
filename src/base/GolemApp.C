@@ -103,23 +103,11 @@ validParams<GolemApp>()
 
 GolemApp::GolemApp(InputParameters parameters) : MooseApp(parameters)
 {
-  Moose::registerObjects(_factory);
-  ModulesApp::registerObjects(_factory);
-  GolemApp::registerObjects(_factory);
-
-  Moose::associateSyntax(_syntax, _action_factory);
-  ModulesApp::associateSyntax(_syntax, _action_factory);
-  GolemApp::associateSyntax(_syntax, _action_factory);
+  GolemApp::registerAll(_factory, _action_factory, _syntax);
 }
 
 GolemApp::~GolemApp() {}
 
-// External entry point for dynamic application loading
-extern "C" void
-GolemApp__registerApps()
-{
-  GolemApp::registerApps();
-}
 void
 GolemApp::registerApps()
 {
@@ -127,19 +115,16 @@ GolemApp::registerApps()
 }
 
 void
-GolemApp::registerObjectDepends(Factory & /*factory*/)
+GolemApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)	
 {
+  Registry::registerObjectsTo(f, {"GolemApp"});
+  Registry::registerActionsTo(af, {"GolemApp"});
 }
 
-// External entry point for dynamic object registration
-extern "C" void
-GolemApp__registerObjects(Factory & factory)
-{
-  GolemApp::registerObjects(factory);
-}
 void
 GolemApp::registerObjects(Factory & factory)
 {
+  mooseDeprecated("use registerAll instead of registerObjects");
   // Materials
   registerMaterial(GMSMaterial);
   registerMaterial(GolemMaterialBase);
@@ -208,21 +193,17 @@ GolemApp::registerObjects(Factory & factory)
 }
 
 void
-GolemApp::associateSyntaxDepends(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
-{
-}
-
-// External entry point for dynamic syntax association
-extern "C" void
-GolemApp__associateSyntax(Syntax & syntax, ActionFactory & action_factory)
-{
-  GolemApp::associateSyntax(syntax, action_factory);
-}
-void
 GolemApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
 {
+  mooseDeprecated("use registerAll instead of associateSyntax");
   registerSyntax("EmptyAction", "BCs/GolemPressure");
   registerSyntax("GolemPressureAction", "BCs/GolemPressure/*");
 
   registerAction(GolemPressureAction, "add_bc");
+}
+
+extern "C" void
+GolemApp__registerAll(Factory & f, ActionFactory & af, Syntax & s)
+{
+  GolemApp::registerAll(f, af, s);
 }

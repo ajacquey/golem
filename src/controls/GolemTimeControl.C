@@ -20,6 +20,8 @@
 
 #include "GolemTimeControl.h"
 
+registerMooseObject("GolemApp", GolemTimeControl);
+
 template <>
 InputParameters
 validParams<GolemTimeControl>()

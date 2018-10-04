@@ -20,6 +20,8 @@
 
 #include "GolemStrain.h"
 
+registerMooseObject("GolemApp", GolemStrain);
+
 template <>
 InputParameters
 validParams<GolemStrain>()

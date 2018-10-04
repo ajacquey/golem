@@ -20,6 +20,8 @@
 
 #include "GolemConvectiveTHBC.h"
 
+registerMooseObject("GolemApp", GolemConvectiveTHBC);
+
 template <>
 InputParameters
 validParams<GolemConvectiveTHBC>()
