@@ -27,6 +27,8 @@ InputParameters
 validParams<GolemFunctionBCFromFile>()
 {
   InputParameters params = validParams<Function>();
+  params.addClassDescription(
+      "Applies boundary condition based on data from a file (csv/tab-separated).");
   params.addParam<std::string>("data_file", "File holding csv/tab-separated bc data.");
   params.addParam<bool>(
       "interpolate_data_in_time", false, "Linearly interpolating among the data in time?");

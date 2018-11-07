@@ -35,6 +35,8 @@ InputParameters
 validParams<GolemKernelTH>()
 {
   InputParameters params = validParams<Kernel>();
+  params.addClassDescription("Advective kernel for temperature based on either a conservative or "
+                             "non-conservative scheme.");
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure");
   params.addCoupledVar("displacements", "The displacement vector");
   params.addParam<bool>("is_conservative", false, "Is conservative?");

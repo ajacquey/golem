@@ -32,6 +32,7 @@ InputParameters
 validParams<GolemKernelM>()
 {
   InputParameters params = validParams<Kernel>();
+  params.addClassDescription("Kernel for conservation of momentum in terms of effective stress.");
   params.addRequiredParam<unsigned int>("component",
                                         "The direction this kernel acts onto (0=x, 1=y, 2=z).");
   params.addRequiredCoupledVar("displacements", "The displacement variables vector.");

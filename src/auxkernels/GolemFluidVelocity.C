@@ -27,6 +27,7 @@ InputParameters
 validParams<GolemFluidVelocity>()
 {
   InputParameters params = validParams<GolemDarcyVelocity>();
+  params.addClassDescription("AuxKernel to output the fluid velocity components.");
   return params;
 }
 

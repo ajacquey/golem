@@ -27,6 +27,7 @@ InputParameters
 validParams<GolemThermalStress>()
 {
   InputParameters params = validParams<AuxKernel>();
+  params.addClassDescription("AuxKernels to output the thermal stresses.");
   params.addRequiredCoupledVar("temperature", "The temperature");
   params.addRequiredRangeCheckedParam<unsigned int>(
       "index", "index >= 0 & index <= 2", "The index i of ij for the tensor to output (0, 1, 2).");

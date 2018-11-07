@@ -27,6 +27,8 @@ InputParameters
 validParams<GolemConvectiveTHBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
+  params.addClassDescription(
+      "Boundary condition for a zero-flux temperature when using conservative advection.");
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");
   return params;

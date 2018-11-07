@@ -28,6 +28,8 @@ InputParameters
 validParams<GolemKernelHPoroElastic>()
 {
   InputParameters params = validParams<Kernel>();
+  params.addClassDescription(
+      "Kernel for poroelastic effect (solid to fluid) in the pore pressure equation.");
   params.addRequiredCoupledVar("displacements", "The displacement variables vector.");
   return params;
 }

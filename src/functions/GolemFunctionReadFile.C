@@ -27,6 +27,7 @@ InputParameters
 validParams<GolemFunctionReadFile>()
 {
   InputParameters params = validParams<Function>();
+  params.addClassDescription("Function used to read date from a file (csv/tab/space-separated).");
   params.addRequiredParam<std::string>(
       "file", "File holding csv/tab/space-separated data. It does not consider ; as a delimiter");
   return params;

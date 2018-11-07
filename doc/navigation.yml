@@ -1,0 +1,18 @@
+Getting Started:
+  Installation - Mac OS: getting_started/macos.md
+  Installation - Ubuntu: getting_started/ubuntu.md
+  Running GOLEM: getting_started/running_golem.md
+Examples:
+  Test suite: examples/test_suite/index.md
+  Benchmarks: examples/benchmarks/index.md
+  Applications: examples/application/index.md
+Manuals:
+  Theory: manuals/theory/index.md
+  User: manuals/user/index.md
+Documentation:
+  Syntax: syntax/index.md
+  Source: source/index.md
+  Doc1: documentation/doc1/index.md
+  Doc2: documentation/doc2/index.md
+Help:
+  FAQ: help/faq.md

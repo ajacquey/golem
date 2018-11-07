@@ -27,6 +27,7 @@ InputParameters
 validParams<GolemEqvInelasticStrain>()
 {
   InputParameters params = validParams<AuxKernel>();
+  params.addClassDescription("AuxKernel to output the equivalent inelastic strain.");
   return params;
 }
 

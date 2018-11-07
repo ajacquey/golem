@@ -27,6 +27,8 @@ InputParameters
 validParams<GMSEnergyResidual>()
 {
   InputParameters params = validParams<Kernel>();
+  params.addClassDescription(
+      "Kernel for divergence of conductive heat flux (based of Fourier's law).");
   return params;
 }
 

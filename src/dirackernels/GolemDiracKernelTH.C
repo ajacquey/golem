@@ -29,6 +29,8 @@ InputParameters
 validParams<GolemDiracKernelTH>()
 {
   InputParameters params = validParams<DiracKernel>();
+  params.addClassDescription(
+      "This class is used to specify some injection/extraction source points for the hydraulics.");
   params.addParam<Point>("source_point", "The source point location (x, y, z).");
   params.addParam<MooseEnum>(
       "source_type", GolemDiracKernelTH::Type() = "injection", "The source type.");

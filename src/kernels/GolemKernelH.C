@@ -28,6 +28,7 @@ InputParameters
 validParams<GolemKernelH>()
 {
   InputParameters params = validParams<Kernel>();
+  params.addClassDescription("Kernel for divergence of the Darcy velocity.");
   params.addCoupledVar("temperature", "The temperature variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");
   params.addParam<bool>("has_boussinesq", false, "Has Boussinesq terms?");

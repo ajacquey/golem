@@ -1,0 +1,26 @@
+Content:
+    golem:
+        root_dir: doc/content
+    moose:
+        root_dir: ${MOOSE_DIR}/framework/doc/content
+        content:
+            - contrib/**
+            - css/**
+            - js/**
+
+Renderer:
+    type: MooseDocs.base.MaterializeRenderer
+    name: GOLEM
+    repo: https://github.com/ajacquey/Golem
+    navigation: !include doc/navigation.yml
+
+Extensions:
+    appsyntax:
+        type: MooseDocs.extensions.appsyntax
+        executable: ${ROOT_DIR}
+        includes:
+            - include
+        hide:
+            framework: !include ${MOOSE_DIR}/framework/doc/hidden.yml
+        remove:
+            framework: !include ${MOOSE_DIR}/framework/doc/remove.yml

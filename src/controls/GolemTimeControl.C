@@ -27,6 +27,8 @@ InputParameters
 validParams<GolemTimeControl>()
 {
   InputParameters params = validParams<Control>();
+  params.addClassDescription("This class allows the user to activate or deactivate some objects "
+                             "based on some time values.");
   params.addRequiredParam<FunctionName>("function", "The function to use.");
   params.addParam<std::vector<std::string>>(
       "enable_objects", std::vector<std::string>(), "Objects to enable.");

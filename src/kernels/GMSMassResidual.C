@@ -27,6 +27,7 @@ InputParameters
 validParams<GMSMassResidual>()
 {
   InputParameters params = validParams<Kernel>();
+  params.addClassDescription("Kernel for calculating the load.");
   return params;
 }
 

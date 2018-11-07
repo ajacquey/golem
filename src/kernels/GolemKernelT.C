@@ -27,6 +27,8 @@ InputParameters
 validParams<GolemKernelT>()
 {
   InputParameters params = validParams<Kernel>();
+  params.addClassDescription(
+      "Kernel for heat conduction, divergence of the heat flux based on Fourier's law");
   params.addCoupledVar("pore_pressure", "The pore pressure variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");
   return params;

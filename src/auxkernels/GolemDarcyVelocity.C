@@ -28,6 +28,7 @@ InputParameters
 validParams<GolemDarcyVelocity>()
 {
   InputParameters params = validParams<AuxKernel>();
+  params.addClassDescription("AuxKernel to output the Darcy velocity components.");
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure variable.");
   params.addRequiredParam<int>("component", "The darcy velocity component.");
   return params;

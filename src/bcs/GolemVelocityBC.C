@@ -27,6 +27,8 @@ InputParameters
 validParams<GolemVelocityBC>()
 {
   InputParameters params = validParams<PresetNodalBC>();
+  params.addClassDescription("Applies a constant velocity boundary condition in terms of "
+                             "displacement: $u = u_{old} + v  dt$");
   params.addRequiredParam<Real>("velocity", "Value of the velocity applied.");
   return params;
 }
