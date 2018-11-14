@@ -63,7 +63,7 @@ with $\overline{T}$ as the transform of $T(x,t)$, $s$ is the transformation para
 
 ## Input file
 
-Because the problem now is time dependent, the appropriate Kernel type **GolemKernelTimeT** has to be used for the time dependent temperature.
+Because the problem now is time dependent, the appropriate Kernel type **`[GolemKernelTimeT]`** has to be used for the time dependent temperature.
 
 ```
     [Kernels]

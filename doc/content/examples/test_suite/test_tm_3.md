@@ -1,4 +1,5 @@
 # Test TM 3
+
 ## Description
 
 An elastic cube deforms due to an instant temperature change
@@ -37,7 +38,7 @@ u_z(z) &=\, \alpha \,(T_1 - T_0)z
 
 ## Input file
 
-With the type **DirichletBC** the temperature on the front or top of the domain is given with -40°C.
+With the type **`[DirichletBC]`** the temperature on the front or top of the domain is given with -40°C.
 
 ```
     [BCs]
@@ -73,4 +74,3 @@ With the type **DirichletBC** the temperature on the front or top of the domain 
 !media media/examples/test_suite/TM3_plot.png
        caption=Thermomechanic deformation
        style=width:50%;
-

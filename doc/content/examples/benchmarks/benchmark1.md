@@ -6,7 +6,7 @@ Thermal and hydraulic processes - heat transport in a fracture.
 
 This example refers to the following publication: [cite:cacace2017]
 
-Given a homogenous and isotropic fracture fully saturated with water ($n=1$), groundwater flow is assumed to be unidirectional with a constant average velocity throughout the length of the flow field. The initial temperature is set to zero. At the time $t = 0$ a sudden increase of temperature is imposed at along the inlet boundary so that $T = T_0$. The increase itself can be described by the Heaviside function. With these assumptions an analytical solution to the temperature distribution is given by [cite:ogata1961]:
+Given a homogeneous and isotropic fracture fully saturated with water ($n=1$), groundwater flow is assumed to be unidirectional with a constant average velocity throughout the length of the flow field. The initial temperature is set to zero. At the time $t = 0$ a sudden increase of temperature is imposed along the inlet boundary so that $T = T_0$. The increase itself can be described by the Heaviside function. With these assumptions an analytical solution to the temperature distribution is given by [cite:ogata1961]:
 
 \begin{equation}
 T(x,t) = \frac{T_0}{2} erfc(\frac{x - v_x t}{\sqrt{4kt}}) + \frac{T_0}{2} exp(\frac{v_x x}{k}) erfc(\frac{x + v_x  t}{\sqrt{4kt}})
@@ -18,7 +18,7 @@ For the numerical solution a fracture length of $L = 100m$, discretized into 100
 \nabla p_f = 3.0 \cdot 10^{-7} ms^{-1}
 \end{equation}
 
-Material properties are listed in the table below.
+is defined. The material properties are listed in the table below.
 
 | Property name              |     Symbol    |                  Value | SI Unit             |
 |----------------------------|:-------------:|-----------------------:|---------------------|
@@ -30,12 +30,12 @@ Material properties are listed in the table below.
 
 ## Solution
 
-Given these parameters a constant fluid velocity of $v_x = 3.0 \cdot 10^{-7} \, ms^{-1}$ is obtained. Initial conditions for pressure and temperature were $p_f = 0.1 \, MPa$ and $T = 0 \degree C$. In this benchmark the evolution of the temperature field obtained by the numerical solution is compared with the analytical solution (given by the equations above). To compare the results, the temperature evolution according to analytical and numerical results  are plotted at four distinct points along the length of the fractured.
+Given these parameters, a constant fluid velocity of $v_x = 3.0 \cdot 10^{-7} \, ms^{-1}$ is obtained. Initial conditions for pressure and temperature were $p_f = 0.1 \, MPa$ and $T = 0 \degree C$. In this benchmark the evolution of the temperature field obtained by the numerical solution is compared with the analytical solution (given by the equations above). To compare the results, the temperature evolution according to analytical and numerical results  are plotted at four distinct points along the length of the fractured.
 
 !media media/examples/benchmarks/heat_transport_fracture_comparison.png
        caption=Comparison of numerical results (red curves) and analytical solutions (black circles) for heat transport in a fracture. The figure shows the temperature evolution at different positions along the fracture as a function of time.
        style=width:50%;
 
-It can be stated that in this case there is a generally good fit in terms of the temporal evolution of the advective front at all locations of the frature plane. The modelled thermal front moves slightly faster than the analytical solution predicts.
+It can be stated that in this case there is generally a good fit in terms of the temporal evolution of the advective front at all locations of the fracture plane. The modeled thermal front moves slightly faster than the analytical solution predicts.
 
 !bibtex bibliography

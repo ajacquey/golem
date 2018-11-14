@@ -1,5 +1,7 @@
 # Test M2
-##Description
+
+## Description
+
 An elastic plate undergoes simple shear
 
 The stress of a rectangular plate (10m by 10m) is investigated. The material of the plate has a Poisson's ratio of $v = 0.25$ and a Young's modulus of $E = 10,000\,MPa$. The material has a zero density so that gravity can be neglected. The load is applied with a prescribed displacement which covers the entire surface. Two time steps are investigated with increasing deformation.
@@ -60,7 +62,7 @@ with Hooke's law the associated stress is:
     []
 ```
 
-**`[AuxKernels]`** returns the strain and stress based on the displacement. The values are valid for the spaces in between the calculated displacement points. **type = RankTwoAux** defines the Kernel for a tensor and **rank_two_tensor = mechanical_strain** chooses the suitable tensor given by the material (in this case: **GolemMaterialMElastic**). Since the data on which this kernel is based is given by the material, the name is also given by the material and can not be changed (hard coded). The same is valid for the stress. The **index_i** and **index_j** define the position in the tensor (from 0 to 2) and therefore in which direction the strain and/or stress is supposed to be calculated (i = 0 and j = 1 equals the direction xy)
+**`[AuxKernels]`** returns the strain and stress based on the displacement. The values are valid for the spaces in between the calculated displacement points. **`[type = RankTwoAux]`** defines the Kernel for a tensor and **`[rank_two_tensor = mechanical_strain]`** chooses the suitable tensor given by the material (in this case: **`[GolemMaterialMElastic]`**). Since the data on which this kernel is based is given by the material, the name is also given by the material and can not be changed (hard coded). The same is valid for the stress. The **`[index_i]`** and **`[index_j]`** define the position in the tensor (from 0 to 2) and therefore in which direction the strain and/or stress is supposed to be calculated (i = 0 and j = 1 equals the direction xy)
 
 ```
     [AuxKernels]
@@ -81,7 +83,7 @@ with Hooke's law the associated stress is:
     []
 ```
 
-**`[Materials]`** defines the material properties as well as the calculation for the strain and stress. It returns the **rank_two_tensor** **stress** and **mechanical_strain**, which are used in the **`[AuxKernels]`**.
+**`[Materials]`** defines the material properties as well as the calculation for the strain and stress. It returns the **`[rank_two_tensor** **stress]`** and **`[mechanical_strain]`** which are used in the **`[AuxKernels]`**.
 
 ```
     [Materials]
@@ -97,7 +99,7 @@ with Hooke's law the associated stress is:
     []
 ```
 
-**`[UserObjects]`** defines the necessary porosity and fluid density and chooses the suitable types, in this case both porosity and density are constant. Both of this objects are needed in **`[Materials]`** as **porosity_uo** and **fluid_density**.
+**`[UserObjects]`** defines the necessary porosity and fluid density and chooses the suitable types, in this case both porosity and density are constant. Both of this objects are needed in **`[Materials]`** as **`[porosity_uo]`** and **`[fluid_density]`**.
 
 ```
     [UserObjects]
@@ -112,7 +114,6 @@ with Hooke's law the associated stress is:
 
 ## Analytical Plot
 
-  !media media/examples/test_suite/M2_plot.png 
+  !media media/examples/test_suite/M2_plot.png
          caption=Shear stress in beam over time
          style=width:50%;
-

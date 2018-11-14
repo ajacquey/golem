@@ -1,4 +1,5 @@
 #  Test T 1
+
 ## Description
 
 1D Steady-State Temperature distribution, boundary condition of 1st kind
@@ -23,7 +24,7 @@ T(x) = T_0 \frac{x}{L}
 
 The input file consists of a couple of individual blocks, which are opened with **`[block name]`** and closed with empty **`[]`**. Editable sub blocks are opened with **`[./name]`** and closed with **`[../]`** .
 
-**`[Mesh]`** gives all the information for the generation of the mesh. **type = GeneratedMesh** will generate a mesh with the given dimension and proportions. **nx**, **ny** and **nz** are the given amount of mesh elements in each direction. **xmin** and **xmax** defines from where to where the beam extends along the x-axis. The same applies to **ymin**, **ymax** and **zmin** and **zmax** in their respective directions.
+**`[Mesh]`** gives all the information for the generation of the mesh. **`[type = GeneratedMesh]`** will generate a mesh with the given dimension and proportions. **`[nx]`**, **`[ny]`** and **`[nz]`** are the given amount of mesh elements in each direction. **`[xmin]`** and **`[xmax]`** defines from where to where the beam extends along the x-axis. The same applies to **`[ymin]`**, **`[ymax]`** and **`[zmin]`** and **`[zmax]`** in their respective directions.
 
 ```
     [Mesh]
@@ -63,7 +64,7 @@ The input file consists of a couple of individual blocks, which are opened with 
     []
 ```
 
-**`[BSc]`** defines the boundary conditions. A new boundary condition is defined with **`[./T0_left]`**, again the name can be changed. The type defines the kind of boundary condition, in this case it is Dirichlet boundary condition or 1st kind. The variable refers to the defined variables from the **`[Variables]`** - Block. **boundary = left** will automatically find the left spot of the x-axis, so in this chase x = 0m, while **boundary = right** in the second boundary condition (**`[./T1_right]`**) will find the right end of the x-axis, here x = 100m. The value gives the value of the variable at the chosen boundary.
+**`[BSc]`** defines the boundary conditions. A new boundary condition is defined with **`[./T0_left]`**, again the name can be changed. The type defines the kind of boundary condition, in this case it is Dirichlet boundary condition or 1st kind. The variable refers to the defined variables from the **`[Variables]`** - Block. **`[boundary = left]`** will automatically find the left spot of the x-axis, so in this chase x = 0m, while **`[boundary = right]`** in the second boundary condition (**`[./T1_right]`**) will find the right end of the x-axis, here x = 100m. The value gives the value of the variable at the chosen boundary.
 
 ```
     [BCs]
@@ -82,7 +83,7 @@ The input file consists of a couple of individual blocks, which are opened with 
     []
 ```
 
-**`[Materials]`** defines the material of the beam. Even when no specific material properties are given some simple input properties have to be given in order for the input file to work. With **`[./thermal]`** a new material is created. With type a for a temperature simulation fitting code of Golum is chosen. **block = 0** is the first and only block of this simulation. The Initial conductivity of the fluid as well as the solid have to be given, here with 1.0, so that there will be no change of the simulation. **porosity_uo** refers to the porosity defined in the **`[UserObjekt]`** - Block. The **porosity_uo** has to be defined in the next block in order for the simulation to work.
+**`[Materials]`** defines the material of the beam. Even when no specific material properties are given some simple input properties have to be given in order for the input file to work. With **`[./thermal]`** a new material is created. With type a for a temperature simulation fitting code of Golum is chosen. **`[block = 0]`** is the first and only block of this simulation. The Initial conductivity of the fluid as well as the solid have to be given, here with 1.0, so that there will be no change of the simulation. **`[porosity_uo]`** refers to the porosity defined in the **`[UserObject]`** - Block. The **`[porosity_uo]`** has to be defined in the next block in order for the simulation to work.
 
 ```
     [Materials]
@@ -96,7 +97,7 @@ The input file consists of a couple of individual blocks, which are opened with 
     []
 ```
 
-**`[UserObjects]`** defines with **`[./porosity]`** a type of simulation for the porosity, in this case the **GolemPososityConstant**, which will in this simple example just return the input parameter given. However, it has to be defined in order to work.
+**`[UserObjects]`** defines with **`[./porosity]`** a type of simulation for the porosity, in this case the **`[GolemPososityConstant]`**, which will in this simple example just return the input parameter given. However, it has to be defined in order to work.
 
 ```
     [UserObjects]
@@ -129,7 +130,7 @@ The input file consists of a couple of individual blocks, which are opened with 
     []
 ```
 
-**`[Outputs]`** defines the kind of log and data output. With **print_linear_residuals = true**, ever linear equation will be printed. The **print_per_log** will return computing times and other information. **exodus = true** will create an exodus file with the suffix .e containing the result of the simulation, which can be opened in Paraview.
+**`[Outputs]`** defines the kind of log and data output. With **`[print_linear_residuals = true]`**, ever linear equation will be printed. The **`[print_per_log]`** will return computing times and other information. **`[exodus = true]`** will create an exodus file with the suffix .e containing the result of the simulation, which can be opened in Paraview.
 
 ```
     [Outputs]
@@ -144,4 +145,3 @@ The input file consists of a couple of individual blocks, which are opened with 
 !media media/examples/test_suite/T1_plot.png
        caption=Temperature distribution
        style=width:50%;
-

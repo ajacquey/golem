@@ -66,7 +66,7 @@ the solution for the displacement reads:
     []
 ```
 
-Since there is a combination of 1st and 2nd kind boundary conditions, both kinds are defined in the **`[BCs]`** part of the input file. So instead of just type **PresetBC** and **FunctionPresetBC** for boundary conditions 1st kind, there is also type **FunctionNeumannBC** for the linear increasing inlet as a boundary condition of 2nk kind for the pore pressure.
+Since there is a combination of 1st and 2nd kind boundary conditions, both kinds are defined in the **`[BCs]`** part of the input file. So instead of just type **`[PresetBC]`** and **`[FunctionPresetBC]`** for boundary conditions 1st kind, there is also type **`[FunctionNeumannBC]`** for the linear increasing inlet as a boundary condition of 2nk kind for the pore pressure.
 
 ```
     [BCs]

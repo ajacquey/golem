@@ -1,5 +1,7 @@
 # Test THM 1
+
 ## Description
+
 A permeable elastic cuboid deforms due to gravity, internal fluid pressure and instant temperature change
 
 A cuboid with a height of $H = 30\,m$ is investigated.
@@ -50,7 +52,7 @@ u_z(z) &= \frac{1+v}{1-v}\alpha (T_1 - T_0)z + \bigg( 1- \frac{2v^2}{1-v}\bigg) 
 \end{aligned}
 \end{equation}
 
-Since only the strain and stress in the vertical direction are required only those are defined in the input file, here in the **`[AuxKernels]`** for the z-direction with the **index_i** and **index_y** = 2
+Since only the strain and stress in the vertical direction are required only those are defined in the input file, here in the **`[AuxKernels]`** for the z-direction with the **`[index_i]`** and **`[index_y]`** = 2
 
 ```
     [AuxKernels]
@@ -71,7 +73,7 @@ Since only the strain and stress in the vertical direction are required only tho
     []
 ```
 
-The **`[BCs]`** defines the immediate temperature change in the beginning of the simulation as a **type = DirichletBC** which is located at the whole domain (**boundary = 'top bottom left right front back'**)
+The **`[BCs]`** defines the immediate temperature change in the beginning of the simulation as a **`[type = DirichletBC]`** which is located at the whole domain (**`[boundary = 'top bottom left right front back]`**).
 
 ```
     [BCs]
@@ -113,4 +115,3 @@ The **`[BCs]`** defines the immediate temperature change in the beginning of the
 !media media/examples/test_suite/THM1_plot.png
        caption=Displacement
        style=width:50%;
-

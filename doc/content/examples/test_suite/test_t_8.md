@@ -1,5 +1,7 @@
 # Test T 8
+
 ## Description
+
 Transient 2D temperature distribution, non-zero initial temperature, boundary conditions of 1st and 2nd kind
 
 The temperature distribution of a square plate with a side length of ($L = 100\,m$) is investigated. The plate has a thermal conductivity of $\lambda = 0.5787037\, W/(m \cdot K)$ and further properties comprise a heat capacity $c = 0.01\, J/(kg\cdot K)$ and a density of $\rho = 2,000kg/m^3$.
@@ -95,7 +97,7 @@ T(x,y,t) = T_0 \cdot T1(x,t) \cdot T2(y,t)
     []
 ```
 
-**`[Functions]`** loads a **data_file** called **IC_x.txt** and **IC_y.txt**, which contains the given boundary conditions above, with values of 1 and 0 for certain points in either the x or y direction of the plate.
+**`[Functions]`** loads a **`[data_file]`** called **`[IC_x.txt]`** and **`[IC_y.txt]`** which contains the given boundary conditions above, with values of 1 and 0 for certain points in either the x or y direction of the plate.
 
 IC_x.txt
 
@@ -115,7 +117,7 @@ IC_y.txt
     0 0 1 1 0 0
 ```
 
-However, the interpolation of $f(x)$ is done with the **PiecewiseMultilinear**, which will interpolate the values between 0 and 1.  The **CompositeFunction** then combines the functions.
+However, the interpolation of $f(x)$ is done with the **`[PiecewiseMultilinear]`** which will interpolate the values between 0 and 1.  The **`[CompositeFunction]`** then combines the functions.
 
 ```
     [Functions]
@@ -176,7 +178,6 @@ However, the interpolation of $f(x)$ is done with the **PiecewiseMultilinear**, 
        caption=Temperature distribution
        style=width:50%;
 
-!media media/examples/test_suite/T8_plot_0_02_days.png 
+!media media/examples/test_suite/T8_plot_0_02_days.png
        caption=2D Temperature distribution
        style=width:50%;
-

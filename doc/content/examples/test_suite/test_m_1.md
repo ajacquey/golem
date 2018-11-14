@@ -1,4 +1,5 @@
 # Test M 1
+
 ## Description
 
 An elastic beam undergoes axial load
@@ -59,7 +60,7 @@ u_z(z)&=& -v\frac{\sigma_0}{E}z.
     []
 ```
 
-**`[GlobalParams]`** defines within the input file, that it will give **'disp_x disp_y disp_z'** when ever **displacement** is written. Both the **Kernel** and the **Material** will ask for a displacement vector. Since it is already defined here, it does not need to be defined again in the block of the **Kernel** or the **Material**.
+**`[GlobalParams]`** defines within the input file, that it will give **`['disp_x disp_y disp_z']`** when ever **`[displacement]`** is written. Both the **`[Kernel]`** and the **`[Material]`** will ask for a displacement vector. Since it is already defined here, it does not need to be defined again in the block of the **`[Kernel]`** or the **`[Material]`**.
 
 ```
     [GlobalParams]
@@ -67,7 +68,7 @@ u_z(z)&=& -v\frac{\sigma_0}{E}z.
     []
 ```
 
-**`[Kernels]`** will call the **GolemKernelM** Kernel which can handle the deformation in all three directions. However, the Kernel needs to know which variable equals which direction of the displacement. This is done with the **component**. The order of the variables is fixed, meaning **component = 0** is always the displacement in the x-direction, **component = 1** is the y-direction and **component = 2** is the z-direction. While the name of the variables can be chosen the sequence of the components is fixed.
+**`[Kernels]`** will call the **`[GolemKernelM]`** Kernel which can handle the deformation in all three directions. However, the Kernel needs to know which variable equals which direction of the displacement. This is done with the **`[component]`** The order of the variables is fixed, meaning **`[component = 0]`** is always the displacement in the x-direction, **`[component = 1]`** is the y-direction and **`[component = 2]`** is the z-direction. While the name of the variables can be chosen the sequence of the components is fixed.
 
 ```
     [Kernels]
@@ -89,7 +90,7 @@ u_z(z)&=& -v\frac{\sigma_0}{E}z.
     []
 ```
 
-**`[BCs]`** defines the boundary conditions. In this case there three boundary conditions of the first kind, which are defined with **type = PresetBC** and one boundary condition of the 2nd kind with **type = NeumannBC** and a **value = 2.0e+06**, which equals the tensile stress $\sigma_0 = 2M\,Pa$ at the right end on the beam (**boundary = right**).
+**`[BCs]`** defines the boundary conditions. In this case there three boundary conditions of the first kind, which are defined with **`[type = PresetBC]`** and one boundary condition of the 2nd kind with **`[type = NeumannBC]`** and a **`[value = 2.0e+06]`** which equals the tensile stress $\sigma_0 = 2M\,Pa$ at the right end on the beam (**`[boundary = right]`**).
 
 ```
     [BCs]
@@ -120,7 +121,7 @@ u_z(z)&=& -v\frac{\sigma_0}{E}z.
     []
 ```
 
-**`[Materials]`** defines the necessary properties of the material as well as strain model which acts a basis for the calculation. In this case the **small_strain**:
+**`[Materials]`** defines the necessary properties of the material as well as strain model which acts a basis for the calculation. In this case the **`[small_strain]`**:
 \begin{equation}
 \epsilon_{ij} = \frac{1}{2} \bigl( \frac{\partial u_i}{\partial j} + \frac{\partial u_j}{\partial i}  \bigr)
 \end{equation}
@@ -155,6 +156,6 @@ The porosity and fluid density, which have to be defined are linked to the **`[U
 
 ## Analytical Plot
 
-!media media/examples/test_suite/M1_plot.png 
+!media media/examples/test_suite/M1_plot.png
        caption=Displacement in x direction
        style=width:50%;

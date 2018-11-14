@@ -1,5 +1,7 @@
 # Test TM 2
+
 ## Description
+
 An Elastic Square Deforms Due to an Instant Temperature Change
 
 A square with a side length of $L = 1\,m$ orientated in the x-y-plane is investigated.
@@ -70,4 +72,3 @@ Besides the dimension of the mesh the strain and stress of the individual direct
 !media media/examples/test_suite/TM2_plot.png
        caption=Thermomechanic deformation
        style=width:50%;
-

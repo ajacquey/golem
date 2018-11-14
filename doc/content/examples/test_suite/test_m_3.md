@@ -1,5 +1,6 @@
 # Test M 3
-##Description
+
+## Description
 
 An elastic cuboid undergoes load due to gravity
 
@@ -60,7 +61,7 @@ u_z(z) &= \frac{1}{E} \left(1- \frac{2v^2}{1-v}\right) \rho (-g) \left(Hz -\frac
 
 ## Input file
 
-**`[AuxKernels]`** takes the output of the **`[Materials]`** to calculate the stress and strain, this time in the zz direction. as a result the **index_i** and **index_j** are both 2.
+**`[AuxKernels]`** takes the output of the **`[Materials]`** to calculate the stress and strain, this time in the zz direction. as a result the **`[index_i]`** and **`[index_j]`** are both 2.
 
 ```
     [AuxKernels]
@@ -82,7 +83,7 @@ u_z(z) &= \frac{1}{E} \left(1- \frac{2v^2}{1-v}\right) \rho (-g) \left(Hz -\frac
 ```
 
 
-**`[Materials]`** defines besides the proportions of the material also the gravity. **has_gravity = true** activates the consideration of gravity while **gravity_acceleration** gives the value of the gravity.
+**`[Materials]`** defines besides the proportions of the material also the gravity. **`[has_gravity = true]`** activates the consideration of gravity while **`[gravity_acceleration]`** gives the value of the gravity.
 
 ```
     [Materials]
@@ -107,4 +108,3 @@ u_z(z) &= \frac{1}{E} \left(1- \frac{2v^2}{1-v}\right) \rho (-g) \left(Hz -\frac
 !media media/examples/test_suite/M3_plot.png
        caption=Vertical displacement
        style=width:50%;
-

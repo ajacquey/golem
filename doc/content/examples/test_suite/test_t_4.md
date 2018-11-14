@@ -1,5 +1,7 @@
 # Test T 4
+
 ## Description
+
 2D steady-state temperature distribution, boundary conditions of 1st and 2nd kind
 
 The temperature distribution of a plate with dimensions of 2 by 1 meter ($L = 1\,m$) is investigated. The thermal conductivity of the material is $1\,W/(m*K)$.
@@ -53,7 +55,7 @@ T(x, y) = \frac{T_0}{L}(x+2y)
 []
 ```
 
-**`[BCs]`** defines the boundary conditions and their corresponding types. **`[./qf_left]`** defines the heat flow from the left of the plate with a **NeumannBC** or 2nd kind. All the other boundary conditions are of 1st kind which results in a **type=FunctionPresetBC**.
+**`[BCs]`** defines the boundary conditions and their corresponding types. **`[./qf_left]`** defines the heat flow from the left of the plate with a **`[NeumannBC]`** or 2nd kind. All the other boundary conditions are of 1st kind which results in a **`[type=FunctionPresetBC]`**.
 
 ```
     [BCs]
@@ -86,7 +88,7 @@ T(x, y) = \frac{T_0}{L}(x+2y)
 
 ## Analytical Plot
 
-!media media/examples/test_suite/T4_plot.png 
+!media media/examples/test_suite/T4_plot.png
        caption=Temperature distribution
        style=width:50%;
 
@@ -94,5 +96,3 @@ T(x, y) = \frac{T_0}{L}(x+2y)
 !media media/examples/test_suite/T4_plot_2D.png
        caption=2D Temperature distribution
        style=width:50%;
-
-

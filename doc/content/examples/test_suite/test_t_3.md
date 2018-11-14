@@ -1,4 +1,5 @@
 # Test T 3
+
 ## Description
 
 2D steady-state temperature distribution, boundary conditions of 1st kind
@@ -28,7 +29,7 @@ T(x, y) = T_0 \frac{x}{L} \frac{y}{L}
 
 ## Input file
 
-**`[Mesh]`** generates a three-dimensional mesh with 50 elements in x and y direction over a length of 1 meter. **zmax = 0.02** is a thin layer regarding the z-direction since it is not a relevant direction for the test.
+**`[Mesh]`** generates a three-dimensional mesh with 50 elements in x and y direction over a length of 1 meter. **`[zmax = 0.02]`** is a thin layer regarding the z-direction since it is not a relevant direction for the test.
 
 ```
     [Mesh]
@@ -46,7 +47,7 @@ T(x, y) = T_0 \frac{x}{L} \frac{y}{L}
     []
 ```
 
-**`[Functions]`** generates two functions describing the temperature along the x and the y-axis. With **`[./T_right_func]`** a new function is defined. The type **ParsedFunction** only takes the variables x,y and z as well as time as an input. **value** defines the end value of the function. **vars** defines the fixed variables of the function, in this case **T0** and **L**, and **vals** then defines the actual values of the fixed variables.
+**`[Functions]`** generates two functions describing the temperature along the x and the y-axis. With **`[./T_right_func]`** a new function is defined. The type **`[ParsedFunction]`** only takes the variables x,y and z as well as time as an input. **`[value]`** defines the end value of the function. **`[vars]`** defines the fixed variables of the function, in this case **`[T0]`** and **`[L]`**, and **`[vals]`** then defines the actual values of the fixed variables.
 
 ```
     [Functions]
@@ -67,7 +68,7 @@ T(x, y) = T_0 \frac{x}{L} \frac{y}{L}
 
 ## Analytical Plot
 
-!media media/examples/test_suite/T3_plot.png 
+!media media/examples/test_suite/T3_plot.png
        caption=Temperature distribution
        style=width:50%;
 
@@ -75,4 +76,3 @@ T(x, y) = T_0 \frac{x}{L} \frac{y}{L}
 !media media/examples/test_suite/T3_plot_2D.png
        caption=2D Temperature distribution
        style=width:50%;
-

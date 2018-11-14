@@ -1,5 +1,7 @@
 # Test TH 1
+
 ## Description
+
 Transient 1D temperature distribution in moving fluid
 
 A beam with a length of $L = 10\,m$ is investigated.
@@ -71,7 +73,7 @@ $\overline{T}$ is the transform of $T$, $s$ is the transformation parameter and 
 
 ## Input file
 
-**`[GlobalParams]`** gives the temperature and pore pressure for the kernels. In this case the variables are named the same as the demanded variable by the kernels. However, these **GlobalParms** still have to be defined in order for the kernels to find the variables.
+**`[GlobalParams]`** gives the temperature and pore pressure for the kernels. In this case the variables are named the same as the demanded variable by the kernels. However, these **`[GlobalParms]`** still have to be defined in order for the kernels to find the variables.
 
 ```
     [GlobalParams]
@@ -80,7 +82,7 @@ $\overline{T}$ is the transform of $T$, $s$ is the transformation parameter and 
     []
 ```
 
-**`[AuxKernels]`** takes the defined variables from **`[AuxVariables]`** and assigns them to the correct component of the **GolemDarcyVelocity** kernel, so that the kernel knows which variable equals which direction.
+**`[AuxKernels]`** takes the defined variables from **`[AuxVariables]`** and assigns them to the correct component of the **`[GolemDarcyVelocity]`** kernel, so that the kernel knows which variable equals which direction.
 
 ```
     [AuxKernels]
@@ -102,7 +104,7 @@ $\overline{T}$ is the transform of $T$, $s$ is the transformation parameter and 
     []
 ```
 
-**`[Kernels]`** assigns to correct kernel to the calculation to each variable. Additionally, for the **GolemKernelTH** you can choose the type of calculation. Standard procedure should be **is_conservative = true** in which case no assumptions are made. However, if your simulation is (almost) steady state and convection is irrelevant or the simulation tends to be unstable you can switch the calculation to **is_conservative = false**.
+**`[Kernels]`** assigns to correct kernel to the calculation to each variable. Additionally, for the **`[GolemKernelTH]`** you can choose the type of calculation. Standard procedure should be **`[is_conservative = true]`** in which case no assumptions are made. However, if your simulation is (almost) steady state and convection is irrelevant or the simulation tends to be unstable you can switch the calculation to **`[is_conservative = false]`**.
 
 ```
     [Kernels]
@@ -127,4 +129,3 @@ $\overline{T}$ is the transform of $T$, $s$ is the transformation parameter and 
 !media media/examples/test_suite/TH1_plot.png
        caption=Temperature distribution
        style=width:50%;
-

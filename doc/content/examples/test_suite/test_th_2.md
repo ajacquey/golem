@@ -1,5 +1,7 @@
 # Test TH 2
+
 ## Description
+
 A transient 1D temperature distribution in a moving fluid
 
 A rectangle plate with the measurements `[0,2L]` by `[-0.75L, 0.75L]` with $L = 1 \ m$ is investigated. The plate consists of a permeable material with a permeability $k = 10^{-11}\,m^2 $ and a porosity of $\Phi = 0.1$. The fluid has a viscosity of $\mu = 1\,mPa \, s$ and is incompressible. Gravity is neglected. Density, heat capacity and thermal conductivity for both the fluid and the material of the beam (solid grain) are given below.

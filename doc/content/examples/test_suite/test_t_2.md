@@ -1,4 +1,5 @@
 # Test T 2
+
 ## Description
 
 1D Steady-State Temperature Distribution, Boundary Conditions of 1st and 2nd Kind
@@ -40,7 +41,7 @@ The temperature distribution is described by:
     []
 ```
 
-**`[BCs]`** contains two boundary conditions. The first boundary condition is a Dirichlet boundary condition or 1st kind. Thus, the type of boundary conditions is **PresetBC**. The second boundary condition, the heat flow, is a Neumann boundary condition or 2nd kind. As a result of this the right kind of boundary type is chosen with **NeumannBC**.
+**`[BCs]`** contains two boundary conditions. The first boundary condition is a Dirichlet boundary condition or 1st kind. Thus, the type of boundary conditions is **`[PresetBC]`**. The second boundary condition, the heat flow, is a Neumann boundary condition or 2nd kind. As a result of this the right kind of boundary type is chosen with **`[NeumannBC]`**.
 
 ```
     [BCs]
@@ -59,7 +60,7 @@ The temperature distribution is described by:
     []
 ```
 
-**`[Materials]`** defines two different materials with their individual thermal conductivity. First a new material is defined with **`[./thermal_left]`**, with a corresponding block number and an **inital_thermal_conductivity_solid** of a $100 W/(m*K)$. For each material there has to be a user defined porosity **porosity_uo**. The same applies to the second material **`[./thermal_right]`** with a conductivity of $300 W/(m*K)$.
+**`[Materials]`** defines two different materials with their individual thermal conductivity. First a new material is defined with **`[./thermal_left]`**, with a corresponding block number and an **`[inital_thermal_conductivity_solid]`** of a $100 W/(m*K)$. For each material there has to be a user defined porosity **`[porosity_uo]`**. The same applies to the second material **`[./thermal_right]`** with a conductivity of $300 W/(m*K)$.
 
 ```
     [Materials]
@@ -92,7 +93,6 @@ The temperature distribution is described by:
 
 ## Analytical Plot
 
-!media media/examples/test_suite/T2_plot.png 
+!media media/examples/test_suite/T2_plot.png
   caption=Temperature distribution
   style=width:50%;
-

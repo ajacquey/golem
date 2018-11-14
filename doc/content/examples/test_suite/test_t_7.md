@@ -1,5 +1,7 @@
 # Test T 7
-# Description
+
+## Description
+
 Transient 1D temperature distribution, non-zero initial temperature, boundary conditions of 1st and 2nd kind
 
 The temperature distribution of two long beams ($L = 100\,m$)is investigated. Both beams have a thermal conductivity of $\lambda = 0.5787037\, W/(m \cdot K)$, their heat capacity is $c = 0.01\, J/(kg\cdot K)$ and their density is $\rho = 2,000kg/m^3$.
@@ -75,7 +77,7 @@ T1(x,t) = \frac{1}{2} + \sum_{n=1}^\infty \text{cos} \frac{n\pi x}{L} \text{exp}
 ## (Check the time in the input file, end_time should be 8640 (0.1 days) instead of 7776 (0.09 days) seconds)
 
 **`[Mesh]`** loads a pregenerated mesh since it is not possible to generate a mesh with two individual beams with golem.
-The mesh has some predefined boundary IDs which are given new names with **boundary_name** so that instead of the boundary ID 0 or 1, left1 and left2 right can be used in the rest of the input file.
+The mesh has some predefined boundary IDs which are given new names with **`[boundary_name]`** so that instead of the boundary ID 0 or 1, left1 and left2 right can be used in the rest of the input file.
 
 ```
     [Mesh]
@@ -86,7 +88,7 @@ The mesh has some predefined boundary IDs which are given new names with **bound
     []
 ```
 
-**`[Functions]`** loads a **data_file** called **IC_x.txt**, which contains the given boundary conditions above, with values of 1 and 0 for certain points of the beam.
+**`[Functions]`** loads a **`[data_file]`** called **`[IC_x.txt]`** which contains the given boundary conditions above, with values of 1 and 0 for certain points of the beam.
 IC_x.text :
 
 ```
@@ -96,7 +98,7 @@ IC_x.text :
     0 0 1 1 0 0
 ```
 
-However, the interpolation of $f(x)$ is done with the **PiecewiseMultilinear**, which will interpolate the values between 0 and 1.
+However, the interpolation of $f(x)$ is done with the **`[PiecewiseMultilinear]`** which will interpolate the values between 0 and 1.
 
 ```
     [Functions]

@@ -1,7 +1,8 @@
 # Application 4
+
 ## Description
 
-This example refers to the following publication: Watanabe, Blöcher, Cacace Held and Kohl: Geoenergy Modeling 3, Enhanced Geothermal Systems, Springer Verlag, 2017.
+This example refers to the following publication: [cite:watanabe2017]
 
 In this example energy production through an enhanced geothermal energy system is simulated. The target horizon lies in a depth of about 4 km resulting in a reservoir pressure of $10 \, MPa$ and has a sandstone lithology with porosities of 10% and permeabilities of $10 \times 10^{-15} \,m^2$. The Sandstone is entirely saturated with fluid of a temperature of $150 \degree C$. The installed doublet system comprises two parallel hydraulic fractures in a distance of 200 m between each other and square geometries with 100 m side lengths with production and injection points lying in the middle of each fracture. The injection temperature is set to $70 \degree C$ while the production and injection rate is set to $3 \, L/s$. The whole model has a cubic geometry with a cube side length of 500 m (see figure below).
 
@@ -14,13 +15,13 @@ Listed in the table below there are further properties used for this simulation:
 |             | Property name         | Value                |SI Unit        |
 |-------------|-----------------------|----------------------|---------------|
 |Fracture     | Edge length           | $100$                | $m$           |
-|             | Mean aperture         | $ 1 \times 10^{-4} $ | $m$           |
+|             | Mean aperture         | $1 \times 10^{-4}$   | $m$           |
 |             | Permeability          | $8.3 \times 10^{-10}$| $m^2$         |
 |             | Porosity              | $1$                  | -             |
-|             | Storage               | $4 \times 10^{-10}$  | $Pa^{-1} $    |
-|Rock         | Permeability          | $10^{-15} $          | $m^2$         |
+|             | Storage               | $4 \times 10^{-10}$  | $Pa^{-1}$     |
+|Rock         | Permeability          | $10^{-15}$           | $m^2$         |
 |             | Porosity              | $0,01$               | -             |
-|             | Density               | $2600$               | $kg \, m^{3}$|
+|             | Density               | $2600$               | $kg \, m^{3}$ |
 |             | Specific heat capacity| $950$                | $kg/J/K$      |
 |             | Thermal conductivity  | $3.0$                | $W/m/K$       |
 |             | Storage               | $10^{-10}$           | $Pa^{-1}$     |
@@ -44,3 +45,5 @@ In the following graphic the fluid flow is illustrated using the stream line tra
 !media media/examples/benchmarks/results2_example3.png
        caption=Stream lines of the fluid flow after 60 years of simulation time. The colouring shows the temperature of the fluid along the stream lines.
        style=width:100%;
+
+!bibtex bibliography

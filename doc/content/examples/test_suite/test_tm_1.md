@@ -1,4 +1,5 @@
 # Test TM 1
+
 ## Description
 
 An elastic beam deforms due to an instant temperature change
@@ -41,7 +42,7 @@ u_z &= 0
 
 ## Input file
 
-Due to the setup the x-direction is free of stress and y and z-direction are free of strain. As a result only the strain (**mechanical_strain**) and stress of the remaining directions have to be calculated.
+Due to the setup the x-direction is free of stress and y and z-direction are free of strain. As a result only the strain **`[mechanical_strain]`**). and stress of the remaining directions have to be calculated.
 
 ```
     [AuxKernels]
@@ -68,7 +69,7 @@ Due to the setup the x-direction is free of stress and y and z-direction are fre
       [../]
 ```
 
-Since the temperature is 'fixed' this is set up in the **`[BCs]`** part of the input file with type **DirichletBC** for the left and the right boundary.
+Since the temperature is 'fixed' this is set up in the **`[BCs]`** part of the input file with type **`[DirichletBC]`**). for the left and the right boundary.
 
 ```
     [BCs]
@@ -122,4 +123,3 @@ The **`[Executioner]`** is set up so that only one time step is calculated, sinc
 !media media/examples/test_suite/TM1_plot.png
        caption=Thermomechanic deformation
        style=width:50%;
-

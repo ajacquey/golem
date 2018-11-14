@@ -1,6 +1,7 @@
 # Test HM 3
 
 ## Description
+
 Biot's 1D consolidation problem: Squeezing of a pressurized column causes the fluid to discharge from the domain
 
 A rectangle beam with the length of $L = 1\,m$ is investigated. The beam is made of a permeable material with a permeability $k = 10^{-10}\,m^2 $ and zero porosity. The fluid has a viscosity of $\mu = 1\,mPa\cdot s $. Gravity is neglected. The solid material has a Poisson's ratio $v = 0.2$ a Young's modulus $E = 30000\,Pa$ and a Biot number one.
@@ -73,7 +74,7 @@ The scaling option in the **`[Variables]`** is only a numerical option which hel
     []
 ```
 
-The fixed boundary condition or Dirichlet boundary condition has to be defined in the **`[BCs]`** part of the input file. Here the pore pressure is defined with type **DirichletBC** and assigned the value 0.
+The fixed boundary condition or Dirichlet boundary condition has to be defined in the **`[BCs]`** part of the input file. Here the pore pressure is defined with type **`[DirichletBC]`** and assigned the value 0.
 
 ```
     [BCs]
@@ -119,4 +120,3 @@ The fixed boundary condition or Dirichlet boundary condition has to be defined i
 !media media/examples/test_suite/HM3_stress_xx_plot.png
        caption=Stress xx
        style=width:50%;
-

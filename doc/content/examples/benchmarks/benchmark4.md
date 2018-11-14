@@ -12,13 +12,13 @@ In this example the synthetic model contains two intersecting planar faults embe
        caption=The domain contains two intersecting faults in a two-layered porous matrix. Three observation points are marked for later illustration of the results.
        style=width:50%;
 
-The model simulates infiltration of water from the southern border into the model domain and lets the inflowing water advect as a non-isothermal front fixed along the same boundary. As initial conditions, the pore pressure in the center point of the model (z=0) is set to $1.5 MPa$ and a hydrostatic pore pressure distribution is assumed for the rest of the model. The temperature distribution is set to be homogeneous at $60 \degree C$.
+The model simulates infiltration of water from the southern border into the model domain and lets the inflowing water advect as a non-isothermal front fixed along the same boundary. As initial conditions, the pore pressure in the center point of the model (z=0) is set to $1.5\,MPa$ and a hydrostatic pore pressure distribution is assumed for the rest of the model. The temperature distribution is set to be homogeneous at $60 \degree C$.
 
 !media media/examples/benchmarks/boundary_conditions.png
        caption=Boundary conditions of the problem: left the fixed pore pressure boundary on the southern and northern border. Right the fixed temperature distribution.
        style=width:100%;
 
-To impose a fluid flow in the model a pore pressure gradient of $\Delta p = 0.5 MPa$ is imposed by pore pressure boundary conditions on the southern and northern boundary. Across the southern boundary a linear distribution of temperature from $40 \degree C$ to $80 \degree C$ is applied. The fluid is considered incompressible.
+To impose a fluid flow in the model a pore pressure gradient of $\Delta p = 0.5\,MPa$ is imposed by pore pressure boundary conditions on the southern and northern boundary. Across the southern boundary a linear distribution of temperature from $40 \degree C$ to $80 \degree C$ is applied. The fluid is considered incompressible.
 The properties of the fluid, the faults and the two layers are listed below:
 
 |Property name             |SI Unit           | Layer 1             | Layer 2             | Fault 1             | Fault 2             |

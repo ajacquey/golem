@@ -1,5 +1,7 @@
-#Test T 5
+# Test T 5
+
 ## Description
+
 3D steady-state temperature distribution
 
 The temperature distribution of a cube with a side length of $L = 1\,m$ is investigated. The thermal conductivity of the material is $1\,W/(m*K)$.
@@ -141,6 +143,6 @@ T(x,y,z) = T_0(\frac{x}{L}+\frac{y}{L}+\frac{z}{L})
        caption=Temperature distribution
        style=width:50%;
 
-!media media/examples/test_suite/T5_plot_3D.png 
+!media media/examples/test_suite/T5_plot_3D.png
        caption=3D Temperature distribution
        style=width:50%;

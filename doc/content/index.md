@@ -13,21 +13,21 @@
 
 !row!
 !col! class=s12 m4 l4 icon=flash_on
-### First point class=center style=font-weight:200;
+### Powerful simulator class=center style=font-weight:200;
 
-GOLEM can do this amazing thing
+For both academic and economic applications, GOLEM is a powerful simulator for the assessment of the behaviour of geothermal reservoirs.
 !col-end!
 
 !col! class=s12 m4 l4 icon=group
-### Second point class=center style=font-weight:200;
+### Real Time Support class=center style=font-weight:200;
 
-GOLEM can also do this other amazing thing
+Updates are published frequently and plenty of support is available from the moose framework community on GitHub. GOLEM is easy to work with across Mac OS, Linux, and Windows.
 !col-end!
 
 !col! class=s12 m4 l4 icon=settings
 ### Modular Design class=center style=font-weight:200;
 
-Finally, GOLEM can even do that!
+Fully customizable for specific applications thanks to the open source code. Kernels as well as any other section can be edited to meet any needs.
 !col-end!
 !row-end!
 

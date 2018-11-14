@@ -1,5 +1,7 @@
 # Test T 6
+
 ## Discription
+
 Transient 1D temperature distribution, time dependent boundary conditions of 1st kind
 
 The temperature distribution of a beam from -L to L ($L = 50m$) with a thermal conductivity $\lambda = 0.5787037\, W/(m \cdot K)$, heat capacity $c = 0.01\, J/(kg\cdot K)$ and density $\rho = 2,500 \, kg/m^3$ is investigated. The temperature increases linearly with time $t$ ($T_1*t, \, T_1 = 2\, \degree C/d$) and is applied to the two ends of the beam with $t > 0$. The temperature is investigated after 0.25 days and 0.5 days.
@@ -28,7 +30,7 @@ T(x,t)& = T_1 \cdot t + \frac{T_1 \cdot (x^2 - L^2)}{2\chi} + \frac{16 \cdot T_1
 
 ## Input file
 
-**`[Mesh]`** generates a mesh with 200 elements (**nx = 200**) along the x-axis from -50 meter (**xmin = -50**) to 50 meters (**xmax = 50**).
+**`[Mesh]`** generates a mesh with 200 elements **`[nx = 200]`** along the x-axis from -50 meter **`[xmin = -50]`** to 50 meters **`[xmax = 50]`**.
 
 ```
     [Mesh]
@@ -46,7 +48,7 @@ T(x,t)& = T_1 \cdot t + \frac{T_1 \cdot (x^2 - L^2)}{2\chi} + \frac{16 \cdot T_1
     []
 ```
 
-**`[Variables]`** is now given an extra **initial_condition = 0.0** for the temperature.
+**`[Variables]`** is now given an extra **`[initial_condition = 0.0]`** for the temperature.
 
 ```
     [Variables]
@@ -58,7 +60,7 @@ T(x,t)& = T_1 \cdot t + \frac{T_1 \cdot (x^2 - L^2)}{2\chi} + \frac{16 \cdot T_1
     []
 ```
 
-**`[Kernels]`** loads two Kernels for the temperature. **GolemKernelT** is responsible for the right part of the governing equation, while *GolemKernelTimeT* handles the left part of the equation.
+**`[Kernels]`** loads two Kernels for the temperature. **`[GolemKernelT]`** is responsible for the right part of the governing equation, while *GolemKernelTimeT* handles the left part of the equation.
 
 ```
     [Kernels]
@@ -73,7 +75,7 @@ T(x,t)& = T_1 \cdot t + \frac{T_1 \cdot (x^2 - L^2)}{2\chi} + \frac{16 \cdot T_1
     []
 ```
 
-**`[Functions]`** describes the function for the linear increase of the temperature with **vals = '0.000023148'** being the increase of temperature in $\degree$ Celsius per second.
+**`[Functions]`** describes the function for the linear increase of the temperature with **`[vals = '0.000023148]`** being the increase of temperature in $\degree$ Celsius per second.
 
 ```
     [Functions]
@@ -86,7 +88,7 @@ T(x,t)& = T_1 \cdot t + \frac{T_1 \cdot (x^2 - L^2)}{2\chi} + \frac{16 \cdot T_1
     []
 ```
 
-**`[Materials]`** gives the thermal conductivity of the solid, which is $\lambda = 0.5787037\, W/(m*K)$ as well as the heat  capacity with $c = 0.01\, J/(kg\cdot K)$. Since the density is also given and has to be defined (**density_solid_initial = 2500**) there has to be a UserObject for the density, in this case **fluid_density_uo = fluid_density**, which is defined in the next block.
+**`[Materials]`** gives the thermal conductivity of the solid, which is $\lambda = 0.5787037\, W/(m*K)$ as well as the heat  capacity with $c = 0.01\, J/(kg\cdot K)$. Since the density is also given and has to be defined **`[density_solid_initial = 2500]`** there has to be a UserObject for the density, in this case **`[fluid_density_uo = fluid_density]`** which is defined in the next block.
 
 ```
     [Materials]
@@ -103,7 +105,7 @@ T(x,t)& = T_1 \cdot t + \frac{T_1 \cdot (x^2 - L^2)}{2\chi} + \frac{16 \cdot T_1
     []
 ```
 
-**`[UserObjects]`** defines the type of simulation for the different parameters. The density is defined with **type = GolemFluidDensityConstant**. The chosen names have to fit the names given in the materials.
+**`[UserObjects]`** defines the type of simulation for the different parameters. The density is defined with **`[type = GolemFluidDensityConstant]`** The chosen names have to fit the names given in the materials.
 
 ```
     [UserObjects]
@@ -116,7 +118,7 @@ T(x,t)& = T_1 \cdot t + \frac{T_1 \cdot (x^2 - L^2)}{2\chi} + \frac{16 \cdot T_1
     []
 ```
 
-**`[Executioner]`** is given a start (**start_time**) and end (**end_time**) for the simulation as well as a distance (**dt = 4320**) for the time steps of the simulation. While the chosen time step of 4320 seconds is a lot shorter than the demanded time steps of 0.25 days (or 21600 seconds) it is necessary to keep the simulation stable.
+**`[Executioner]`** is given a start **`[start_time]`** and end **`[end_time]`** for the simulation as well as a distance **`[dt = 4320]`** for the time steps of the simulation. While the chosen time step of 4320 seconds is a lot shorter than the demanded time steps of 0.25 days (or 21600 seconds) it is necessary to keep the simulation stable.
 
 ```
     [Executioner]

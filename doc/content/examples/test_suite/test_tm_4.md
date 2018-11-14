@@ -1,5 +1,7 @@
 # Test TM 4
+
 ## Description
+
 An elastic cuboid undergoes load due to gravity and instant temperature change
 
 A cuboid with a height of $H = 30\,m$ is investigated.
@@ -91,7 +93,7 @@ While normally even for 1D or 2D problems a 3D mesh is generated or loaded, the 
     []
 ```
 
-if an object or material is affected by gravity is adjusted in the **`[Materials]`** part of the input file. With **has_gravity** the gravitation will be recognized and with **gravity_acceleration** the actual value can be modified.
+if an object or material is affected by gravity is adjusted in the **`[Materials]`** part of the input file. With **`[has_gravity]`** the gravitation will be recognized and with **`[gravity_acceleration]`** the actual value can be modified.
 
 ```
     [Materials]
@@ -118,4 +120,3 @@ if an object or material is affected by gravity is adjusted in the **`[Materials
 !media media/examples/test_suite/TM4_plot.png
        caption= Thermomechanic deformation
        style=width:50%;
-
