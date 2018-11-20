@@ -34,7 +34,7 @@ template <>
 InputParameters
 validParams<GolemKernelTH>()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = validParams<TimeKernel>();
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure");
   params.addCoupledVar("displacements", "The displacement vector");
   params.addParam<bool>("is_conservative", false, "Is conservative?");
@@ -44,7 +44,7 @@ validParams<GolemKernelTH>()
 }
 
 GolemKernelTH::GolemKernelTH(const InputParameters & parameters)
-  : DerivativeMaterialInterface<Kernel>(parameters),
+  : DerivativeMaterialInterface<TimeKernel>(parameters),
     _is_conservative(getParam<bool>("is_conservative")),
     _has_lumped_mass_matrix(getParam<bool>("has_lumped_mass_matrix")),
     _has_SUPG_upwind(isParamValid("supg_uo") ? true : false),

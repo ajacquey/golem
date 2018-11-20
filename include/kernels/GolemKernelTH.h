@@ -21,7 +21,7 @@
 #ifndef GOLEMKERNELTH_H
 #define GOLEMKERNELTH_H
 
-#include "Kernel.h"
+#include "TimeKernel.h"
 #include "DerivativeMaterialInterface.h"
 #include "RankTwoTensor.h"
 
@@ -31,7 +31,7 @@ class RankTwoTensor;
 template <>
 InputParameters validParams<GolemKernelTH>();
 
-class GolemKernelTH : public DerivativeMaterialInterface<Kernel>
+class GolemKernelTH : public DerivativeMaterialInterface<TimeKernel>
 {
 public:
   GolemKernelTH(const InputParameters & parameters);
