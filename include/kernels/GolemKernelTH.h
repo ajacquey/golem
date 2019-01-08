@@ -26,7 +26,6 @@
 #include "RankTwoTensor.h"
 
 class GolemKernelTH;
-class RankTwoTensor;
 
 template <>
 InputParameters validParams<GolemKernelTH>();
