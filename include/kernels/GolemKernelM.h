@@ -27,8 +27,6 @@
 #include "RankFourTensor.h"
 
 class GolemKernelM;
-class RankTwoTensor;
-class RankFourTensor;
 
 template <>
 InputParameters validParams<GolemKernelM>();

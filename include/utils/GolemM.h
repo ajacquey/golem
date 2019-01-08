@@ -21,8 +21,6 @@
 #ifndef GOLEMM_H
 #define GOLEMM_H
 
-class RankFourTensor;
-
 namespace GolemM
 {
 
