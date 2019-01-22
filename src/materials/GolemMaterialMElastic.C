@@ -104,7 +104,14 @@ GolemMaterialMElastic::GolemMaterialMElastic(const InputParameters & parameters)
     _has_pf(isCoupled("pore_pressure")),
     _permeability_type(getParam<MooseEnum>("permeability_type")),
     _has_T(isCoupled("temperature")),
-    _has_T_source_sink(getParam<bool>("has_heat_source_sink"))
+    _has_T_source_sink(getParam<bool>("has_heat_source_sink")),
+    // SUPG parameters
+    _grad_pf(coupledGradient("pore_pressure")),
+    _SUPG_N(declareProperty<RealVectorValue>("SUPG_N")),
+    _SUPG_dtau_dgradpf(declareProperty<RankTwoTensor>("SUPG_dtau_dgradpf")),
+    _SUPG_dtau_dpf(declareProperty<RealVectorValue>("SUPG_dtau_dpf")),
+    _SUPG_dtau_dT(declareProperty<RealVectorValue>("SUPG_dtau_dT")),
+    _SUPG_dtau_dev(declareProperty<RealVectorValue>("SUPG_dtau_dev"))
 {
   if (_ndisp != _mesh.dimension())
     mooseError(
@@ -391,15 +398,7 @@ GolemMaterialMElastic::setPropertiesTHM()
   _dH_kernel_grav_dpf = &declareProperty<RealVectorValue>("dH_kernel_grav_dpf");
   _dH_kernel_grav_dT = &declareProperty<RealVectorValue>("dH_kernel_grav_dT");
   _dM_kernel_grav_dT = &declareProperty<RealVectorValue>("dM_kernel_grav_dT");
-  if (_has_SUPG_upwind)
-  {
-    _grad_pf = &coupledGradient("pore_pressure");
-    _SUPG_N = &declareProperty<RealVectorValue>("SUPG_N");
-    _SUPG_dtau_dgradpf = &declareProperty<RankTwoTensor>("SUPG_dtau_dgradpf");
-    _SUPG_dtau_dpf = &declareProperty<RealVectorValue>("SUPG_dtau_dpf");
-    _SUPG_dtau_dT = &declareProperty<RealVectorValue>("SUPG_dtau_dT");
-    _SUPG_dtau_dev = &declareProperty<RealVectorValue>("SUPG_dtau_dev");
-  }
+
   if (_has_lumped_mass_matrix)
   {
     if (!_fe_problem.isTransient())
@@ -553,12 +552,6 @@ GolemMaterialMElastic::computeQpFiniteStrain()
   R_incr(2, 0) += C3 * a[1];
   R_incr(2, 1) -= C3 * a[0];
   (*_rotation_increment)[_qp] = R_incr.transpose();
-
-  // (*_strain_increment)[_qp] = (*_total_strain_increment)[_qp];
-  // substractThermalEigenStrain((*_strain_increment)[_qp]);
-  // _mechanical_strain[_qp] = (*_mechanical_strain_old)[_qp] + (*_strain_increment)[_qp];
-  // _mechanical_strain[_qp] = (*_rotation_increment)[_qp] * _mechanical_strain[_qp] *
-  // (*_rotation_increment)[_qp].transpose();
 }
 
 void
@@ -606,9 +599,8 @@ GolemMaterialMElastic::GolemCrackClosure()
   {
     std::vector<Real> iso_const(2);
     // Bulk modulus
-    Real K = 1. / (1. / (*_K_end) +
-                   (1. / (*_K_i) - 1. / (*_K_end)) *
-                       std::exp((*_stress_old)[_qp].trace() / (3.0 * (*_p_hat))));
+    Real K = 1. / (1. / (*_K_end) + (1. / (*_K_i) - 1. / (*_K_end)) *
+                                        std::exp((*_stress_old)[_qp].trace() / (3.0 * (*_p_hat))));
     iso_const[0] = K - 2.0 / 3.0 * (*_G);
     iso_const[1] = (*_G);
     // Fill elasticity tensor
@@ -829,22 +821,20 @@ GolemMaterialMElastic::GolemKernelPropertiesDerivativesTHM()
   // SUPG
   if (_has_SUPG_upwind)
   {
-    RealVectorValue vel = -(*_H_kernel)[_qp] * ((*_grad_pf)[_qp] + (*_H_kernel_grav)[_qp]);
+    RealVectorValue vel = -(*_H_kernel)[_qp] * (_grad_pf[_qp] + (*_H_kernel_grav)[_qp]);
     RankTwoTensor dvel_dgradp = -(*_H_kernel)[_qp];
-    RealVectorValue dvel_dp =
-        -(*_dH_kernel_dpf)[_qp] * ((*_grad_pf)[_qp] + (*_H_kernel_grav)[_qp]) -
-        (*_H_kernel)[_qp] * (*_dH_kernel_grav_dpf)[_qp];
-    RealVectorValue dvel_dT = -(*_dH_kernel_dT)[_qp] * ((*_grad_pf)[_qp] + (*_H_kernel_grav)[_qp]) -
+    RealVectorValue dvel_dp = -(*_dH_kernel_dpf)[_qp] * (_grad_pf[_qp] + (*_H_kernel_grav)[_qp]) -
+                              (*_H_kernel)[_qp] * (*_dH_kernel_grav_dpf)[_qp];
+    RealVectorValue dvel_dT = -(*_dH_kernel_dT)[_qp] * (_grad_pf[_qp] + (*_H_kernel_grav)[_qp]) -
                               (*_H_kernel)[_qp] * (*_dH_kernel_grav_dT)[_qp];
-    RealVectorValue dvel_dev =
-        -(*_dH_kernel_dev)[_qp] * ((*_grad_pf)[_qp] + (*_H_kernel_grav)[_qp]);
+    RealVectorValue dvel_dev = -(*_dH_kernel_dev)[_qp] * (_grad_pf[_qp] + (*_H_kernel_grav)[_qp]);
     Real diff = (*_T_kernel_diff)[_qp] / (*_T_kernel_time)[_qp];
     Real tau = _supg_uo->tau(vel, diff, _dt, _current_elem);
-    (*_SUPG_N)[_qp] = tau * vel;
-    (*_SUPG_dtau_dgradpf)[_qp] = tau * dvel_dgradp;
-    (*_SUPG_dtau_dpf)[_qp] = tau * dvel_dp;
-    (*_SUPG_dtau_dT)[_qp] = tau * dvel_dT;
-    (*_SUPG_dtau_dev)[_qp] = tau * dvel_dev;
+    _SUPG_N[_qp] = tau * vel;
+    _SUPG_dtau_dgradpf[_qp] = tau * dvel_dgradp;
+    _SUPG_dtau_dpf[_qp] = tau * dvel_dp;
+    _SUPG_dtau_dT[_qp] = tau * dvel_dT;
+    _SUPG_dtau_dev[_qp] = tau * dvel_dev;
   }
 }
 

@@ -168,12 +168,14 @@ protected:
   MaterialProperty<RealVectorValue> * _dH_kernel_grav_dpf;
   MaterialProperty<RealVectorValue> * _dH_kernel_grav_dT;
   MaterialProperty<RealVectorValue> * _dM_kernel_grav_dT;
-  const VariableGradient * _grad_pf;
-  MaterialProperty<RealVectorValue> * _SUPG_N;
-  MaterialProperty<RankTwoTensor> * _SUPG_dtau_dgradpf;
-  MaterialProperty<RealVectorValue> * _SUPG_dtau_dpf;
-  MaterialProperty<RealVectorValue> * _SUPG_dtau_dT;
-  MaterialProperty<RealVectorValue> * _SUPG_dtau_dev;
+  // SUPG related material properties
+  const VariableGradient & _grad_pf;
+  MaterialProperty<RealVectorValue> & _SUPG_N;
+  MaterialProperty<RankTwoTensor> & _SUPG_dtau_dgradpf;
+  MaterialProperty<RealVectorValue> & _SUPG_dtau_dpf;
+  MaterialProperty<RealVectorValue> & _SUPG_dtau_dT;
+  MaterialProperty<RealVectorValue> & _SUPG_dtau_dev;
+  // nosal values related material properties --> for lumping the mass matrix
   MaterialProperty<unsigned int> * _node_number;
   MaterialProperty<Real> * _nodal_pf;
   MaterialProperty<Real> * _nodal_pf_old;
