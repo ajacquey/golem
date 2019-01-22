@@ -21,6 +21,7 @@
 #include "GolemH.h"
 #include "MooseError.h"
 #include "MooseEnum.h"
+#include "libmesh/vector_value.h"
 
 RankTwoTensor
 computeKernel(std::vector<Real> k0, MooseEnum dist, Real den, int dim)
