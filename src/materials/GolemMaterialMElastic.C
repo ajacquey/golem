@@ -178,26 +178,22 @@ GolemMaterialMElastic::setStrainModel()
 {
   if (_strain_model > 1) // incremental strain model
   {
-    _grad_disp_old = new std::vector<const VariableGradient *>;
-    (*_grad_disp_old).resize(3);
+    _grad_disp_old.resize(3);
     for (unsigned int i = _ndisp; i < 3; ++i)
-      (*_grad_disp_old)[i] = &_grad_zero;
+      _grad_disp_old[i] = &_grad_zero;
     for (unsigned int i = 0; i < _ndisp; ++i)
       if (_fe_problem.isTransient())
-        (*_grad_disp_old)[i] = &coupledGradientOld("displacements", i);
+        _grad_disp_old[i] = &coupledGradientOld("displacements", i);
       else
-        (*_grad_disp_old)[i] = &_grad_zero;
+        _grad_disp_old[i] = &_grad_zero;
     _mechanical_strain_old = &getMaterialPropertyOld<RankTwoTensor>("mechanical_strain");
-    _strain_increment = new std::vector<RankTwoTensor>;
-    (*_strain_increment).resize(_fe_problem.getMaxQps());
-    _total_strain_increment = new std::vector<RankTwoTensor>;
-    (*_total_strain_increment).resize(_fe_problem.getMaxQps());
+    _strain_increment.resize(_fe_problem.getMaxQps());
+    _total_strain_increment.resize(_fe_problem.getMaxQps());
     _stress_old = &getMaterialPropertyOld<RankTwoTensor>("stress");
     if (_strain_model > 2) // finite strain model
     {
       _current_elem_volume = &_assembly.elemVolume();
-      _Fhat = new std::vector<RankTwoTensor>;
-      (*_Fhat).resize(_fe_problem.getMaxQps());
+      _Fhat.resize(_fe_problem.getMaxQps());
       _deformation_gradient = &declareProperty<RankTwoTensor>("deformation_gradient");
       _deformation_gradient_old = &getMaterialPropertyOld<RankTwoTensor>("deformation_gradient");
       _rotation_increment = &declareProperty<RankTwoTensor>("rotation_increment");
@@ -241,18 +237,14 @@ GolemMaterialMElastic::setElasticModuli()
   {
     if (_strain_model < 2)
       mooseError("Use an incremental strain model for crack closure model.\n");
-    _K_i = new Real;
-    (*_K_i) = iso_const[0] + 2. / 3. * iso_const[1];
-    _K_end = new Real;
-    (*_K_end) = getParam<Real>("end_bulk_modulus");
-    _G = new Real;
-    (*_G) = iso_const[1];
-    _p_hat = new Real;
-    (*_p_hat) = getParam<Real>("closure_pressure");
+    _K_i = iso_const[0] + 2. / 3. * iso_const[1];
+    _K_end = getParam<Real>("end_bulk_modulus");
+    _G = iso_const[1];
+    _p_hat = getParam<Real>("closure_pressure");
     if (_has_scaled_properties)
     {
-      (*_K_end) *= _scaling_uo->_s_compressibility;
-      (*_p_hat) /= _scaling_uo->_s_stress;
+      _K_end *= _scaling_uo->_s_compressibility;
+      _p_hat /= _scaling_uo->_s_stress;
     }
   }
 }
@@ -459,11 +451,10 @@ GolemMaterialMElastic::computeStrain()
       for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
       {
         RankTwoTensor A((*_grad_disp[0])[_qp], (*_grad_disp[1])[_qp], (*_grad_disp[2])[_qp]);
-        RankTwoTensor Fbar((*(*_grad_disp_old)[0])[_qp],
-                           (*(*_grad_disp_old)[1])[_qp],
-                           (*(*_grad_disp_old)[2])[_qp]);
+        RankTwoTensor Fbar(
+            (*_grad_disp_old[0])[_qp], (*_grad_disp_old[1])[_qp], (*_grad_disp_old[2])[_qp]);
         A -= Fbar;
-        (*_total_strain_increment)[_qp] = 0.5 * (A + A.transpose());
+        _total_strain_increment[_qp] = 0.5 * (A + A.transpose());
         //  (*_strain_increment)[_qp] = (*_total_strain_increment)[_qp];
         //  substractThermalEigenStrain((*_strain_increment)[_qp]);
         //  _mechanical_strain[_qp] = (*_mechanical_strain_old)[_qp] + (*_strain_increment)[_qp];
@@ -475,19 +466,18 @@ GolemMaterialMElastic::computeStrain()
       for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
       {
         RankTwoTensor A((*_grad_disp[0])[_qp], (*_grad_disp[1])[_qp], (*_grad_disp[2])[_qp]);
-        RankTwoTensor Fbar((*(*_grad_disp_old)[0])[_qp],
-                           (*(*_grad_disp_old)[1])[_qp],
-                           (*(*_grad_disp_old)[2])[_qp]);
+        RankTwoTensor Fbar(
+            (*_grad_disp_old[0])[_qp], (*_grad_disp_old[1])[_qp], (*_grad_disp_old[2])[_qp]);
         (*_deformation_gradient)[_qp] = A;
         (*_deformation_gradient)[_qp].addIa(1.0);
         A -= Fbar;
         Fbar.addIa(1.0);
-        (*_Fhat)[_qp] = A * Fbar.inverse();
-        (*_Fhat)[_qp].addIa(1.0);
+        _Fhat[_qp] = A * Fbar.inverse();
+        _Fhat[_qp].addIa(1.0);
         if (_volumetric_locking_correction)
         {
           // Calculate average _Fhat for volumetric locking correction
-          ave_Fhat += (*_Fhat)[_qp] * _JxW[_qp] * _coord[_qp];
+          ave_Fhat += _Fhat[_qp] * _JxW[_qp] * _coord[_qp];
 
           // Average deformation gradient
           ave_dfgrd_det += (*_deformation_gradient)[_qp].det() * _JxW[_qp] * _coord[_qp];
@@ -505,7 +495,7 @@ GolemMaterialMElastic::computeStrain()
         if (_volumetric_locking_correction)
         {
           // Finalize volumetric locking correction
-          (*_Fhat)[_qp] *= std::cbrt(ave_Fhat.det() / (*_Fhat)[_qp].det());
+          _Fhat[_qp] *= std::cbrt(ave_Fhat.det() / _Fhat[_qp].det());
           (*_deformation_gradient)[_qp] *=
               std::cbrt(ave_dfgrd_det / (*_deformation_gradient)[_qp].det());
         }
@@ -518,11 +508,11 @@ GolemMaterialMElastic::computeStrain()
 void
 GolemMaterialMElastic::computeQpFiniteStrain()
 {
-  RankTwoTensor invFhat((*_Fhat)[_qp].inverse());
+  RankTwoTensor invFhat(_Fhat[_qp].inverse());
   RankTwoTensor A(RankTwoTensor::initIdentity);
   A -= invFhat;
   RankTwoTensor Cinv_I = A * A.transpose() - A - A.transpose();
-  (*_total_strain_increment)[_qp] = -Cinv_I * 0.5 + Cinv_I * Cinv_I * 0.25;
+  _total_strain_increment[_qp] = -Cinv_I * 0.5 + Cinv_I * Cinv_I * 0.25;
   const Real a[3] = {
       invFhat(1, 2) - invFhat(2, 1), invFhat(2, 0) - invFhat(0, 2), invFhat(0, 1) - invFhat(1, 0)};
   Real q = (a[0] * a[0] + a[1] * a[1] + a[2] * a[2]) / 4.0;
@@ -599,10 +589,10 @@ GolemMaterialMElastic::GolemCrackClosure()
   {
     std::vector<Real> iso_const(2);
     // Bulk modulus
-    Real K = 1. / (1. / (*_K_end) + (1. / (*_K_i) - 1. / (*_K_end)) *
-                                        std::exp((*_stress_old)[_qp].trace() / (3.0 * (*_p_hat))));
-    iso_const[0] = K - 2.0 / 3.0 * (*_G);
-    iso_const[1] = (*_G);
+    Real K = 1. / (1. / _K_end + (1. / _K_i - 1. / _K_end) *
+                                     std::exp((*_stress_old)[_qp].trace() / (3.0 * _p_hat)));
+    iso_const[0] = K - 2.0 / 3.0 * _G;
+    iso_const[1] = _G;
     // Fill elasticity tensor
     _Cijkl[_qp].fillFromInputVector(iso_const, RankFourTensor::symmetric_isotropic);
   }
@@ -619,7 +609,7 @@ GolemMaterialMElastic::GolemMatPropertiesHM()
   // Biot coefficient
   (*_biot)[_qp] = 1.0 - (_Cijkl[_qp](0, 0, 1, 1) + 2.0 / 3.0 * _Cijkl[_qp](0, 1, 0, 1)) / _Ks;
   // Porosity
-  Real dev = (_fe_problem.isTransient()) * (*_total_strain_increment)[_qp].trace();
+  Real dev = (_fe_problem.isTransient()) * _total_strain_increment[_qp].trace();
   Real dpf = 0.0;
   if (_fe_problem.isTransient())
     dpf = (*_pf)[_qp] - (*_pf_old)[_qp];
@@ -647,7 +637,7 @@ GolemMaterialMElastic::GolemKernelPropertiesHM()
   if (_current_elem->dim() < _mesh.dimension())
     (*_H_kernel)[_qp].rotate(_rotation_matrix);
   (*_H_kernel_grav)[_qp] = -_fluid_density[_qp] * _gravity;
-  (*_vol_strain_rate)[_qp] = (*_total_strain_increment)[_qp].trace() / _dt;
+  (*_vol_strain_rate)[_qp] = _total_strain_increment[_qp].trace() / _dt;
 }
 
 void
@@ -742,7 +732,7 @@ GolemMaterialMElastic::GolemMatPropertiesTHM()
   // Biot coefficient
   (*_biot)[_qp] = 1.0 - (_Cijkl[_qp](0, 0, 1, 1) + 2.0 / 3.0 * _Cijkl[_qp](0, 1, 0, 1)) / _Ks;
   // Porosity
-  Real dev = (_fe_problem.isTransient()) * (*_total_strain_increment)[_qp].trace();
+  Real dev = (_fe_problem.isTransient()) * _total_strain_increment[_qp].trace();
   (*_dphi_dev)[_qp] = _porosity_uo->computedPorositydev(_porosity_old[_qp], (*_biot)[_qp]);
   (*_dphi_dpf)[_qp] = _porosity_uo->computedPorositydpf(_porosity_old[_qp], (*_biot)[_qp], _Ks);
   (*_dphi_dT)[_qp] =
@@ -878,9 +868,9 @@ GolemMaterialMElastic::GolemSubstractEigenStrain()
 {
   if (_strain_model > 1)
   {
-    (*_strain_increment)[_qp] = (*_total_strain_increment)[_qp];
-    substractThermalEigenStrain((*_strain_increment)[_qp]);
-    _mechanical_strain[_qp] = (*_mechanical_strain_old)[_qp] + (*_strain_increment)[_qp];
+    _strain_increment[_qp] = _total_strain_increment[_qp];
+    substractThermalEigenStrain(_strain_increment[_qp]);
+    _mechanical_strain[_qp] = (*_mechanical_strain_old)[_qp] + _strain_increment[_qp];
     if (_strain_model > 2)
       _mechanical_strain[_qp] = (*_rotation_increment)[_qp] * _mechanical_strain[_qp] *
                                 (*_rotation_increment)[_qp].transpose();
@@ -909,12 +899,12 @@ GolemMaterialMElastic::GolemStress()
       _stress[_qp] = _Cijkl[_qp] * _mechanical_strain[_qp];
       break;
     case 2:
-      _stress[_qp] = (*_stress_old)[_qp] + _Cijkl[_qp] * (*_strain_increment)[_qp];
+      _stress[_qp] = (*_stress_old)[_qp] + _Cijkl[_qp] * _strain_increment[_qp];
       break;
     case 3:
       RankTwoTensor intermediate_stress =
           (*_stress_old)[_qp] +
-          _Cijkl[_qp] * (*_strain_increment)[_qp]; // Calculate stress in intermediate configruation
+          _Cijkl[_qp] * _strain_increment[_qp]; // Calculate stress in intermediate configruation
       _stress[_qp] = (*_rotation_increment)[_qp] * intermediate_stress *
                      (*_rotation_increment)[_qp].transpose();
       break;
