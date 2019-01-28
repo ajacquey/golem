@@ -86,22 +86,22 @@ protected:
   const MaterialProperty<Real> & _porosity_old;
   // SetPropertiesM
   // SetStrainModel
-  std::vector<const VariableGradient *> * _grad_disp_old;
+  std::vector<const VariableGradient *> _grad_disp_old;
   const MaterialProperty<RankTwoTensor> * _mechanical_strain_old;
-  std::vector<RankTwoTensor> * _strain_increment;
-  std::vector<RankTwoTensor> * _total_strain_increment;
+  std::vector<RankTwoTensor> _strain_increment;
+  std::vector<RankTwoTensor> _total_strain_increment;
   const MaterialProperty<RankTwoTensor> * _stress_old;
   const Real * _current_elem_volume;
-  std::vector<RankTwoTensor> * _Fhat;
+  std::vector<RankTwoTensor> _Fhat;
   MaterialProperty<RankTwoTensor> * _deformation_gradient;
   const MaterialProperty<RankTwoTensor> * _deformation_gradient_old;
   MaterialProperty<RankTwoTensor> * _rotation_increment;
   // setElasticModuli
   bool _crack_closure_set;
-  Real * _K_i;
-  Real * _K_end;
-  Real * _G;
-  Real * _p_hat;
+  Real _K_i;
+  Real _K_end;
+  Real _G;
+  Real _p_hat;
   // SetBackgroundStress
   std::vector<Function *> _background_stress;
   // ============================ HM properties ================================

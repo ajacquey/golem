@@ -88,7 +88,7 @@ GolemMaterialMInelastic::GolemStress()
 
   if (_num_models == 0)
   {
-    _stress[_qp] = (*_stress_old)[_qp] + _Cijkl[_qp] * (*_strain_increment)[_qp];
+    _stress[_qp] = (*_stress_old)[_qp] + _Cijkl[_qp] * _strain_increment[_qp];
     _M_jacobian[_qp] = _Cijkl[_qp];
   }
   else if (_num_models == 1)
@@ -140,7 +140,7 @@ GolemMaterialMInelastic::updateQpStress(RankTwoTensor & combined_inelastic_strai
     {
       _models[i_mod]->setQp(_qp);
 
-      elastic_strain_increment = (*_strain_increment)[_qp];
+      elastic_strain_increment = _strain_increment[_qp];
 
       for (unsigned j_mod = 0; j_mod < _num_models; ++j_mod)
         if (i_mod != j_mod)
@@ -193,7 +193,7 @@ void
 GolemMaterialMInelastic::updateQpStressSingleModel(
     RankTwoTensor & combined_inelastic_strain_increment)
 {
-  RankTwoTensor elastic_strain_increment = (*_strain_increment)[_qp];
+  RankTwoTensor elastic_strain_increment = _strain_increment[_qp];
   _models[0]->setQp(_qp);
 
   _stress[_qp] = (*_stress_old)[_qp] + _Cijkl[_qp] * elastic_strain_increment;
