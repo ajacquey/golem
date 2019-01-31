@@ -9,7 +9,6 @@
 []
 
 [GlobalParams]
-  displacements = 'disp_x disp_y disp_z'
   pore_pressure = pore_pressure
   temperature = temperature
   strain_model = incr_small_strain
@@ -63,31 +62,37 @@
   [./KernelH]
     type = GolemKernelH
     variable = pore_pressure
+    displacements = 'disp_x disp_y disp_z'
   [../]
   [./KernelT]
     type = GolemKernelT
     variable = temperature
+    displacements = 'disp_x disp_y disp_z'
   [../]
   [./KernelTH]
     type = GolemKernelTH
     variable = temperature
+    displacements = 'disp_x disp_y disp_z'
   [../]
   [./KernelM_x]
     type = GolemKernelM
     variable = disp_x
     component = 0
+    displacements = 'disp_x disp_y disp_z'
     block = 'u1 u2'
   [../]
   [./KernelM_y]
     type = GolemKernelM
     variable = disp_y
     component = 1
+    displacements = 'disp_x disp_y disp_z'
     block = 'u1 u2'
   [../]
   [./KernelM_z]
     type = GolemKernelM
     variable = disp_z
     component = 2
+    displacements = 'disp_x disp_y disp_z'
     block = 'u1 u2'
   [../]
 []
@@ -276,6 +281,7 @@
 [Materials]
   [./unit_granite]
     type = GolemMaterialMElastic
+    displacements = 'disp_x disp_y disp_z'
     block = 'u1 u2'
     porosity_initial = 0.005
     poisson_ratio = 0.2
@@ -287,6 +293,7 @@
   [../]
   [./major_faults]
     type = GolemMaterialMElastic
+    displacements = 'disp_x disp_y disp_z'
     block = 'f1 f2'
     material_type = frac
     poisson_ratio = 0.2
