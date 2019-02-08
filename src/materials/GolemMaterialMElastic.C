@@ -397,14 +397,14 @@ GolemMaterialMElastic::setPropertiesTHM()
       mooseError("_has_lumped_mass_matrix is set to ",
                  _has_lumped_mass_matrix,
                  " but simulation is Steady State!");
-    _nodal_pf_var = &coupledNodalValue("pore_pressure");
-    _nodal_temp_var = &coupledNodalValue("temperature");
+    _nodal_pf_var = &coupledDofValues("pore_pressure");
+    _nodal_temp_var = &coupledDofValues("temperature");
     _node_number = &declareProperty<unsigned int>("node_number");
     _nodal_pf = &declareProperty<Real>("nodal_pf");
     _nodal_temp = &declareProperty<Real>("nodal_temp");
-    _nodal_temp_var_old = &coupledNodalValueOld("temperature");
+    _nodal_temp_var_old = &coupledDofValuesOld("temperature");
     _nodal_temp_old = &declareProperty<Real>("nodal_temp_old");
-    _nodal_pf_var_old = &coupledNodalValueOld("pore_pressure");
+    _nodal_pf_var_old = &coupledDofValuesOld("pore_pressure");
     _nodal_pf_old = &declareProperty<Real>("nodal_pf_old");
   }
 }

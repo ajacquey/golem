@@ -112,16 +112,16 @@ GolemMaterialTH::GolemMaterialTH(const InputParameters & parameters)
     // Set the mapping from qps to nodes
     _node_number = &declareProperty<unsigned int>("node_number");
     // Pressure nodal
-    _nodal_pf_var = &coupledNodalValue("pore_pressure");
+    _nodal_pf_var = &coupledDofValues("pore_pressure");
     _nodal_pf = &declareProperty<Real>("nodal_pf");
     if (_has_boussinesq)
     {
-      _nodal_pf_var_old = &coupledNodalValueOld("pore_pressure");
+      _nodal_pf_var_old = &coupledDofValuesOld("pore_pressure");
       _nodal_pf_old = &declareProperty<Real>("nodal_pf_old");
     }
     // Temperature nodal
-    _nodal_temp_var = &coupledNodalValue("temperature");
-    _nodal_temp_var_old = &coupledNodalValueOld("temperature");
+    _nodal_temp_var = &coupledDofValues("temperature");
+    _nodal_temp_var_old = &coupledDofValuesOld("temperature");
     _nodal_temp = &declareProperty<Real>("nodal_temp");
     _nodal_temp_old = &declareProperty<Real>("nodal_temp_old");
   }
