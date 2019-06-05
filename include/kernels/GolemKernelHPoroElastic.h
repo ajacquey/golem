@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMKERNELHPOROELASTIC_H
-#define GOLEMKERNELHPOROELASTIC_H
+#pragma once
 
 #include "Kernel.h"
 
@@ -43,5 +42,3 @@ protected:
   const MaterialProperty<Real> & _biot;
   const MaterialProperty<Real> & _vol_strain_rate;
 };
-
-#endif // GOLEMKERNELHPOROELASTIC_H

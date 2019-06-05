@@ -41,7 +41,7 @@ GolemFunctionReadFile::GolemFunctionReadFile(const InputParameters & parameters)
 }
 
 Real
-GolemFunctionReadFile::value(Real t, const Point & /*pt*/)
+GolemFunctionReadFile::value(Real t, const Point & /*pt*/) const
 {
   Real value = 0.0;   // default value to return
   bool found = false; // flag for console outprinting

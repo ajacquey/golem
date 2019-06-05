@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMSCALING_H
-#define GOLEMSCALING_H
+#pragma once
 
 #include "GeneralUserObject.h"
 
@@ -60,5 +59,3 @@ public:
   // Material parameters - M
   Real _s_expansivity; // 1 / temperature
 };
-
-#endif // GOLEMSCALING_H

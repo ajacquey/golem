@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMFLUIDDENSITYCONSTANT_H
-#define GOLEMFLUIDDENSITYCONSTANT_H
+#pragma once
 
 #include "GolemFluidDensity.h"
 
@@ -36,5 +35,3 @@ public:
   Real computedDensitydT(Real, Real, Real) const;
   Real computedDensitydp(Real, Real) const;
 };
-
-#endif // GOLEMFLUIDDENSITYCONSTANT_H

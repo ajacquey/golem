@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMTHERMALSTRESS_H
-#define GOLEMTHERMALSTRESS_H
+#pragma once
 
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
@@ -41,5 +40,3 @@ protected:
   const unsigned int _i;
   const MaterialProperty<RankTwoTensor> & _TM_jacobian;
 };
-
-#endif // GOLEMTHERMALSTRESS_H

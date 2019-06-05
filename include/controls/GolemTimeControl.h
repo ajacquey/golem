@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMTIMECONTROL_H
-#define GOLEMTIMECONTROL_H
+#pragma once
 
 #include "Control.h"
 #include "Function.h"
@@ -38,11 +37,9 @@ public:
 
 protected:
   void initialSetup() override;
-  Function & _function;
+  const Function & _function;
 
 private:
   const std::vector<std::string> & _enable;
   const std::vector<std::string> & _disable;
 };
-
-#endif // GOLEMTIMECONTROL_H

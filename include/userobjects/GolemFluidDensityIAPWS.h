@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMFLUIDDENSITYIAPWS_H
-#define GOLEMFLUIDDENSITYIAPWS_H
+#pragma once
 
 #include "GolemFluidDensity.h"
 
@@ -38,5 +37,3 @@ public:
 
   bool _has_kelvin;
 };
-
-#endif // GOLEMFLUIDDENSITYIAPWS_H

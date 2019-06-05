@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMKERNELH_H
-#define GOLEMKERNELH_H
+#pragma once
 
 #include "Kernel.h"
 #include "DerivativeMaterialInterface.h"
@@ -63,4 +62,3 @@ private:
   unsigned int _ndisp;
   std::vector<unsigned int> _disp_var;
 };
-#endif // GOLEMKERNELH_H

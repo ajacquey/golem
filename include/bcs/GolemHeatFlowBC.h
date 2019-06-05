@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMHEATFLOWBC_H
-#define GOLEMHEATFLOWBC_H
+#pragma once
 
 #include "NeumannBC.h"
 
@@ -38,11 +37,9 @@ public:
 protected:
   virtual Real computeQpResidual();
   bool _has_scaled_properties;
-  Function * _function;
+  const Function * _function;
 
 private:
   const GolemScaling * _scaling_uo;
   Real _scaled_value;
 };
-
-#endif // GOLEMHEATFLOWBC_H

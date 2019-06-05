@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMM_H
-#define GOLEMM_H
+#pragma once
 
 namespace GolemM
 {
@@ -52,5 +51,3 @@ Real getIsotropicBulkModulus(const RankFourTensor & elasticity_tensor);
  */
 Real getIsotropicYoungsModulus(const RankFourTensor & elasticity_tensor);
 }
-
-#endif // GOLEMM_H

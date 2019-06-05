@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMFUNCTIONBCFROMFILE_H
-#define GOLEMFUNCTIONBCFROMFILE_H
+#pragma once
 
 #include "Function.h"
 #include "GolemSetBCFromFile.h"
@@ -35,7 +34,7 @@ class GolemFunctionBCFromFile : public Function
 public:
   GolemFunctionBCFromFile(const InputParameters & parameters);
   virtual ~GolemFunctionBCFromFile();
-  virtual Real value(Real t, const Point & pt) override;
+  virtual Real value(Real t, const Point & p) const override;
 
 protected:
   GolemSetBCFromFile * _set_bc;
@@ -52,8 +51,6 @@ private:
   bool parseNextLineReals(std::ifstream & ifs, std::vector<Real> & myvec);
   bool parseNextLineStrings(std::ifstream & ifs, std::vector<std::string> & myvec);
   void fillMatrixBC(ColumnMajorMatrix & px, ColumnMajorMatrix & py, ColumnMajorMatrix & pz);
-  Real constant_value(Real t, const Point & pt);
-  Real interpolated_value(Real t, const Point & pt);
+  Real constant_value(Real t, const Point & pt) const;
+  Real interpolated_value(Real t, const Point & pt) const;
 };
-
-#endif // GOLEMFUNCTIONBCFROMFILE_H

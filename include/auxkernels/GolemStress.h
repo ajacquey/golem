@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMSTRESS_H
-#define GOLEMSTRESS_H
+#pragma once
 
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
@@ -42,5 +41,3 @@ private:
   const unsigned int _i;
   const unsigned int _j;
 };
-
-#endif // GOLEMSTRESS_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPRESSUREACTION_H
-#define GOLEMPRESSUREACTION_H
+#pragma once
 
 #include "Action.h"
 
@@ -39,5 +38,3 @@ protected:
   std::vector<std::vector<AuxVariableName>> _save_in_vars;
   std::vector<bool> _has_save_in_vars;
 };
-
-#endif // GOLEMPRESSUREACTION_H

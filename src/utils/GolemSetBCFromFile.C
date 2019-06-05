@@ -79,7 +79,7 @@ GolemSetBCFromFile::sampleTime(Real t, Real xcoord, Real ycoord)
 {
   mooseAssert(_time_frames.size() > 0, "Sampling an empty GolemSetBCFromFile.");
   int posi;
-  int posj;
+
   bool found = false;
   if (t <= _time_frames[0])
     return find_value(0, xcoord, ycoord);

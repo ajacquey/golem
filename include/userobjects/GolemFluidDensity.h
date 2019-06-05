@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMFLUIDDENSITY_H
-#define GOLEMFLUIDDENSITY_H
+#pragma once
 
 #include "GeneralUserObject.h"
 #include "GolemScaling.h"
@@ -44,5 +43,3 @@ protected:
   bool _has_scaled_properties;
   const GolemScaling * _scaling_uo;
 };
-
-#endif // GOLEMFLUIDDENSITY_H

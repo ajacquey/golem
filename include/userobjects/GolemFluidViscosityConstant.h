@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMFLUIDVISCOSITYCONSTANT_H
-#define GOLEMFLUIDVISCOSITYCONSTANT_H
+#pragma once
 
 #include "GolemFluidViscosity.h"
 
@@ -36,5 +35,3 @@ public:
   Real computedViscositydT(Real, Real, Real, Real) const;
   Real computedViscositydp(Real, Real, Real) const;
 };
-
-#endif // GOLEMFLUIDVISCOSITYCONSTANT_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMHARDENINGPLASTICSATURATION_H
-#define GOLEMHARDENINGPLASTICSATURATION_H
+#pragma once
 
 #include "GolemHardeningModel.h"
 
@@ -41,5 +40,3 @@ private:
   Real _val_res;
   Real _intnl_lim;
 };
-
-#endif // GOLEMHARDENINGPLASTICSATURATION_H

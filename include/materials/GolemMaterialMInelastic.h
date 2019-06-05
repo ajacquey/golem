@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMMATERIALMINELASTIC_H
-#define GOLEMMATERIALMINELASTIC_H
+#pragma once
 
 #include "GolemMaterialMElastic.h"
 
@@ -54,5 +53,3 @@ protected:
   const enum class TangentOperatorEnum { elastic, nonlinear } _tangent_operator_type;
   const unsigned _num_models;
 };
-
-#endif // GOLEMMATERIALMINELASTIC_H

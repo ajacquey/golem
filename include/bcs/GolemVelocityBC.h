@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMVELOCITYBC_H
-#define GOLEMVELOCITYBC_H
+#pragma once
 
 #include "PresetNodalBC.h"
 
@@ -39,5 +38,3 @@ protected:
   const VariableValue & _u_old;
   const Real & _velocity;
 };
-
-#endif // GOLEMVELOCITYBC_H

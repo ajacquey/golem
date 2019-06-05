@@ -18,12 +18,9 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMH_H
-#define GOLEMH_H
+#pragma once
 
 #include "MooseTypes.h"
 #include "RankTwoTensor.h"
 
 RankTwoTensor computeKernel(std::vector<Real>, MooseEnum, Real, int dim);
-
-#endif // GOLEMH_H

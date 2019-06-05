@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPRESSUREBC_H
-#define GOLEMPRESSUREBC_H
+#pragma once
 
 #include "NeumannBC.h"
 
@@ -40,11 +39,9 @@ protected:
   virtual Real computeQpJacobian();
   bool _has_scaled_properties;
   const int _component;
-  Function * _function;
+  const Function * _function;
 
 private:
   const GolemScaling * _scaling_uo;
   Real _scaled_value;
 };
-
-#endif // GOLEMPRESSUREBC_H

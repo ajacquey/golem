@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMFLUIDVELOCITY_H
-#define GOLEMFLUIDVELOCITY_H
+#pragma once
 
 #include "GolemDarcyVelocity.h"
 
@@ -37,5 +36,3 @@ protected:
   virtual Real computeValue();
   const MaterialProperty<Real> & _porosity;
 };
-
-#endif // GOLEMDARCYVELOCITY_H

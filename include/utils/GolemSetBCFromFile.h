@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMSETBCFROMFILE_H
-#define GOLEMSETBCFROMFILE_H
+#pragma once
 
 #include "MooseTypes.h"
 #include "ColumnMajorMatrix.h"
@@ -52,5 +51,3 @@ private:
   void errorCheck();
   Real find_value(int posi, Real xcoord, Real ycoord);
 };
-
-#endif // GOLEMSETBCFROMFILE_H

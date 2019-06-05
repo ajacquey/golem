@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMMATERIALH_H
-#define GOLEMMATERIALH_H
+#pragma once
 
 #include "GolemMaterialBase.h"
 #include "RankTwoTensor.h"
@@ -55,5 +54,3 @@ protected:
   MaterialProperty<Real> * _dH_kernel_time_dev;
   MaterialProperty<Real> * _dH_kernel_time_dpf;
 };
-
-#endif // GOLEMMATERIALH_H

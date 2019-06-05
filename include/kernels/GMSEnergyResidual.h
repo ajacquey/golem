@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GMSENERGYRESIDUAL_H
-#define GMSENERGYRESIDUAL_H
+#pragma once
 
 #include "Kernel.h"
 
@@ -43,5 +42,3 @@ protected:
   const MaterialProperty<Real> & _bulk_density;
   const MaterialProperty<Real> & _scale_factor;
 };
-
-#endif // GMSENERGYRESIDUAL_H

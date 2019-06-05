@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMMATERIALBASE_H
-#define GOLEMMATERIALBASE_H
+#pragma once
 
 #include "Material.h"
 #include "RankTwoTensor.h"
@@ -55,7 +54,7 @@ protected:
   bool _has_gravity;
   Real _g;
   Real _scaling_factor0;
-  Function * _function_scaling;
+  const Function * _function_scaling;
   Real _alpha_T_f;
   Real _alpha_T_s;
   const GolemFluidDensity * _fluid_density_uo;
@@ -71,5 +70,3 @@ protected:
   RealVectorValue _gravity;
   RankTwoTensor _rotation_matrix;
 };
-
-#endif // GOLEMMATERIALBASE_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GMSMASSRESIDUAL_H
-#define GMSMASSRESIDUAL_H
+#pragma once
 
 #include "Kernel.h"
 
@@ -40,5 +39,3 @@ protected:
   const MaterialProperty<Real> & _bulk_density;
   const MaterialProperty<RealVectorValue> & _gravity;
 };
-
-#endif // GMSMASSRESIDUAL_H

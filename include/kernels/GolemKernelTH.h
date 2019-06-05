@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMKERNELTH_H
-#define GOLEMKERNELTH_H
+#pragma once
 
 #include "TimeKernel.h"
 #include "DerivativeMaterialInterface.h"
@@ -78,5 +77,3 @@ private:
   unsigned int _ndisp;
   std::vector<unsigned int> _disp_var;
 };
-
-#endif // GOLEMKERNELTH_H

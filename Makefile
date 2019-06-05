@@ -3,7 +3,7 @@
 ###############################################################################
 #
 # Optional Environment variables
-# MOOSE_DIR        - Root directory of the MOOSE project 
+# MOOSE_DIR        - Root directory of the MOOSE project
 #
 ###############################################################################
 # Use the MOOSE submodule if it exists and MOOSE_DIR is not set
@@ -38,7 +38,6 @@ RICHARDS            := no
 SOLID_MECHANICS     := no
 STOCHASTIC_TOOLS    := no
 TENSOR_MECHANICS    := no
-WATER_STEAM_EOS     := no
 XFEM                := no
 POROUS_FLOW         := no
 
@@ -49,7 +48,7 @@ include $(MOOSE_DIR)/modules/modules.mk
 APPLICATION_DIR    := $(CURDIR)
 APPLICATION_NAME   := golem
 BUILD_EXEC         := yes
-DEP_APPS           := $(shell $(FRAMEWORK_DIR)/scripts/find_dep_apps.py $(APPLICATION_NAME))
+GEN_REVISION       := no
 include            $(FRAMEWORK_DIR)/app.mk
 
 ###############################################################################

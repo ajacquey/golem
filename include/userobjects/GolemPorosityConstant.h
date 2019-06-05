@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPOROSITYCONSTANT_H
-#define GOLEMPOROSITYCONSTANT_H
+#pragma once
 
 #include "GolemPorosity.h"
 
@@ -37,5 +36,3 @@ public:
   Real computedPorositydpf(Real, Real, Real) const;
   Real computedPorositydT(Real, Real, Real, Real) const;
 };
-
-#endif // GOLEMPOROSITYCONSTANT_H

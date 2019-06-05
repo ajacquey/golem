@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMKERNELTIMEH_H
-#define GOLEMKERNELTIMEH_H
+#pragma once
 
 #include "TimeDerivative.h"
 #include "DerivativeMaterialInterface.h"
@@ -58,5 +57,3 @@ private:
   std::vector<unsigned int> _disp_var;
   // unsigned int _brine_var;
 };
-
-#endif // GOLEMKERNELTIMEH_H

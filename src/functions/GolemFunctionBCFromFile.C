@@ -67,7 +67,7 @@ GolemFunctionBCFromFile::~GolemFunctionBCFromFile()
 }
 
 Real
-GolemFunctionBCFromFile::value(Real t, const Point & p)
+GolemFunctionBCFromFile::value(Real t, const Point & p) const
 {
   if (!_has_interpol_in_space)
     return constant_value(t, p);
@@ -75,7 +75,7 @@ GolemFunctionBCFromFile::value(Real t, const Point & p)
 }
 
 Real
-GolemFunctionBCFromFile::interpolated_value(Real t, const Point & p)
+GolemFunctionBCFromFile::interpolated_value(Real t, const Point & p) const
 {
   if (_has_interpol_in_time)
     return _interpolate_bc->sampleTime(t, p(0), p(1));
@@ -83,7 +83,7 @@ GolemFunctionBCFromFile::interpolated_value(Real t, const Point & p)
 }
 
 Real
-GolemFunctionBCFromFile::constant_value(Real t, const Point & p)
+GolemFunctionBCFromFile::constant_value(Real t, const Point & p) const
 {
   if (_has_interpol_in_time)
     return _set_bc->sampleTime(t, p(0), p(1));

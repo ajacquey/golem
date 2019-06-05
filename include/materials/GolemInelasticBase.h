@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMINELASTICBASE_H
-#define GOLEMINELASTICBASE_H
+#pragma once
 
 #include "Conversion.h"
 #include "GolemMaterialMElastic.h"
@@ -46,5 +45,3 @@ public:
 protected:
   const std::string _base_name;
 };
-
-#endif // GOLEMINELASTICBASE_H

@@ -56,7 +56,7 @@ Real
 GolemInterpolateBCFromFile::sample(Real t, Real xcoord, Real ycoord)
 {
   mooseAssert(_time_frames.size() > 0, "Sampling an empty GolemInterpolateBCFromFile.");
-  int position;
+
   if (_file_names.size() > 1)
   {
     for (unsigned int i(0); i < _file_names.size() - 1; ++i)
@@ -81,7 +81,7 @@ GolemInterpolateBCFromFile::sampleTime(Real t, Real xcoord, Real ycoord)
 {
   mooseAssert(_time_frames.size() > 0, "Sampling an empty GolemInterpolateBCFromFile.");
   int posi;
-  int posj;
+
   bool found = false;
   if (t <= _time_frames[0])
     return interpolate_values(0, xcoord, ycoord);

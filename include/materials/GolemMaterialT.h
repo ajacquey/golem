@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMMATERIALT_H
-#define GOLEMMATERIALT_H
+#pragma once
 
 #include "GolemMaterialBase.h"
 
@@ -46,5 +45,3 @@ protected:
   MaterialProperty<Real> * _T_kernel_source;
   MaterialProperty<Real> * _T_kernel_time;
 };
-
-#endif // GOLEMMATERIALT_H

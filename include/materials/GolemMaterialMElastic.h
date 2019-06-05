@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMMATERIALMELASTIC_H
-#define GOLEMMATERIALMELASTIC_H
+#pragma once
 
 #include "GolemMaterialBase.h"
 #include "RankTwoTensor.h"
@@ -103,7 +102,7 @@ protected:
   Real _G;
   Real _p_hat;
   // SetBackgroundStress
-  std::vector<Function *> _background_stress;
+  std::vector<const Function *> _background_stress;
   // ============================ HM properties ================================
   bool _has_pf;
   MooseEnum _permeability_type;
@@ -186,5 +185,3 @@ protected:
   const VariableValue * _nodal_temp_var;
   const VariableValue * _nodal_temp_var_old;
 };
-
-#endif // GOLEMMATERIALMELASTIC_H

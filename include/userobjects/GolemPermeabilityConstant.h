@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPERMEABILITYCONSTANT_H
-#define GOLEMPERMEABILITYCONSTANT_H
+#pragma once
 
 #include "GolemPermeability.h"
 
@@ -41,5 +40,3 @@ public:
   std::vector<Real>
   computedPermeabilitydT(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dT) const;
 };
-
-#endif // GOLEMPERMEABILITYCONSTANT_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPOROSITY_H
-#define GOLEMPOROSITY_H
+#pragma once
 
 #include "GeneralUserObject.h"
 
@@ -46,5 +45,3 @@ public:
   virtual Real computedPorositydpf(Real phi_old, Real biot, Real Ks) const = 0;
   virtual Real computedPorositydT(Real phi_old, Real biot, Real beta_f, Real beta_s) const = 0;
 };
-
-#endif // GOLEMPOROSITY_H

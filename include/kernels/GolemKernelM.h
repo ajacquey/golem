@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMKERNELM_H
-#define GOLEMKERNELM_H
+#pragma once
 
 #include "Kernel.h"
 #include "DerivativeMaterialInterface.h"
@@ -68,5 +67,3 @@ protected:
   const MaterialProperty<RealVectorValue> & _dM_kernel_grav_dpf;
   const MaterialProperty<RealVectorValue> & _dM_kernel_grav_dT;
 };
-
-#endif // GOLEMKERNELM_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMMATERIALTH_H
-#define GOLEMMATERIALTH_H
+#pragma once
 
 #include "GolemMaterialH.h"
 #include "GolemSUPG.h"
@@ -104,5 +103,3 @@ protected:
   MaterialProperty<Real> * _dH_kernel_time_dT;
   MaterialProperty<RealVectorValue> * _SUPG_dtau_dev;
 };
-
-#endif // GOLEMMATERIALTH_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPQPLASTICITY_H
-#define GOLEMPQPLASTICITY_H
+#pragma once
 
 #include "GolemInelasticBase.h"
 #include <array>
@@ -166,5 +165,3 @@ protected:
   Real _dq_dqt;
   std::array<Real, _num_rhs> _rhs;
 };
-
-#endif // GOLEMPQPLASTICITY_H

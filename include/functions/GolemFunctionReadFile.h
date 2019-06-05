@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMFUNCTIONREADFILE_H
-#define GOLEMFUNCTIONREADFILE_H
+#pragma once
 
 #include "Function.h"
 
@@ -32,7 +31,7 @@ class GolemFunctionReadFile : public Function
 {
 public:
   GolemFunctionReadFile(const InputParameters & parameters);
-  virtual Real value(Real t, const Point & pt) override;
+  virtual Real value(Real t, const Point & pt) const override;
 
 protected:
   const std::string _file;
@@ -42,5 +41,3 @@ protected:
 private:
   void readFile();
 };
-
-#endif // GOLEMFUNCTIONREADFILE_H

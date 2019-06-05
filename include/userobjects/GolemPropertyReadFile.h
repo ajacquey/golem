@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPROPERTYREADFILE_H
-#define GOLEMPROPERTYREADFILE_H
+#pragma once
 
 #include "GeneralUserObject.h"
 
@@ -47,5 +46,3 @@ protected:
 
 private:
 };
-
-#endif // GOLEMPROPERTYREADFILE_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMDARCYVELOCITY_H
-#define GOLEMDARCYVELOCITY_H
+#pragma once
 
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
@@ -42,5 +41,3 @@ protected:
   const MaterialProperty<RealVectorValue> & _H_kernel_grav;
   int _component;
 };
-
-#endif // GOLEMDARCYVELOCITY_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMCONVECTIVETHBC_H
-#define GOLEMCONVECTIVETHBC_H
+#pragma once
 
 #include "IntegratedBC.h"
 #include "DerivativeMaterialInterface.h"
@@ -60,5 +59,3 @@ private:
   unsigned int _ndisp;
   std::vector<unsigned int> _disp_var;
 };
-
-#endif // GOLEMCONVECTIVETHBC_H

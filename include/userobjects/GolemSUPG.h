@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMSUPG_H
-#define GOLEMSUPG_H
+#pragma once
 
 #include "GeneralUserObject.h"
 
@@ -51,5 +50,3 @@ private:
   Real DoublyAsymptotic(Real, Real, Real) const;
   Real Critical(Real, Real, Real) const;
 };
-
-#endif // GOLEMSUPG_H

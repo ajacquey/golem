@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMDRUCKERPRAGER_H
-#define GOLEMDRUCKERPRAGER_H
+#pragma once
 
 #include "GolemPQPlasticity.h"
 #include "GolemHardeningModel.h"
@@ -93,5 +92,3 @@ private:
   Real _beta;  // for dilation
   Real _k;
 };
-
-#endif // GOLEMDRUCKERPRAGER_H

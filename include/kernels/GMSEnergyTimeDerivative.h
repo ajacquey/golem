@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GMSENERGYTIMEDERIVATIVE_H
-#define GMSENERGYTIMEDERIVATIVE_H
+#pragma once
 
 #include "TimeDerivative.h"
 
@@ -37,5 +36,3 @@ protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 };
-
-#endif // GMSENERGYTIMEDERIVATIVE_H

@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GMSMATERIAL_H
-#define GMSMATERIAL_H
+#pragma once
 
 #include "Material.h"
 #include "GolemPropertyReadFile.h"
@@ -61,5 +60,3 @@ protected:
   MaterialProperty<Real> & _scale;
   MaterialProperty<RealVectorValue> & _gravity;
 };
-
-#endif // GMSMATERIAL_H

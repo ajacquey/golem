@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMSTRAIN_H
-#define GOLEMSTRAIN_H
+#pragma once
 
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
@@ -45,5 +44,3 @@ private:
   const unsigned int _j;
   const MaterialProperty<RankTwoTensor> * _strain;
 };
-
-#endif // GOLEMSTRAIN_H

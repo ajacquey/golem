@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMPERMEABILITY_H
-#define GOLEMPERMEABILITY_H
+#pragma once
 
 #include "GeneralUserObject.h"
 
@@ -44,5 +43,3 @@ public:
   virtual std::vector<Real>
   computedPermeabilitydT(std::vector<Real> k0, Real phi0, Real porosity, Real dphi_dTs) const = 0;
 };
-
-#endif // GOLEMPERMEABILITY_H

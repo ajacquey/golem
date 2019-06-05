@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMHARDENINGMODEL_H
-#define GOLEMHARDENINGMODEL_H
+#pragma once
 
 #include "GeneralUserObject.h"
 
@@ -42,5 +41,3 @@ public:
 protected:
   bool _is_radians;
 };
-
-#endif // GOLEMHARDENINGMODEL_H

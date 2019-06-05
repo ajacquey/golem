@@ -18,7 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#include "GolemApp.h"
+#include "GolemTestApp.h"
 #include "MooseInit.h"
 #include "Moose.h"
 #include "MooseApp.h"
@@ -35,7 +35,7 @@ main(int argc, char * argv[])
   MooseInit init(argc, argv);
 
   // Register this application's MooseApp and any it depends on
-  GolemApp::registerApps();
+  GolemTestApp::registerApps();
 
   // Create an instance of the application and store it in a smart pointer for easy cleanup
   std::shared_ptr<MooseApp> app = AppFactory::createAppShared("GolemApp", argc, argv);

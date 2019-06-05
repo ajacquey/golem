@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMEQVINELASTICSTRAIN_H
-#define GOLEMEQVINELASTICSTRAIN_H
+#pragma once
 
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
@@ -39,5 +38,3 @@ protected:
   const MaterialProperty<RankTwoTensor> & _inelastic_strain;
   const MaterialProperty<RankTwoTensor> & _inelastic_strain_old;
 };
-
-#endif // GOLEMEQVINELASTICSTRAIN_H

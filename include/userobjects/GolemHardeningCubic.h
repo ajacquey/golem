@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMHARDENINGCUBIC_H
-#define GOLEMHARDENINGCUBIC_H
+#pragma once
 
 #include "GolemHardeningModel.h"
 
@@ -44,5 +43,3 @@ private:
   Real _alpha;
   Real _beta;
 };
-
-#endif // GOLEMHARDENINGCUBIC_H

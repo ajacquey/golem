@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMINTERPOLATEBCFROMFILE_H
-#define GOLEMINTERPOLATEBCFROMFILE_H
+#pragma once
 
 #include "MooseTypes.h"
 #include "ColumnMajorMatrix.h"
@@ -52,5 +51,3 @@ private:
   void errorCheck();
   Real interpolate_values(int, Real, Real);
 };
-
-#endif // GOLEMINTERPOLATEBCFROMFILE_H

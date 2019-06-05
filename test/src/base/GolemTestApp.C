@@ -3,6 +3,7 @@
 #include "Moose.h"
 #include "AppFactory.h"
 #include "MooseSyntax.h"
+#include "ModulesApp.h"
 
 template <>
 InputParameters
@@ -36,17 +37,10 @@ GolemTestApp::registerApps()
   registerApp(GolemApp);
   registerApp(GolemTestApp);
 }
-
-void
-GolemTestApp::registerObjects(Factory & /*factory*/)
-{
-}
-
-void
-GolemTestApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
-{
-}
-
+/***************************************************************************************************
+ *********************** Dynamic Library Entry Points - DO NOT MODIFY ******************************
+ **************************************************************************************************/
+// External entry point for dynamic application loading
 extern "C" void
 GolemTestApp__registerAll(Factory & f, ActionFactory & af, Syntax & s)
 {

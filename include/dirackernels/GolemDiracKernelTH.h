@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMDIRACKERNELTH_H
-#define GOLEMDIRACKERNELTH_H
+#pragma once
 
 #include "DiracKernel.h"
 
@@ -44,7 +43,7 @@ protected:
   Point _source_point;
   MooseEnum _source_type;
   Real _in_out_rate;
-  Function * _function;
+  const Function * _function;
   Real _start_time;
   Real _end_time;
   const MaterialProperty<Real> & _scaling_factor;
@@ -54,5 +53,3 @@ private:
   const GolemScaling * _scaling_uo;
   Real _scale;
 };
-
-#endif // GOLEMDIRACKERNELTH_H

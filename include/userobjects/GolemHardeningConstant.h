@@ -18,8 +18,7 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#ifndef GOLEMHARDENINGCONSTANT_H
-#define GOLEMHARDENINGCONSTANT_H
+#pragma once
 
 #include "GolemHardeningModel.h"
 
@@ -38,5 +37,3 @@ public:
 private:
   Real _value;
 };
-
-#endif // GOLEMHARDENINGCONSTANT_H
