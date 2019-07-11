@@ -104,11 +104,16 @@ GolemMaterialBase::computeQpScaling()
   switch (_material_type)
   {
     case 1:
-      scaling_factor += PI * _scaling_factor0 * _scaling_factor0;
+      scaling_factor = PI * _scaling_factor0 * _scaling_factor0;
       break;
     case 2:
+      scaling_factor = _scaling_factor0;
+      break;
     case 3:
-      scaling_factor += _scaling_factor0;
+      scaling_factor = 1.0;
+      break;
+    default:
+      mooseError("Unknow material type. Possible inputs are well, frac or unit.");
       break;
   }
   if (isParamValid("function_scaling"))
