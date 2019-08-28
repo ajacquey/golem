@@ -1,0 +1,37 @@
+Content:
+    Golem:
+        root_dir: ${ROOT_DIR}/doc/content
+    moose:
+        root_dir: ${MOOSE_DIR}/framework/doc/content
+        content:
+            - js/*
+            - css/*
+            - contrib/**
+            - media/**
+
+Renderer:
+    type: MooseDocs.base.MaterializeRenderer
+    name: GOLEM
+    repo: https://github.com/ajacquey/Golem
+    # home: https://www.mooseframework.org
+    google_analytics: True
+
+Translators:
+    type: MooseDocs.base.Translator
+    incremental_build: False
+
+Extensions:
+    MooseDocs.extensions.appsyntax:
+        executable: ${ROOT_DIR}
+        includes:
+            - include
+    MooseDocs.extensions.navigation:
+        name: 'GOLEM'
+        repo: https://github.com/ajacquey/Golem
+        # home: https://www.mooseframework.org
+        menu:
+            Getting Started: getting_started/index.md
+            Examples: examples/examples.menu.md
+            Manuals: manuals/manuals.menu.md
+            Documentation: documentation/documentation.menu.md
+            Help: help/help.menu.md
