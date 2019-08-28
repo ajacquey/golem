@@ -113,15 +113,21 @@
   [./hypre]
     type = SMP
     full = true
-    #petsc_options = '-snes_ksp_ew -snes_monitor -snes_linesearch_monitor -snes_converged_reason'
-    petsc_options = '-snes_ksp_ew'
-	  petsc_options_iname = '-ksp_type -ksp_rtol -ksp_max_it -pc_type -pc_hypre_type -snes_type -snes_linesearch_type -snes_atol -snes_rtol -snes_max_it -ksp_gmres_restart'
-    petsc_options_value = 'fgmres 1e-10 100 hypre boomeramg newtonls cp 1e-06 1e-10 1000 201'
+    petsc_options_iname = '-pc_type -pc_hypre_type
+                           -ksp_type -ksp_rtol -ksp_max_it
+                           -snes_type -snes_atol -snes_rtol -snes_max_it
+                           -ksp_gmres_restart'
+    petsc_options_value = 'hypre boomeramg
+                           fgmres 1e-10 100
+                           newtonls 1e-05 1e-10 100
+                           201'
   [../]
 []
 
 [Executioner]
   type = Transient
+  solve_type = 'NEWTON'
+  automatic_scaling = true
   start_time = 0.0
   end_time = 1.0
   dt = 1.0

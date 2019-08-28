@@ -147,31 +147,28 @@
     [./pT]
       splitting = 'p T'
       splitting_type = multiplicative
-      petsc_options_iname = '-ksp_type
-                             -ksp_rtol -ksp_max_it
-                             -snes_type -snes_linesearch_type
+      petsc_options_iname = '-snes_type -snes_linesearch_type
                              -snes_atol -snes_rtol -snes_max_it'
-      petsc_options_value = 'fgmres
-                             1.0e-12 50
-                             newtonls cp
+      petsc_options_value = 'newtonls basic
                              1.0e-05 1.0e-12 25'
     [../]
     [./p]
      vars = 'pore_pressure'
-     petsc_options_iname = '-ksp_type -pc_type -sub_pc_type -sub_pc_factor_levels -ksp_rtol -ksp_max_it'
-     petsc_options_value = 'fgmres asm ilu 1 1e-12 500'
+     petsc_options_iname = '-pc_type -pc_hypre_type'
+     petsc_options_value = 'hypre boomeramg'
     [../]
     [./T]
      vars = 'temperature'
-     petsc_options_iname = '-ksp_type -pc_type -pc_hypre_type -ksp_rtol -ksp_max_it'
-     petsc_options_value = 'preonly hypre boomeramg 1e-12 500'
+     petsc_options_iname = '-pc_type -pc_hypre_type'
+     petsc_options_value = 'hypre boomeramg'
     [../]
   [../]
 []
 
 [Executioner]
   type = Transient
-  solve_type = Newton
+  solve_type = 'NEWTON'
+  automatic_scaling = true
   start_time = 0.0
   end_time = 20000
   dt = 2000

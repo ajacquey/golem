@@ -188,13 +188,12 @@
   [./hypre]
     type = SMP
     full = true
-    petsc_options = '-snes_ksp_ew'
-    petsc_options_iname = '-ksp_type -ksp_rtol -ksp_max_it
-                           -pc_type -pc_hypre_type
+    petsc_options_iname = '-pc_type -pc_hypre_type
+                           -ksp_type -ksp_rtol -ksp_max_it
                            -snes_type -snes_atol -snes_rtol -snes_max_it
                            -ksp_gmres_restart'
-    petsc_options_value = 'fgmres 1e-10 100
-                           hypre boomeramg
+    petsc_options_value = 'hypre boomeramg
+                           fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
   [../]
@@ -202,7 +201,8 @@
 
 [Executioner]
   type = Transient
-  solve_type = Newton
+  solve_type = 'NEWTON'
+  automatic_scaling = true
   start_time = 0.0
   end_time = 20000
   dt = 2000

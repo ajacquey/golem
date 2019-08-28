@@ -1,6 +1,6 @@
 [Mesh]
   type = GeneratedMesh
-  dim = 3
+  dim = 2
   nx = 50
   ny = 25
   nz = 1
@@ -8,8 +8,6 @@
   xmax = 2
   ymin = 0
   ymax = 1
-  zmin = 0
-  zmax = 0.01
 []
 
 [Variables]
@@ -91,18 +89,24 @@
 []
 
 [Preconditioning]
-  [./precond]
+  [./hypre]
     type = SMP
     full = true
-    petsc_options = '-snes_ksp_ew'
-    petsc_options_iname = '-ksp_type -pc_type -snes_atol -snes_rtol -snes_max_it -ksp_max_it -sub_pc_type -sub_pc_factor_shift_type'
-    petsc_options_value = 'gmres asm 1E-10 1E-10 200 500 lu NONZERO'
+    petsc_options_iname = '-pc_type -pc_hypre_type
+                           -ksp_type -ksp_rtol -ksp_max_it
+                           -snes_type -snes_atol -snes_rtol -snes_max_it
+                           -ksp_gmres_restart'
+    petsc_options_value = 'hypre boomeramg
+                           fgmres 1e-10 100
+                           newtonls 1e-05 1e-10 100
+                           201'
   [../]
 []
 
 [Executioner]
   type = Steady
-  solve_type = Newton
+  solve_type = 'NEWTON'
+  automatic_scaling = true
 []
 
 [Outputs]

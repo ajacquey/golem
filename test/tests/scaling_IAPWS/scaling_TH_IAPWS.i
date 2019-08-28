@@ -216,11 +216,11 @@
 
 [Executioner]
   type = Transient
-  solve_type = Newton
+  solve_type = 'NEWTON'
+  automatic_scaling = true
   start_time = 0.0
   end_time = 100000
   dt = 10000
-  #num_steps = 10
 []
 
 [Outputs]

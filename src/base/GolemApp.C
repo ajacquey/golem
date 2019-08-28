@@ -47,15 +47,29 @@ associateSyntaxInner(Syntax & syntax, ActionFactory & /*action_factory*/)
 }
 
 void
-GolemApp::registerApps()
-{
-  registerApp(GolemApp);
-}
-
-void
 GolemApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)	
 {
   Registry::registerObjectsTo(f, {"GolemApp"});
   Registry::registerActionsTo(af, {"GolemApp"});
   associateSyntaxInner(s, af);
+}
+
+void
+GolemApp::registerApps()
+{
+  registerApp(GolemApp);
+}
+
+/***************************************************************************************************
+ *********************** Dynamic Library Entry Points - DO NOT MODIFY ******************************
+ **************************************************************************************************/
+extern "C" void
+GolemApp__registerAll(Factory & f, ActionFactory & af, Syntax & s)
+{
+  GolemApp::registerAll(f, af, s);
+}
+extern "C" void
+GolemApp__registerApps()
+{
+  GolemApp::registerApps();
 }
