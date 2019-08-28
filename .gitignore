@@ -80,6 +80,7 @@ temp_print_trace.*
 *.xyz
 *Revision.h
 *.json
+*.yaml
 *.bak
 *.processor.*
 .clang_complete

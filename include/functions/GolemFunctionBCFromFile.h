@@ -39,7 +39,7 @@ public:
 protected:
   GolemSetBCFromFile * _set_bc;
   GolemInterpolateBCFromFile * _interpolate_bc;
-  int _n_points;
+  unsigned int _n_points;
   bool _has_interpol_in_time;
   bool _has_interpol_in_space;
   const std::string _data_file_name;

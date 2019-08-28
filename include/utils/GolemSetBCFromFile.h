@@ -40,7 +40,7 @@ public:
   Real sampleTime(Real t, Real xcoord, Real ycoord);
 
 protected:
-  const int _n_points;
+  const unsigned int _n_points;
   const std::vector<Real> _time_frames;
   const std::vector<std::string> _file_names;
   ColumnMajorMatrix _px;

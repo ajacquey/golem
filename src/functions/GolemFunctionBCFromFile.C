@@ -225,7 +225,7 @@ GolemFunctionBCFromFile::fillMatrixBC(ColumnMajorMatrix & px,
     px.reshape(_time_frames.size(), _n_points);
     py.reshape(_time_frames.size(), _n_points);
     pz.reshape(_time_frames.size(), _n_points);
-    for (unsigned int j(0); j < _n_points; ++j)
+    for (unsigned int j = 0; j < _n_points; ++j)
     {
       px(i, j) = myx[j];
       py(i, j) = myy[j];

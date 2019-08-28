@@ -117,7 +117,7 @@ GolemSetBCFromFile::sampleTime(Real t, Real xcoord, Real ycoord)
 Real
 GolemSetBCFromFile::find_value(int posi, Real xcoord, Real ycoord)
 {
-  for (unsigned int i(0); i < _n_points; ++i)
+  for (unsigned int i = 0; i < _n_points; ++i)
   {
     if ((std::fabs(_px(posi, i) - xcoord) < 0.1) && (std::fabs(_py(posi, i) - ycoord) < 0.1))
       return _pv(posi, i);

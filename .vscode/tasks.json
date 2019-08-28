@@ -1,0 +1,112 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+      {
+          "label": "Makefike",
+          "type": "shell",
+          "command": "make",
+          // start the build without prompting for task selection, use "group": "build" otherwise
+          "group": {
+              "kind": "build",
+              "isDefault": true
+          },
+          "presentation": {
+              "echo": true,
+              "reveal": "always",
+              "focus": false,
+              "panel": "shared"
+          },
+          // arg passing example: in this case is executed with 2 processors
+          "args": ["test", "-j2"],
+          // Use the standard less compilation problem matcher.
+          "problemMatcher": {
+              "owner": "cpp",
+              "fileLocation": ["absolute"],
+              "pattern": {
+                  "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                  "file": 1,
+                  "line": 2,
+                  "column": 3,
+                  "severity": 4,
+                  "message": 5
+              }
+          }
+      },
+      {
+          "label": "Makefike debug",
+          "type": "shell",
+          "command": "make",
+          // start the build without prompting for task selection, use "group": "build" otherwise
+          "group": "none",
+          "presentation": {
+              "echo": true,
+              "reveal": "always",
+              "focus": false,
+              "panel": "shared"
+          },
+          // arg passing example: in this case is executed in DEBUG mode with 4 processors
+          "args": ["METHOD=dbg", "-j4"],
+          // Use the standard less compilation problem matcher.
+          "problemMatcher": {
+              "owner": "cpp",
+              "fileLocation": ["absolute"],
+              "pattern": {
+                  "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                  "file": 1,
+                  "line": 2,
+                  "column": 3,
+                  "severity": 4,
+                  "message": 5
+              }
+          }
+      },
+      {
+          "label": "Makefike clean",
+          "type": "shell",
+          "command": "make",
+          // start the build without prompting for task selection, use "group": "build" otherwise
+          "group": "none",
+          "presentation": {
+              "echo": true,
+              "reveal": "always",
+              "focus": false,
+              "panel": "shared"
+          },
+          // arg passing example: in this case is executed for clean
+          "args": ["clean"],
+          // Use the standard less compilation problem matcher.
+          "problemMatcher": {
+              "owner": "cpp",
+              "fileLocation": ["absolute"],
+              "pattern": {
+                  "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                  "file": 1,
+                  "line": 2,
+                  "column": 3,
+                  "severity": 4,
+                  "message": 5
+              }
+          }
+      },
+      {
+          "label": "Test",
+          "type": "shell",
+          "command": "./run_tests",
+          // start the build without prompting for task selection, use "group": "build" otherwise
+          "group": {
+              "kind": "test",
+              "isDefault": true
+          },
+          "presentation": {
+              "echo": true,
+              "reveal": "always",
+              "focus": false,
+              "panel": "shared"
+          },
+          // arg passing example: in this case is executed with 2 processors
+          "args": ["-j2"]
+      }
+  ]
+}
