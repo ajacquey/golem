@@ -14,7 +14,7 @@ The two BibTeX entries for LaTeX users are:
 
 @misc{GolemApp,
   AUTHOR = {Jacquey, A. B. and Cacace, M.},
-  TITLE = {GOLEM, a MOOSE-based application v1.0},
+  TITLE = {GOLEM, a MOOSE-based application},
   MONTH = sep,
   YEAR = 2017,
   DOI = {10.5281/zenodo.999401},

@@ -85,7 +85,7 @@ Information about the structure of the GOLEM input files can be found in the doc
 
 If you use GOLEM for your work please cite:
 * This repository:  
-Antoine B. Jacquey, & Mauro Cacace. (2017, September 29). GOLEM, a MOOSE-based application v1.0. Zenodo. http://doi.org/10.5281/zenodo.999401
+Antoine B. Jacquey, & Mauro Cacace. (2017, September 29). GOLEM, a MOOSE-based application. Zenodo. http://doi.org/10.5281/zenodo.999401
 * The publication presenting GOLEM:  
  Cacace, M. and Jacquey, A. B.: Flexible parallel implicit modelling of coupled thermal–hydraulic–mechanical processes in fractured rocks, Solid Earth, 8, 921-941, https://doi.org/10.5194/se-8-921-2017, 2017.  
 
@@ -94,7 +94,12 @@ Please read the [CITATION](https://github.com/ajacquey/Golem/blob/master/CITATIO
 
 ## Publications using GOLEM
 
-* Cacace, M. and Jacquey, A. B.: Flexible parallel implicit modelling of coupled Thermal-Hydraulic-Mechanical processes in fractured rocks, Solid Earth Discuss., https://doi.org/10.5194/se-2017-33, in review, 2017.
+* Freymark, J., Bott, J., Cacace, M., Ziegler, M., Scheck-Wenderoth, M.: Influence of the Main Border Faults on the 3D Hydraulic Field of the Central Upper Rhine Graben, *Geofluids*, 2019.
+* Blöcher, G.,  Cacace, M.,  Jacquey, A. B.,  Zang, A.,  Heidbach, O.,  Hofmann, H.,  Kluge, C.,  Zimmermann, G.: Evaluating Micro-Seismic Events Triggered by Reservoir Operations at the Geothermal Site of Groß Schönebeck (Germany), *Rock Mechanics and Rock Engineering*, 2018.
+* Jacquey, A. B.,  Urpi, L.,  Cacace, M.,  Blöcher, G.,  Zimmermann, G.,  Scheck-Wenderoth, M.: Far field poroelastic response of geothermal reservoirs to hydraulic stimulation treatment: Theory and application at the Groß Schönebeck geothermal research facility, *International Journal of Rock Mechanics and Mining Sciences*, 2018.
+* Peters, E., Blöcher, G., Salimzadeh, S., Egberts, P. J. P., Cacace, M.: Modelling of multi-lateral well geometries for geothermal applications, *Advances in Geosciences*, 2018.
+* Magri, F., Cacace, M., Fischer, T., Kolditz, O., Wang, W., Watanabe, N.: Thermal convection of viscous fluids in a faulted system: 3D benchmark for numerical codes, *Energy Procedia*, 2017.
+* Cacace, M. and Jacquey, A. B.: Flexible parallel implicit modelling of coupled Thermal-Hydraulic-Mechanical processes in fractured rocks, Solid Earth, 2017.
 * Jacquey, A. B.: Coupled Thermo-Hydro-Mechanical Processes in Geothermal Reservoirs: a Multiphysic and Multiscale Approach Linking Geology and 3D Numerical Modelling, PhD thesis, RWTH Aachen, 2017.
 * Jacquey, A. B., Cacace, M., Blöcher, G.: Modelling coupled fluid flow and heat transfer in fractured reservoirs: description of a 3D benchmark numerical case, Energy Procedia, 2017.
 * Jacquey, A. B., Cacace, M., Blöcher, G., Milsch, H., Deon, F., Scheck-Wenderoth, M.: Processes Responsible for Localized Deformation within Porous Rocks: Insights from Laboratory Experiments and Numerical Modelling, 6th Biot Conference on Poromechanics, Paris 2017.
