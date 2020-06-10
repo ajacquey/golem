@@ -284,7 +284,7 @@ GolemMaterialTH::nearest()
   Real smallest_dist = std::numeric_limits<Real>::max();
   for (unsigned int i = 0; i < _current_elem->n_nodes(); ++i)
   {
-    const Real this_dist = (_current_elem->point(i) - _q_point[_qp]).size();
+    const Real this_dist = (_current_elem->point(i) - _q_point[_qp]).norm();
     if (this_dist < smallest_dist)
     {
       n = i;
