@@ -62,5 +62,5 @@
     "GolemSetBCFromFile.C": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled",
-  "python.pythonPath": "/opt/moose/miniconda/bin/python"
+  "python.pythonPath": "/Users/ajacquey/miniconda/envs/moose/bin/python"
 }
