@@ -29,6 +29,10 @@ InputParameters
 validParams<GolemApp>()
 {
   InputParameters params = validParams<MooseApp>();
+  // Do not use legacy DirichletBC, that is, set DirichletBC default for preset = true
+  params.set<bool>("use_legacy_dirichlet_bc") = false;
+  // Do not use legacy material output
+  params.set<bool>("use_legacy_material_output") = false;
   return params;
 }
 

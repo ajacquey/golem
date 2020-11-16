@@ -130,24 +130,28 @@
     variable = pore_pressure
     boundary = front
     value = 20.0e+06
+    preset = false
   [../]
   [./no_x_left]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = left
     value = 0.0
+    preset = true
   [../]
   [./no_y_bottom]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     boundary = bottom
     value = 0.0
+    preset = true
   [../]
   [./no_z_back]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = back
     value = 0.0
+    preset = true
   [../]
 []
 

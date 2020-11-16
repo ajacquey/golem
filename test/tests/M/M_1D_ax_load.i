@@ -72,10 +72,11 @@
 
 [BCs]
   [./no_x_left]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = left
     value = 0.0
+    preset = true
   [../]
   [./load_x_right]
     type = NeumannBC
@@ -84,16 +85,18 @@
     value = 2.0e+06
   [../]
   [./no_y_bottom]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     boundary = bottom
     value = 0.0
+    preset = true
   [../]
   [./no_z_back]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = back
     value = 0.0
+    preset = true
   [../]
 []
 

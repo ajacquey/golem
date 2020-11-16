@@ -81,22 +81,25 @@
 
 [BCs]
   [./p_left]
-    type = PresetBC
+    type = DirichletBC
     variable = pore_pressure
     boundary = left
     value = 1.0e+05
+    preset = true
   [../]
   [./p0_right]
-    type = PresetBC
+    type = DirichletBC
     variable = pore_pressure
     boundary = right
     value = 0.0
+    preset = true
   [../]
   [./T0_left]
-    type = PresetBC
+    type = DirichletBC
     variable = temperature
     boundary = left
     value = 10
+    preset = true
   [../]
   [./T_right]
     type = GolemConvectiveTHBC

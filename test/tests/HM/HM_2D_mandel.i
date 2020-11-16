@@ -30,34 +30,39 @@
 
 [BCs]
   [./roller_xmin]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     value = 0
     boundary = 'left'
+    preset = true
   [../]
   [./roller_ymin]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     value = 0
     boundary = 'bottom'
+    preset = true
   [../]
   [./plane_strain]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     value = 0
     boundary = 'back front'
+    preset = true
   [../]
   [./xmax_drained]
     type = DirichletBC
     variable = pore_pressure
     value = 0
     boundary = right
+    preset = false
   [../]
   [./top_velocity]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = disp_y
     function = top_velocity
     boundary = top
+    preset = true
   [../]
 []
 

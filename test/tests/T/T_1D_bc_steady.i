@@ -21,10 +21,11 @@
 
 [BCs]
   [./T0_left]
-    type = PresetBC
+    type = DirichletBC
     variable = temperature
     boundary = left
     value = 1.0
+    preset = true
   [../]
   [./qf_right]
     type = NeumannBC

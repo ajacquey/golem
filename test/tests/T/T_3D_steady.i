@@ -67,40 +67,46 @@
 
 [BCs]
   [./T_left]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = left
     function = T_left_func
+    preset = true
   [../]
   [./T_right]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = right
     function = T_right_func
+    preset = true
   [../]
   [./T_bottom]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = bottom
     function = T_bottom_func
+    preset = true
   [../]
   [./T_top]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = top
     function = T_top_func
+    preset = true
   [../]
   [./T_front]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = front
     function = T_front_func
+    preset = true
   [../]
   [./T_back]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = back
     function = T_back_func
+    preset = true
   [../]
 []
 

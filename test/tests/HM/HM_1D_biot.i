@@ -89,12 +89,14 @@
     variable = pore_pressure
     boundary = right
     value = 0.0
+    preset = false
   [../]
   [./no_x_left]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = left
     value = 0.0
+    preset = true
   [../]
   [./load_x_right]
     type = NeumannBC
@@ -103,16 +105,18 @@
     value = -1.0e+03
   [../]
   [./no_y]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     boundary = 'front back'
     value = 0.0
+    preset = true
   [../]
   [./no_z]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = 'bottom top'
     value = 0.0
+    preset = true
   [../]
 []
 

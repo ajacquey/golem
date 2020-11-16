@@ -48,16 +48,18 @@
 
 [BCs]
   [./p0_left]
-    type = PresetBC
+    type = DirichletBC
     variable = pore_pressure
     boundary = left1
     value = 0.0
+    preset = true
   [../]
   [./p0_right]
-    type = PresetBC
+    type = DirichletBC
     variable = pore_pressure
     boundary = right1
     value = 0.0
+    preset = true
   [../]
 []
 

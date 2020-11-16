@@ -42,16 +42,18 @@
 
 [BCs]
   [./p_left]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = left
     function = p_func
+    preset = true
   [../]
   [./p_right]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = right
     function = p_func
+    preset = true
   [../]
 []
 

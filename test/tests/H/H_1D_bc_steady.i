@@ -21,10 +21,11 @@
 
 [BCs]
   [./p0_left]
-    type = PresetBC
+    type = DirichletBC
     variable = pore_pressure
     boundary = left
     value = 1.0e+06
+    preset = true
   [../]
   [./qf_right]
     type = NeumannBC

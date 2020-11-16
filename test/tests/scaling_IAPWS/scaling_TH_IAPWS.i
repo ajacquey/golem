@@ -128,12 +128,14 @@
     variable = pore_pressure
     boundary = front
     value = 1.0
+    preset = false
   [../]
   [./T_front]
     type = DirichletBC
     variable = temperature
     boundary = front
     value = 10
+    preset = false
   [../]
 []
 

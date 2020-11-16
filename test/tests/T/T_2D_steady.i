@@ -41,28 +41,32 @@
 
 [BCs]
   [./T0_left]
-    type = PresetBC
+    type = DirichletBC
     variable = temperature
     boundary = left
     value = 0.0
+    preset = true
   [../]
   [./T0_bottom]
-    type = PresetBC
+    type = DirichletBC
     variable = temperature
     boundary = bottom
     value = 0.0
+    preset = true
   [../]
   [./T_right]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = right
     function = T_right_func
+    preset = true
   [../]
   [./T_top]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = top
     function = T_top_func
+    preset = true
   [../]
 []
 

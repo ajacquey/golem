@@ -42,16 +42,18 @@
 
 [BCs]
   [./T_left]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = left
     function = T_time_func
+    preset = true
   [../]
   [./T_right]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = right
     function = T_time_func
+    preset = true
   [../]
 []
 

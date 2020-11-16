@@ -2,22 +2,30 @@
   "configurations": [
       {
           "name": "Mac",
-          "includePath": [
-              "${workspaceFolder}/**"
-          ],
+          "includePath": ["${workspaceFolder}",
+            "${workspaceFolder}/../moose/framework/build/header_symlinks",
+            "${workspaceFolder}/../moose/modules/module_loader/build/header_symlinks",
+            "${workspaceFolder}/../moose/framework/contrib/boost/include",
+            "${workspaceFolder}/../moose/framework/contrib/hit",
+            "${HOME}/miniconda/envs/moose/include",
+            "${HOME}/miniconda/envs/moose/libmesh/include"],
           "defines": [],
           "macFrameworkPath": [
               "/System/Library/Frameworks",
               "/Library/Frameworks"
           ],
-          "compilerPath": "/opt/moose/llvm-8.0.0/bin/clang",
+          "compilerPath": "${HOME}/miniconda/envs/moose/bin/clang",
           "cStandard": "c11",
           "cppStandard": "c++17",
           "intelliSenseMode": "clang-x64",
           "compileCommands": "${workspaceFolder}/compile_commands.json",
           "browse": {"path": ["${workspaceFolder}",
-                              "${workspaceFolder}/../moose/framework/build/header_symlinks",
-                              "${workspaceFolder}/../moose/libmesh/build/include/libmesh"]}
+            "${workspaceFolder}/../moose/framework/build/header_symlinks",
+            "${workspaceFolder}/../moose/modules/module_loader/build/header_symlinks",
+            "${workspaceFolder}/../moose/framework/contrib/boost/include",
+            "${workspaceFolder}/../moose/framework/contrib/hit",
+            "${HOME}/miniconda/envs/moose/include",
+            "${HOME}/miniconda/envs/moose/libmesh/include"]}
       }
   ],
   "version": 4

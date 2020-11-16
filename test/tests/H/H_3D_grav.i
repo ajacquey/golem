@@ -28,10 +28,11 @@
 
 [BCs]
   [./p0_front]
-    type = PresetBC
+    type = DirichletBC
     variable = pore_pressure
     boundary = front
     value = 0.0
+    preset = true
   [../]
 []
 

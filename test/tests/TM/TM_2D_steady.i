@@ -108,24 +108,28 @@
     variable = temperature
     boundary = front
     value = 1.0
+    preset = false
   [../]
   [./no_x_left]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = left
     value = 0.0
+    preset = true
   [../]
   [./no_y_bottom]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     boundary = bottom
     value = 0.0
+    preset = true
   [../]
   [./no_z]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = 'front back'
     value = 0.0
+    preset = true
   [../]
 []
 

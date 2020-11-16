@@ -31,28 +31,32 @@
 
 [BCs]
   [./confinex]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     value = 0
     boundary = 'left right'
+    preset = true
   [../]
   [./confiney]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     value = 0
     boundary = 'bottom top'
+    preset = true
   [../]
   [./basefixed]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     value = 0
     boundary = back
+    preset = true
   [../]
   [./topdrained]
     type = DirichletBC
     variable = pore_pressure
     value = 0
     boundary = front
+    preset = false
   [../]
   [./topload]
     type = NeumannBC

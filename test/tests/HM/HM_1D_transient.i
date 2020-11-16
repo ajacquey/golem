@@ -133,34 +133,39 @@
 
 [BCs]
   [./p0_left]
-    type = PresetBC
+    type = DirichletBC
     variable = pore_pressure
     boundary = left
     value = 0.0
+    preset = true
   [../]
   [./p1_right]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = right
     function = func_p1_right
+    preset = true
   [../]
   [./no_x_right]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = right
     value = 0.0
+    preset = true
   [../]
   [./no_y]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     boundary = 'front back'
     value = 0.0
+    preset = true
   [../]
   [./no_z]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = 'bottom top'
     value = 0.0
+    preset = true
   [../]
 []
 

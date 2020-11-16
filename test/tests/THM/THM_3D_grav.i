@@ -101,30 +101,35 @@
     variable = pore_pressure
     boundary = front
     value = 0.0
+    preset = false
   [../]
   [./T_domain]
     type = DirichletBC
     variable = temperature
     boundary = 'top bottom left right front back'
     value = 2.5
+    preset = false
   [../]
   [./no_x]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = 'left right'
     value = 0.0
+    preset = true
   [../]
   [./no_y]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     boundary = 'bottom top'
     value = 0.0
+    preset = true
   [../]
   [./no_z]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = 'back front'
     value = 0.0
+    preset = true
   [../]
 []
 

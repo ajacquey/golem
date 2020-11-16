@@ -116,22 +116,25 @@
 
 [BCs]
   [./no_x]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = 'left right bottom top front back'
     value = 0.0
+    preset = true
   [../]
   [./no_z]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = 'left right bottom top front back'
     value = 0.0
+    preset = true
   [../]
   [./disp_y_plate]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = disp_y
     boundary = 'left right bottom top front back'
     function = disp_y_func
+    preset = true
   [../]
 []
 

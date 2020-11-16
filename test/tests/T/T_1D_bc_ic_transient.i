@@ -40,16 +40,18 @@
 
 [BCs]
   [./T0_left1]
-    type = PresetBC
+    type = DirichletBC
     variable = temperature
     boundary = left1
     value = 0.0
+    preset = true
   [../]
   [./T0_right1]
-    type = PresetBC
+    type = DirichletBC
     variable = temperature
     boundary = right1
     value = 0.0
+    preset = true
   [../]
 []
 

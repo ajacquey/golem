@@ -67,40 +67,46 @@
 
 [BCs]
   [./p_left]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = left
     function = p_left_func
+    preset = true
   [../]
   [./p_right]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = right
     function = p_right_func
+    preset = true
   [../]
   [./p_bottom]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = bottom
     function = p_bottom_func
+    preset = true
   [../]
   [./p_top]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = top
     function = p_top_func
+    preset = true
   [../]
   [./p_back]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = back
     function = p_back_func
+    preset = true
   [../]
   [./p_front]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = pore_pressure
     boundary = front
     function = p_front_func
+    preset = true
   [../]
 []
 

@@ -110,34 +110,39 @@
 
 [BCs]
   [./T0_left]
-    type = PresetBC
+    type = DirichletBC
     variable = temperature
     boundary = left
     value = 0.0
+    preset = true
   [../]
   [./T1_right]
-    type = FunctionPresetBC
+    type = FunctionDirichletBC
     variable = temperature
     boundary = right
     function = T_right_func
+    preset = true
   [../]
   [./no_x_right]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = right
     value = 0.0
+    preset = true
   [../]
   [./no_y]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     boundary = 'bottom top'
     value = 0.0
+    preset = true
   [../]
   [./no_z]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = 'back front'
     value = 0.0
+    preset = true
   [../]
 []
 

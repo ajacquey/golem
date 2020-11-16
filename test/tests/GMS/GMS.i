@@ -26,12 +26,14 @@
     function = func_bc_0
     boundary = 1
     variable = temperature
+    preset = false
   [../]
   [./bc_1]
     type = DirichletBC
     value = 250
     boundary = 2
     variable = temperature
+    preset = false
   [../]
 []
 

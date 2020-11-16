@@ -106,18 +106,21 @@
     variable = pore_pressure
     boundary = 'left'
     value = 1.0e+05
+    preset = false
   [../]
   [./pf_right]
     type = DirichletBC
     variable = pore_pressure
     boundary = 'right'
     value = 0.0
+    preset = false
   [../]
   [./T_left]
     type = DirichletBC
     variable = temperature
     boundary = 'left'
     value = -10
+    preset = false
   [../]
   [./T_right]
     type = GolemConvectiveTHBC
@@ -125,22 +128,25 @@
     boundary = 'right'
   [../]
   [./no_x]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_x
     boundary = 'left'
     value = 0.0
+    preset = true
   [../]
   [./no_y]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_y
     boundary = 'bottom top'
     value = 0.0
+    preset = true
   [../]
   [./no_z]
-    type = PresetBC
+    type = DirichletBC
     variable = disp_z
     boundary = 'back front'
     value = 0.0
+    preset = true
   [../]
 []
 
