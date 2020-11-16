@@ -33,8 +33,8 @@ public:
   GMSEnergyResidual(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual Real computeQpResidual() override;
+  virtual Real computeQpJacobian() override;
 
   const MaterialProperty<Real> & _bulk_thermal_conductivity;
   const MaterialProperty<Real> & _heat_production;

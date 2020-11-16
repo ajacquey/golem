@@ -36,11 +36,11 @@ public:
   GolemKernelM(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual void computeJacobian();
-  virtual Real computeQpJacobian();
-  virtual void computeOffDiagJacobian(MooseVariableFEBase & jvar);
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual Real computeQpResidual() override;
+  virtual void computeJacobian() override;
+  virtual Real computeQpJacobian() override;
+  virtual void computeOffDiagJacobian(unsigned int jvar) override;
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
   virtual void computeFiniteDeformJacobian();
 
   const bool _has_pf;

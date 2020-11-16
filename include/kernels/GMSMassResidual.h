@@ -33,8 +33,8 @@ public:
   GMSMassResidual(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual Real computeQpResidual() override;
+  virtual Real computeQpJacobian() override;
 
   const MaterialProperty<Real> & _bulk_density;
   const MaterialProperty<RealVectorValue> & _gravity;

@@ -35,8 +35,8 @@ public:
   GolemPressureBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual Real computeQpResidual() override;
+  virtual Real computeQpJacobian() override;
   bool _has_scaled_properties;
   const int _component;
   const Function * _function;

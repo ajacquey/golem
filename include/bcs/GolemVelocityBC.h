@@ -33,7 +33,7 @@ public:
   GolemVelocityBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpValue();
+  virtual Real computeQpValue() override;
 
   const VariableValue & _u_old;
   const Real & _velocity;

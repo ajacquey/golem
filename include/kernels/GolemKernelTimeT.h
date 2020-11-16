@@ -34,12 +34,12 @@ public:
   GolemKernelTimeT(const InputParameters & parameters);
 
 protected:
-  virtual void computeResidual();
-  virtual Real computeQpResidual();
-  virtual void computeJacobian();
-  virtual Real computeQpJacobian();
-  virtual void computeOffDiagJacobian(MooseVariableFEBase & jvar);
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual void computeResidual() override;
+  virtual Real computeQpResidual() override;
+  virtual void computeJacobian() override;
+  virtual Real computeQpJacobian() override;
+  virtual void computeOffDiagJacobian(unsigned int jvar_num) override;
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
 
   bool _has_lumped_mass_matrix;
   bool _has_boussinesq;

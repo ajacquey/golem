@@ -35,7 +35,7 @@ public:
   GolemHeatFlowBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
+  virtual Real computeQpResidual() override;
   bool _has_scaled_properties;
   const Function * _function;
 

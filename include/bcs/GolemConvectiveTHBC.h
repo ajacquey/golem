@@ -35,9 +35,9 @@ public:
   GolemConvectiveTHBC(const InputParameters & params);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int);
+  virtual Real computeQpResidual() override;
+  virtual Real computeQpJacobian() override;
+  virtual Real computeQpOffDiagJacobian(unsigned int) override;
 
   bool _has_disp;
   const VariableGradient & _grad_pf;
