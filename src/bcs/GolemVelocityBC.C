@@ -26,13 +26,14 @@ template <>
 InputParameters
 validParams<GolemVelocityBC>()
 {
-  InputParameters params = validParams<PresetNodalBC>();
+  InputParameters params = validParams<DirichletBCBase>();
   params.addRequiredParam<Real>("velocity", "Value of the velocity applied.");
+  params.suppressParameter<bool>("preset");
   return params;
 }
 
 GolemVelocityBC::GolemVelocityBC(const InputParameters & parameters)
-  : PresetNodalBC(parameters), _u_old(valueOld()), _velocity(getParam<Real>("velocity"))
+  : DirichletBCBase(parameters), _u_old(valueOld()), _velocity(getParam<Real>("velocity"))
 {
 }
 

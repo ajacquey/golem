@@ -20,14 +20,14 @@
 
 #pragma once
 
-#include "PresetNodalBC.h"
+#include "DirichletBCBase.h"
 
 class GolemVelocityBC;
 
 template <>
 InputParameters validParams<GolemVelocityBC>();
 
-class GolemVelocityBC : public PresetNodalBC
+class GolemVelocityBC : public DirichletBCBase
 {
 public:
   GolemVelocityBC(const InputParameters & parameters);
