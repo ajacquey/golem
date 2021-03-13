@@ -35,6 +35,7 @@ public:
 
 protected:
   virtual Real computeValue();
+  const VariableValue & _u_old;
   const MaterialProperty<RankTwoTensor> & _inelastic_strain;
   const MaterialProperty<RankTwoTensor> & _inelastic_strain_old;
 };

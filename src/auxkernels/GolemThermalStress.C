@@ -35,6 +35,7 @@ validParams<GolemThermalStress>()
 
 GolemThermalStress::GolemThermalStress(const InputParameters & parameters)
   : AuxKernel(parameters),
+    _u_old(uOld()),
     _temp(coupledValue("temperature")),
     _i(getParam<unsigned int>("index")),
     _TM_jacobian(getMaterialProperty<RankTwoTensor>("TM_jacobian"))

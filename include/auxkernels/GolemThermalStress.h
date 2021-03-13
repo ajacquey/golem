@@ -35,6 +35,7 @@ public:
 
 protected:
   virtual Real computeValue();
+  const VariableValue & _u_old;
   const VariableValue & _temp;
   const VariableValue * _temp_old;
   const unsigned int _i;

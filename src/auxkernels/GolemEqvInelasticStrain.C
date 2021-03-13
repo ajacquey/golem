@@ -32,6 +32,7 @@ validParams<GolemEqvInelasticStrain>()
 
 GolemEqvInelasticStrain::GolemEqvInelasticStrain(const InputParameters & parameters)
   : AuxKernel(parameters),
+    _u_old(uOld()),
     _inelastic_strain(getMaterialProperty<RankTwoTensor>("inelastic_strain")),
     _inelastic_strain_old(getMaterialPropertyOld<RankTwoTensor>("inelastic_strain"))
 {
