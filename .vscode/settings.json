@@ -59,7 +59,8 @@
     "GolemH.C": "cpp",
     "GolemInterpolateBCFromFile.C": "cpp",
     "GolemM.C": "cpp",
-    "GolemSetBCFromFile.C": "cpp"
+    "GolemSetBCFromFile.C": "cpp",
+    "GolemKernelT.C": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled",
   "python.pythonPath": "/Users/ajacquey/miniconda/envs/moose/bin/python"

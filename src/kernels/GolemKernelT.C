@@ -86,7 +86,7 @@ GolemKernelT::computeQpOffDiagJacobian(unsigned int jvar)
   if (_has_pf && _has_disp)
   {
     if (jvar == _pf_var)
-      jac += _grad_test[_i][_qp] * _dT_kernel_diff_dT[_qp] * _grad_u[_qp] * _phi[_j][_qp];
+      jac += _grad_test[_i][_qp] * _dT_kernel_diff_dpf[_qp] * _grad_u[_qp] * _phi[_j][_qp];
 
     for (unsigned i = 0; i < _ndisp; ++i)
       if (jvar == _disp_var[i])
