@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemStrain);
 
-template <>
 InputParameters
-validParams<GolemStrain>()
+GolemStrain::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addClassDescription(
       "Access a component of the strain (total, inelastic or plastic) tensor.");
   params.addParam<MooseEnum>("strain_type",

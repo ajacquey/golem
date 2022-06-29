@@ -21,17 +21,12 @@
 #pragma once
 
 #include "NeumannBC.h"
-
-class GolemHeatFlowBC;
-class Function;
-class GolemScaling;
-
-template <>
-InputParameters validParams<GolemHeatFlowBC>();
+#include "GolemScaling.h"
 
 class GolemHeatFlowBC : public NeumannBC
 {
 public:
+  static InputParameters validParams();
   GolemHeatFlowBC(const InputParameters & parameters);
 
 protected:

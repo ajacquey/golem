@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemDarcyVelocity);
 
-template <>
 InputParameters
-validParams<GolemDarcyVelocity>()
+GolemDarcyVelocity::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure variable.");
   params.addRequiredParam<int>("component", "The darcy velocity component.");
   return params;

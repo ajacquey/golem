@@ -22,14 +22,10 @@
 
 #include "GeneralUserObject.h"
 
-class GolemPropertyReadFile;
-
-template <>
-InputParameters validParams<GolemPropertyReadFile>();
-
 class GolemPropertyReadFile : public GeneralUserObject
 {
 public:
+  static InputParameters validParams();
   GolemPropertyReadFile(const InputParameters & parameters);
   virtual ~GolemPropertyReadFile() {}
   virtual void initialize() {}

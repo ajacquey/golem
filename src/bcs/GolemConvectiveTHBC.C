@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemConvectiveTHBC);
 
-template <>
 InputParameters
-validParams<GolemConvectiveTHBC>()
+GolemConvectiveTHBC::validParams()
 {
-  InputParameters params = validParams<IntegratedBC>();
+  InputParameters params = IntegratedBC::validParams();
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");
   return params;

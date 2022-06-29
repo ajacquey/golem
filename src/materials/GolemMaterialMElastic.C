@@ -27,11 +27,10 @@
 
 registerMooseObject("GolemApp", GolemMaterialMElastic);
 
-template <>
 InputParameters
-validParams<GolemMaterialMElastic>()
+GolemMaterialMElastic::validParams()
 {
-  InputParameters params = validParams<GolemMaterialBase>();
+  InputParameters params = GolemMaterialBase::validParams();
   params.addRequiredCoupledVar("displacements", "The displacement variables vector.");
   params.addCoupledVar("pore_pressure", "The pore pressure variable.");
   params.addCoupledVar("temperature", "The temperature variable.");

@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemPermeabilityKC);
 
-template <>
 InputParameters
-validParams<GolemPermeabilityKC>()
+GolemPermeabilityKC::validParams()
 {
-  InputParameters params = validParams<GolemPermeability>();
+  InputParameters params = GolemPermeability::validParams();
   params.addClassDescription("Kozeny-Carman Permeability formulation");
   return params;
 }

@@ -23,14 +23,10 @@
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
 
-class GolemDarcyVelocity;
-
-template <>
-InputParameters validParams<GolemDarcyVelocity>();
-
 class GolemDarcyVelocity : public AuxKernel
 {
 public:
+  static InputParameters validParams();
   GolemDarcyVelocity(const InputParameters & parameters);
 
 protected:

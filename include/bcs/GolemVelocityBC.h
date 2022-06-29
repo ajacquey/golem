@@ -22,14 +22,10 @@
 
 #include "DirichletBCBase.h"
 
-class GolemVelocityBC;
-
-template <>
-InputParameters validParams<GolemVelocityBC>();
-
 class GolemVelocityBC : public DirichletBCBase
 {
 public:
+  static InputParameters validParams();
   GolemVelocityBC(const InputParameters & parameters);
 
 protected:

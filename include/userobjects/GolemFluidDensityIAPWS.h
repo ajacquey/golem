@@ -22,14 +22,10 @@
 
 #include "GolemFluidDensity.h"
 
-class GolemFluidDensityIAPWS;
-
-template <>
-InputParameters validParams<GolemFluidDensityIAPWS>();
-
 class GolemFluidDensityIAPWS : public GolemFluidDensity
 {
 public:
+  static InputParameters validParams();
   GolemFluidDensityIAPWS(const InputParameters & parameters);
   Real computeDensity(Real pressure, Real temperature, Real) const;
   Real computedDensitydT(Real pressure, Real temperature, Real) const;

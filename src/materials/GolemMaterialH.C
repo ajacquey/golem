@@ -25,11 +25,10 @@
 
 registerMooseObject("GolemApp", GolemMaterialH);
 
-template <>
 InputParameters
-validParams<GolemMaterialH>()
+GolemMaterialH::validParams()
 {
-  InputParameters params = validParams<GolemMaterialBase>();
+  InputParameters params = GolemMaterialBase::validParams();
   params.addCoupledVar("displacements", "The displacement vector");
   params.addParam<MooseEnum>(
       "permeability_type",

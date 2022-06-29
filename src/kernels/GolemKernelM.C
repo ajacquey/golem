@@ -27,11 +27,10 @@
 
 registerMooseObject("GolemApp", GolemKernelM);
 
-template <>
 InputParameters
-validParams<GolemKernelM>()
+GolemKernelM::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = Kernel::validParams();
   params.addRequiredParam<unsigned int>("component",
                                         "The direction this kernel acts onto (0=x, 1=y, 2=z).");
   params.addRequiredCoupledVar("displacements", "The displacement variables vector.");

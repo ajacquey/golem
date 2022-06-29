@@ -24,11 +24,10 @@
 
 registerMooseObject("GolemApp", GolemPressureBC);
 
-template <>
 InputParameters
-validParams<GolemPressureBC>()
+GolemPressureBC::validParams()
 {
-  InputParameters params = validParams<NeumannBC>();
+  InputParameters params = NeumannBC::validParams();
   params.addClassDescription("Applies a pressure on a given boundary in a given direction.");
   params.addRequiredParam<unsigned int>("component", "The component for the pressure.");
   params.addParam<FunctionName>("function", "The function that describes the pressure.");

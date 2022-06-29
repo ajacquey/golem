@@ -20,11 +20,10 @@
 
 #include "GolemPermeability.h"
 
-template <>
 InputParameters
-validParams<GolemPermeability>()
+GolemPermeability::validParams()
 {
-  InputParameters params = validParams<GeneralUserObject>();
+  InputParameters params = GeneralUserObject::validParams();
   params.addClassDescription(
       "Golem Permeability base class. Override the virtual functions in your class.");
   return params;

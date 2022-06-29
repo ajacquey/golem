@@ -22,14 +22,10 @@
 
 #include "Action.h"
 
-class GolemPressureAction;
-
-template <>
-InputParameters validParams<GolemPressureAction>();
-
 class GolemPressureAction : public Action
 {
 public:
+  static InputParameters validParams();
   GolemPressureAction(const InputParameters & params);
 
   virtual void act() override;

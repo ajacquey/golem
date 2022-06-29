@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemPermeabilityConstant);
 
-template <>
 InputParameters
-validParams<GolemPermeabilityConstant>()
+GolemPermeabilityConstant::validParams()
 {
-  InputParameters params = validParams<GolemPermeability>();
+  InputParameters params = GolemPermeability::validParams();
   params.addClassDescription("Constant Permeability formulation.");
   return params;
 }

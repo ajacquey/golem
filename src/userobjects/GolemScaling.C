@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemScaling);
 
-template <>
 InputParameters
-validParams<GolemScaling>()
+GolemScaling::validParams()
 {
-  InputParameters params = validParams<GeneralUserObject>();
+  InputParameters params = GeneralUserObject::validParams();
   params.addClassDescription(
       "Scales the variables and material properties by the characteristic values.");
   params.addRequiredParam<Real>("characteristic_time", "The characteristic time.");

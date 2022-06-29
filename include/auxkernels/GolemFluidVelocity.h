@@ -22,14 +22,10 @@
 
 #include "GolemDarcyVelocity.h"
 
-class GolemFluidVelocity;
-
-template <>
-InputParameters validParams<GolemFluidVelocity>();
-
 class GolemFluidVelocity : public GolemDarcyVelocity
 {
 public:
+  static InputParameters validParams();
   GolemFluidVelocity(const InputParameters & parameters);
 
 protected:

@@ -24,14 +24,10 @@
 #include "DerivativeMaterialInterface.h"
 #include "RankTwoTensor.h"
 
-class GolemConvectiveTHBC;
-
-template <>
-InputParameters validParams<GolemConvectiveTHBC>();
-
 class GolemConvectiveTHBC : public DerivativeMaterialInterface<IntegratedBC>
 {
 public:
+  static InputParameters validParams();
   GolemConvectiveTHBC(const InputParameters & params);
 
 protected:

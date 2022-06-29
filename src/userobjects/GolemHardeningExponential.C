@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemHardeningExponential);
 
-template <>
 InputParameters
-validParams<GolemHardeningExponential>()
+GolemHardeningExponential::validParams()
 {
-  InputParameters params = validParams<GolemHardeningModel>();
+  InputParameters params = GolemHardeningModel::validParams();
   params.addRequiredParam<Real>("value_initial",
                                 "The value of the parameter at internal_parameter = 0.");
   params.addRequiredParam<Real>("value_residual",

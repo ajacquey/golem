@@ -24,14 +24,10 @@
 #include "DerivativeMaterialInterface.h"
 #include "RankTwoTensor.h"
 
-class GolemKernelH;
-
-template <>
-InputParameters validParams<GolemKernelH>();
-
 class GolemKernelH : public DerivativeMaterialInterface<Kernel>
 {
 public:
+  static InputParameters validParams();
   GolemKernelH(const InputParameters & parameters);
 
 protected:

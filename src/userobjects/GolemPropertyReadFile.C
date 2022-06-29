@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemPropertyReadFile);
 
-template <>
 InputParameters
-validParams<GolemPropertyReadFile>()
+GolemPropertyReadFile::validParams()
 {
-  InputParameters params = validParams<GeneralUserObject>();
+  InputParameters params = GeneralUserObject::validParams();
   params.addClassDescription(
       "User Object to read property data from an external file and assign to elements.");
   params.addParam<std::string>("prop_file_name", "", "Name of the property file name.");

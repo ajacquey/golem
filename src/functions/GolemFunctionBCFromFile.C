@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemFunctionBCFromFile);
 
-template <>
 InputParameters
-validParams<GolemFunctionBCFromFile>()
+GolemFunctionBCFromFile::validParams()
 {
-  InputParameters params = validParams<Function>();
+  InputParameters params = Function::validParams();
   params.addParam<std::string>("data_file", "File holding csv/tab-separated bc data.");
   params.addParam<bool>(
       "interpolate_data_in_time", false, "Linearly interpolating among the data in time?");

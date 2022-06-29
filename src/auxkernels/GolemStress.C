@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemStress);
 
-template <>
 InputParameters
-validParams<GolemStress>()
+GolemStress::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addClassDescription("Access a component of the stress tensor.");
   params.addRequiredRangeCheckedParam<unsigned int>(
       "index_i",

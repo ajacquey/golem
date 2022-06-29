@@ -20,11 +20,10 @@
 
 #include "GolemFluidDensity.h"
 
-template <>
 InputParameters
-validParams<GolemFluidDensity>()
+GolemFluidDensity::validParams()
 {
-  InputParameters params = validParams<GeneralUserObject>();
+  InputParameters params = GeneralUserObject::validParams();
   params.addClassDescription(
       "Golem Fluid Density base class. Override the virtual functions in your class.");
   params.addParam<UserObjectName>("scaling_uo", "The name of the scaling user object.");

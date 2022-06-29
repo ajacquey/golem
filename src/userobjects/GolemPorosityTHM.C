@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemPorosityTHM);
 
-template <>
 InputParameters
-validParams<GolemPorosityTHM>()
+GolemPorosityTHM::validParams()
 {
-  InputParameters params = validParams<GolemPorosity>();
+  InputParameters params = GolemPorosity::validParams();
   params.addClassDescription("Porosity formulation for thermo-hydro-mechanical coupling.");
   return params;
 }

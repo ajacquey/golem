@@ -31,11 +31,10 @@ Real H1_visc[21] = {
 
 registerMooseObject("GolemApp", GolemFluidViscosityIAPWS);
 
-template <>
 InputParameters
-validParams<GolemFluidViscosityIAPWS>()
+GolemFluidViscosityIAPWS::validParams()
 {
-  InputParameters params = validParams<GolemFluidViscosity>();
+  InputParameters params = GolemFluidViscosity::validParams();
   params.addClassDescription("IAPWS fluid viscosity formulation for region 1.");
   params.addParam<bool>("has_kelvin", false, "Is the temperature in Kelvin?");
   return params;

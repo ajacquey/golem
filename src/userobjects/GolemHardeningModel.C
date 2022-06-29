@@ -20,11 +20,10 @@
 
 #include "GolemHardeningModel.h"
 
-template <>
 InputParameters
-validParams<GolemHardeningModel>()
+GolemHardeningModel::validParams()
 {
-  InputParameters params = validParams<GeneralUserObject>();
+  InputParameters params = GeneralUserObject::validParams();
   params.addClassDescription(
       "Hardening based virtual class. Override the virtual functions in your class.");
   params.addParam<bool>("convert_to_radians",

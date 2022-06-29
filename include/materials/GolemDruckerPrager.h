@@ -23,14 +23,10 @@
 #include "GolemPQPlasticity.h"
 #include "GolemHardeningModel.h"
 
-class GolemDruckerPrager;
-
-template <>
-InputParameters validParams<GolemDruckerPrager>();
-
 class GolemDruckerPrager : public GolemPQPlasticity
 {
 public:
+  static InputParameters validParams(); 
   GolemDruckerPrager(const InputParameters & parameters);
   static MooseEnum MC_interpolation_scheme();
 

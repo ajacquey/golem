@@ -23,14 +23,10 @@
 #include "TimeDerivative.h"
 #include "DerivativeMaterialInterface.h"
 
-class GolemKernelTimeH;
-
-template <>
-InputParameters validParams<GolemKernelTimeH>();
-
 class GolemKernelTimeH : public DerivativeMaterialInterface<TimeDerivative>
 {
 public:
+  static InputParameters validParams();
   GolemKernelTimeH(const InputParameters & parameters);
 
 protected:

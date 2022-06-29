@@ -21,17 +21,12 @@
 #pragma once
 
 #include "DiracKernel.h"
-
-class GolemDiracKernelTH;
-class Function;
-class GolemScaling;
-
-template <>
-InputParameters validParams<GolemDiracKernelTH>();
+#include "GolemScaling.h"
 
 class GolemDiracKernelTH : public DiracKernel
 {
 public:
+  static InputParameters validParams();
   GolemDiracKernelTH(const InputParameters & parameters);
   static MooseEnum Type();
   virtual void addPoints();

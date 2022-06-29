@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemFluidDensityLinear);
 
-template <>
 InputParameters
-validParams<GolemFluidDensityLinear>()
+GolemFluidDensityLinear::validParams()
 {
-  InputParameters params = validParams<GolemFluidDensity>();
+  InputParameters params = GolemFluidDensity::validParams();
   params.addClassDescription("Linear polynomial fitting for fluid density");
   params.addRequiredParam<Real>("alpha", "the thermal expansion coefficient");
   params.addRequiredParam<Real>("Tc", "The initial temperature");

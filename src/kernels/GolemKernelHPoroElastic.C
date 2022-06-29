@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemKernelHPoroElastic);
 
-template <>
 InputParameters
-validParams<GolemKernelHPoroElastic>()
+GolemKernelHPoroElastic::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = Kernel::validParams();
   params.addRequiredCoupledVar("displacements", "The displacement variables vector.");
   return params;
 }

@@ -23,14 +23,10 @@
 #include "GolemInelasticBase.h"
 #include <array>
 
-class GolemPQPlasticity;
-
-template <>
-InputParameters validParams<GolemPQPlasticity>();
-
 class GolemPQPlasticity : public GolemInelasticBase
 {
 public:
+  static InputParameters validParams();
   GolemPQPlasticity(const InputParameters & parameters);
   virtual void updateStress(RankTwoTensor & strain_increment,
                             RankTwoTensor & inelastic_strain_increment,

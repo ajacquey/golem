@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GMSEnergyTimeDerivative);
 
-template <>
 InputParameters
-validParams<GMSEnergyTimeDerivative>()
+GMSEnergyTimeDerivative::validParams()
 {
-  InputParameters params = validParams<TimeDerivative>();
+  InputParameters params = TimeDerivative::validParams();
   return params;
 }
 

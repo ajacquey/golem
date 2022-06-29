@@ -23,14 +23,10 @@
 #include "Material.h"
 #include "GolemPropertyReadFile.h"
 
-class GMSMaterial;
-
-template <>
-InputParameters validParams<GMSMaterial>();
-
 class GMSMaterial : public Material
 {
 public:
+  static InputParameters validParams();
   GMSMaterial(const InputParameters & parameters);
 
 protected:

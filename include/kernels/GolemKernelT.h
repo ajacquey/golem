@@ -23,14 +23,10 @@
 #include "Kernel.h"
 #include "DerivativeMaterialInterface.h"
 
-class GolemKernelT;
-
-template <>
-InputParameters validParams<GolemKernelT>();
-
 class GolemKernelT : public DerivativeMaterialInterface<Kernel>
 {
 public:
+  static InputParameters validParams();
   GolemKernelT(const InputParameters & parameters);
 
 protected:

@@ -24,11 +24,10 @@
 
 registerMooseObject("GolemApp", GolemMaterialTH);
 
-template <>
 InputParameters
-validParams<GolemMaterialTH>()
+GolemMaterialTH::validParams()
 {
-  InputParameters params = validParams<GolemMaterialH>();
+  InputParameters params = GolemMaterialH::validParams();
   params.addRequiredCoupledVar("temperature", "The temperature");
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure");
   params.addParam<bool>(

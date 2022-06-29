@@ -21,11 +21,10 @@
 #include "GolemInelasticBase.h"
 #include "MooseMesh.h"
 
-template <>
 InputParameters
-validParams<GolemInelasticBase>()
+GolemInelasticBase::validParams()
 {
-  InputParameters params = validParams<Material>();
+  InputParameters params = Material::validParams();
   params.addClassDescription("Base class for radial return mapping. It should be inherited by the "
                              "differnet constitutive models.");
   params.addParam<std::string>(

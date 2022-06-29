@@ -26,14 +26,10 @@
 #include "GolemPorosity.h"
 #include "GolemSUPG.h"
 
-class GolemMaterialMElastic;
-
-template <>
-InputParameters validParams<GolemMaterialMElastic>();
-
 class GolemMaterialMElastic : public GolemMaterialBase
 {
 public:
+  static InputParameters validParams();
   GolemMaterialMElastic(const InputParameters & parameters);
   static MooseEnum strainModel();
   static MooseEnum permeabilityType();

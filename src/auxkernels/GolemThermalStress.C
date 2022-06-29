@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemThermalStress);
 
-template <>
 InputParameters
-validParams<GolemThermalStress>()
+GolemThermalStress::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("temperature", "The temperature");
   params.addRequiredRangeCheckedParam<unsigned int>(
       "index", "index >= 0 & index <= 2", "The index i of ij for the tensor to output (0, 1, 2).");

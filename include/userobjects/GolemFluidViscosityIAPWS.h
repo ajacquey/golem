@@ -22,14 +22,10 @@
 
 #include "GolemFluidViscosity.h"
 
-class GolemFluidViscosityIAPWS;
-
-template <>
-InputParameters validParams<GolemFluidViscosityIAPWS>();
-
 class GolemFluidViscosityIAPWS : public GolemFluidViscosity
 {
 public:
+  static InputParameters validParams();
   GolemFluidViscosityIAPWS(const InputParameters & parameters);
   Real computeViscosity(Real temperature, Real rho, Real) const;
   Real computedViscositydT(Real temperature, Real rho, Real drho_dT, Real) const;

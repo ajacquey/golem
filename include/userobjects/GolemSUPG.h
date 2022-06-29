@@ -22,14 +22,10 @@
 
 #include "GeneralUserObject.h"
 
-class GolemSUPG;
-
-template <>
-InputParameters validParams<GolemSUPG>();
-
 class GolemSUPG : public GeneralUserObject
 {
 public:
+  static InputParameters validParams();
   GolemSUPG(const InputParameters & parameters);
   virtual void initialize() {}
   virtual void execute() {}

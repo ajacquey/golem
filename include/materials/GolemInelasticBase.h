@@ -23,14 +23,10 @@
 #include "Conversion.h"
 #include "GolemMaterialMElastic.h"
 
-class GolemInelasticBase;
-
-template <>
-InputParameters validParams<GolemInelasticBase>();
-
 class GolemInelasticBase : public Material
 {
 public:
+  static InputParameters validParams();
   GolemInelasticBase(const InputParameters & parameters);
   virtual void updateStress(RankTwoTensor & strain_increment,
                             RankTwoTensor & inelastic_strain_increment,

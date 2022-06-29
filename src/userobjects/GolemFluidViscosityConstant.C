@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemFluidViscosityConstant);
 
-template <>
 InputParameters
-validParams<GolemFluidViscosityConstant>()
+GolemFluidViscosityConstant::validParams()
 {
-  InputParameters params = validParams<GolemFluidViscosity>();
+  InputParameters params = GolemFluidViscosity::validParams();
   params.addClassDescription("Constant fluid viscosity formulation.");
   return params;
 }

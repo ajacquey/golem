@@ -22,14 +22,10 @@
 
 #include "GolemPermeability.h"
 
-class GolemPermeabilityKC;
-
-template <>
-InputParameters validParams<GolemPermeabilityKC>();
-
 class GolemPermeabilityKC : public GolemPermeability
 {
 public:
+  static InputParameters validParams();
   GolemPermeabilityKC(const InputParameters & parameters);
   std::vector<Real>
   computePermeability(std::vector<Real> k0, Real phi0, Real porosity, Real aperture) const;

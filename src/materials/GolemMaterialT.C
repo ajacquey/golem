@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemMaterialT);
 
-template <>
 InputParameters
-validParams<GolemMaterialT>()
+GolemMaterialT::validParams()
 {
-  InputParameters params = validParams<GolemMaterialBase>();
+  InputParameters params = GolemMaterialBase::validParams();
   params.addParam<bool>("has_heat_source_sink", false, "Has source/sink of temperature?");
   params.addRequiredParam<Real>("fluid_thermal_conductivity_initial",
                                 "The fluid thermal conductivity [W/m/K].");

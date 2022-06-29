@@ -22,14 +22,10 @@
 
 #include "GeneralUserObject.h"
 
-class GolemScaling;
-
-template <>
-InputParameters validParams<GolemScaling>();
-
 class GolemScaling : public GeneralUserObject
 {
 public:
+  static InputParameters validParams();
   GolemScaling(const InputParameters & parameters);
   virtual void initialize() {}
   virtual void execute() {}

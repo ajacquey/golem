@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemFluidViscosityLinear);
 
-template <>
 InputParameters
-validParams<GolemFluidViscosityLinear>()
+GolemFluidViscosityLinear::validParams()
 {
-  InputParameters params = validParams<GolemFluidViscosity>();
+  InputParameters params = GolemFluidViscosity::validParams();
   params.addClassDescription("Linear polynomial fitting for fluid viscosity");
   params.addRequiredParam<Real>("Tc", "The first thermal coefficient");
   params.addRequiredParam<Real>("Tv", "The second thermal coefficient");

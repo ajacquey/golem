@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GMSMassResidual);
 
-template <>
 InputParameters
-validParams<GMSMassResidual>()
+GMSMassResidual::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = Kernel::validParams();
   return params;
 }
 

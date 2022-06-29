@@ -22,14 +22,10 @@
 
 #include "Kernel.h"
 
-class GMSMassResidual;
-
-template <>
-InputParameters validParams<GMSMassResidual>();
-
 class GMSMassResidual : public Kernel
 {
 public:
+  static InputParameters validParams();
   GMSMassResidual(const InputParameters & parameters);
 
 protected:

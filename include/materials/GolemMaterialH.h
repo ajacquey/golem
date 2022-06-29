@@ -23,14 +23,10 @@
 #include "GolemMaterialBase.h"
 #include "RankTwoTensor.h"
 
-class GolemMaterialH;
-
-template <>
-InputParameters validParams<GolemMaterialH>();
-
 class GolemMaterialH : public GolemMaterialBase
 {
 public:
+  static InputParameters validParams();
   GolemMaterialH(const InputParameters & parameters);
   static MooseEnum permeabilityType();
 

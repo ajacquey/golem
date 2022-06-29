@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemFunctionReadFile);
 
-template <>
 InputParameters
-validParams<GolemFunctionReadFile>()
+GolemFunctionReadFile::validParams()
 {
-  InputParameters params = validParams<Function>();
+  InputParameters params = Function::validParams();
   params.addRequiredParam<std::string>(
       "file", "File holding csv/tab/space-separated data. It does not consider ; as a delimiter");
   return params;

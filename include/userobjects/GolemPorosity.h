@@ -22,14 +22,10 @@
 
 #include "GeneralUserObject.h"
 
-class GolemPorosity;
-
-template <>
-InputParameters validParams<GolemPorosity>();
-
 class GolemPorosity : public GeneralUserObject
 {
 public:
+  static InputParameters validParams();
   GolemPorosity(const InputParameters & parameters);
   void initialize() {}
   void execute() {}

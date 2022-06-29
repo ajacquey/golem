@@ -25,14 +25,10 @@
 #include "GolemFluidDensity.h"
 #include "GolemFluidViscosity.h"
 
-class GolemMaterialTH;
-
-template <>
-InputParameters validParams<GolemMaterialTH>();
-
 class GolemMaterialTH : public GolemMaterialH
 {
 public:
+  static InputParameters validParams();
   GolemMaterialTH(const InputParameters & parameters);
 
 protected:

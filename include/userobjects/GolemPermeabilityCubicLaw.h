@@ -22,14 +22,10 @@
 
 #include "GolemPermeability.h"
 
-class GolemPermeabilityCubicLaw;
-
-template <>
-InputParameters validParams<GolemPermeabilityCubicLaw>();
-
 class GolemPermeabilityCubicLaw : public GolemPermeability
 {
 public:
+  static InputParameters validParams();
   GolemPermeabilityCubicLaw(const InputParameters & parameters);
   std::vector<Real>
   computePermeability(std::vector<Real> k0, Real phi0, Real porosity, Real aperture) const;

@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemHardeningPlasticSaturation);
 
-template <>
 InputParameters
-validParams<GolemHardeningPlasticSaturation>()
+GolemHardeningPlasticSaturation::validParams()
 {
-  InputParameters params = validParams<GolemHardeningModel>();
+  InputParameters params = GolemHardeningModel::validParams();
   params.addClassDescription("Plastic saturation hardening class.");
   params.addRequiredParam<Real>(
       "value_initial", "The value of the parameter for all internal_parameter <= internal_0.");

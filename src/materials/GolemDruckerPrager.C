@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemDruckerPrager);
 
-template <>
 InputParameters
-validParams<GolemDruckerPrager>()
+GolemDruckerPrager::validParams()
 {
-  InputParameters params = validParams<GolemPQPlasticity>();
+  InputParameters params = GolemPQPlasticity::validParams();
   params.addClassDescription("(Non)associated Drucker-Prager plasticity with smoothing of the cone "
                              "tip and with+/-out hardening");
   params.addParam<MooseEnum>("MC_interpolation_scheme",

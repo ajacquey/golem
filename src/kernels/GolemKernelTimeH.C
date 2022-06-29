@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemKernelTimeH);
 
-template <>
 InputParameters
-validParams<GolemKernelTimeH>()
+GolemKernelTimeH::validParams()
 {
-  InputParameters params = validParams<TimeDerivative>();
+  InputParameters params = TimeDerivative::validParams();
   params.addCoupledVar("temperature", "The temperature variable.");
   // params.addCoupledVar("brine_mass", "The brine_mass variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");

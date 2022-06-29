@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemTimeControl);
 
-template <>
 InputParameters
-validParams<GolemTimeControl>()
+GolemTimeControl::validParams()
 {
-  InputParameters params = validParams<Control>();
+  InputParameters params = Control::validParams();
   params.addRequiredParam<FunctionName>("function", "The function to use.");
   params.addParam<std::vector<std::string>>(
       "enable_objects", std::vector<std::string>(), "Objects to enable.");

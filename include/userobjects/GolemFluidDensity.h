@@ -23,14 +23,10 @@
 #include "GeneralUserObject.h"
 #include "GolemScaling.h"
 
-class GolemFluidDensity;
-
-template <>
-InputParameters validParams<GolemFluidDensity>();
-
 class GolemFluidDensity : public GeneralUserObject
 {
 public:
+  static InputParameters validParams();
   GolemFluidDensity(const InputParameters & parameters);
   void initialize() {}
   void execute() {}

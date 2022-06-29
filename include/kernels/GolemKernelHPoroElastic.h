@@ -22,14 +22,10 @@
 
 #include "Kernel.h"
 
-class GolemKernelHPoroElastic;
-
-template <>
-InputParameters validParams<GolemKernelHPoroElastic>();
-
 class GolemKernelHPoroElastic : public Kernel
 {
 public:
+  static InputParameters validParams();
   GolemKernelHPoroElastic(const InputParameters & parameters);
 
 protected:

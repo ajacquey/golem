@@ -22,14 +22,10 @@
 
 #include "GolemHardeningModel.h"
 
-class GolemHardeningExponential;
-
-template <>
-InputParameters validParams<GolemHardeningExponential>();
-
 class GolemHardeningExponential : public GolemHardeningModel
 {
 public:
+  static InputParameters validParams();
   GolemHardeningExponential(const InputParameters & parameters);
   Real value(Real intnl) const;
   Real dvalue(Real intnl) const;

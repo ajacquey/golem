@@ -24,11 +24,10 @@
 
 registerMooseObject("GolemApp", GolemDiracKernelTH);
 
-template <>
 InputParameters
-validParams<GolemDiracKernelTH>()
+GolemDiracKernelTH::validParams()
 {
-  InputParameters params = validParams<DiracKernel>();
+  InputParameters params = DiracKernel::validParams();
   params.addParam<Point>("source_point", "The source point location (x, y, z).");
   params.addParam<MooseEnum>(
       "source_type", GolemDiracKernelTH::Type() = "injection", "The source type.");

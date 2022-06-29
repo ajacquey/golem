@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemVelocityBC);
 
-template <>
 InputParameters
-validParams<GolemVelocityBC>()
+GolemVelocityBC::validParams()
 {
-  InputParameters params = validParams<DirichletBCBase>();
+  InputParameters params = DirichletBCBase::validParams();
   params.addRequiredParam<Real>("velocity", "Value of the velocity applied.");
   params.suppressParameter<bool>("preset");
   return params;

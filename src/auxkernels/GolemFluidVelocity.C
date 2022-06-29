@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemFluidVelocity);
 
-template <>
 InputParameters
-validParams<GolemFluidVelocity>()
+GolemFluidVelocity::validParams()
 {
-  InputParameters params = validParams<GolemDarcyVelocity>();
+  InputParameters params = GolemDarcyVelocity::validParams();
   return params;
 }
 

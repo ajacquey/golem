@@ -20,15 +20,13 @@
 
 #include "GolemHeatFlowBC.h"
 #include "Function.h"
-#include "GolemScaling.h"
 
 registerMooseObject("GolemApp", GolemHeatFlowBC);
 
-template <>
 InputParameters
-validParams<GolemHeatFlowBC>()
+GolemHeatFlowBC::validParams()
 {
-  InputParameters params = validParams<NeumannBC>();
+  InputParameters params = NeumannBC::validParams();
   params.addParam<FunctionName>("function", "The function of the heat flow value.");
   params.addParam<UserObjectName>("scaling_uo", "The name of the scaling user object.");
   return params;

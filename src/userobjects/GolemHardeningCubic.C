@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemHardeningCubic);
 
-template <>
 InputParameters
-validParams<GolemHardeningCubic>()
+GolemHardeningCubic::validParams()
 {
-  InputParameters params = validParams<GolemHardeningModel>();
+  InputParameters params = GolemHardeningModel::validParams();
   params.addClassDescription("Cubic hardening class.");
   params.addRequiredParam<Real>(
       "value_initial", "The value of the parameter for all internal_parameter <= internal_0.");

@@ -24,11 +24,10 @@
 
 registerMooseObject("GolemApp", GolemMaterialMInelastic);
 
-template <>
 InputParameters
-validParams<GolemMaterialMInelastic>()
+GolemMaterialMInelastic::validParams()
 {
-  InputParameters params = validParams<GolemMaterialMElastic>();
+  InputParameters params = GolemMaterialMElastic::validParams();
   params.addClassDescription(
       "Base class for inelastic computation based on a classical radial return mapping algorithm.");
   params.addRangeCheckedParam<unsigned int>(

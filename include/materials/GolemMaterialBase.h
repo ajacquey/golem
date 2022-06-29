@@ -30,15 +30,10 @@
 #include "GolemPorosity.h"
 #include "GolemScaling.h"
 
-class GolemMaterialBase;
-class Function;
-
-template <>
-InputParameters validParams<GolemMaterialBase>();
-
 class GolemMaterialBase : public Material
 {
 public:
+  static InputParameters validParams();
   GolemMaterialBase(const InputParameters & parameters);
   static MooseEnum materialType();
 

@@ -22,15 +22,10 @@
 
 #include "GolemMaterialMElastic.h"
 
-class GolemInelasticBase;
-class GolemMaterialMInelastic;
-
-template <>
-InputParameters validParams<GolemMaterialMInelastic>();
-
 class GolemMaterialMInelastic : public GolemMaterialMElastic
 {
 public:
+  static InputParameters validParams();
   GolemMaterialMInelastic(const InputParameters & parameters);
 
 protected:

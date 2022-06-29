@@ -24,11 +24,10 @@
 
 registerMooseObject("GolemApp", GolemKernelTimeT);
 
-template <>
 InputParameters
-validParams<GolemKernelTimeT>()
+GolemKernelTimeT::validParams()
 {
-  InputParameters params = validParams<TimeDerivative>();
+  InputParameters params = TimeDerivative::validParams();
   params.addCoupledVar("pore_pressure", "The pore pressure variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");
   params.addParam<bool>("has_lumped_mass_matrix", false, "Has mass lumped?");

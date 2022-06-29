@@ -24,11 +24,10 @@
 
 registerMooseObject("GolemApp", GolemHardeningConstant);
 
-template <>
 InputParameters
-validParams<GolemHardeningConstant>()
+GolemHardeningConstant::validParams()
 {
-  InputParameters params = validParams<GolemHardeningModel>();
+  InputParameters params = GolemHardeningModel::validParams();
   params.addParam<Real>(
       "value", 1.0, "The value of the parameter (it is valid for all internal parameters).");
   params.addClassDescription("No hardening model.");

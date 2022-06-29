@@ -24,14 +24,10 @@
 #include "GolemSetBCFromFile.h"
 #include "GolemInterpolateBCFromFile.h"
 
-class GolemFunctionBCFromFile;
-
-template <>
-InputParameters validParams<GolemFunctionBCFromFile>();
-
 class GolemFunctionBCFromFile : public Function
 {
 public:
+  static InputParameters validParams();
   GolemFunctionBCFromFile(const InputParameters & parameters);
   virtual ~GolemFunctionBCFromFile();
   virtual Real value(Real t, const Point & p) const override;

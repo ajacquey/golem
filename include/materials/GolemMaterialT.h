@@ -22,14 +22,10 @@
 
 #include "GolemMaterialBase.h"
 
-class GolemMaterialT;
-
-template <>
-InputParameters validParams<GolemMaterialT>();
-
 class GolemMaterialT : public GolemMaterialBase
 {
 public:
+  static InputParameters validParams();
   GolemMaterialT(const InputParameters & parameters);
 
 protected:

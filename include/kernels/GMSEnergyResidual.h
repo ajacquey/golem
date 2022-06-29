@@ -22,14 +22,10 @@
 
 #include "Kernel.h"
 
-class GMSEnergyResidual;
-
-template <>
-InputParameters validParams<GMSEnergyResidual>();
-
 class GMSEnergyResidual : public Kernel
 {
 public:
+  static InputParameters validParams();
   GMSEnergyResidual(const InputParameters & parameters);
 
 protected:

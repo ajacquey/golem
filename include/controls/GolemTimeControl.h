@@ -23,15 +23,10 @@
 #include "Control.h"
 #include "Function.h"
 
-class GolemTimeControl;
-class Function;
-
-template <>
-InputParameters validParams<GolemTimeControl>();
-
 class GolemTimeControl : public Control
 {
 public:
+  static InputParameters validParams();
   GolemTimeControl(const InputParameters & parameters);
   virtual void execute() override;
 

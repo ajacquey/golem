@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemEqvInelasticStrain);
 
-template <>
 InputParameters
-validParams<GolemEqvInelasticStrain>()
+GolemEqvInelasticStrain::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   return params;
 }
 

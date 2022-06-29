@@ -23,14 +23,10 @@
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
 
-class GolemEqvInelasticStrain;
-
-template <>
-InputParameters validParams<GolemEqvInelasticStrain>();
-
 class GolemEqvInelasticStrain : public AuxKernel
 {
 public:
+  static InputParameters validParams();
   GolemEqvInelasticStrain(const InputParameters & parameters);
 
 protected:

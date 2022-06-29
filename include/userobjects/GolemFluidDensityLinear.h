@@ -22,14 +22,10 @@
 
 #include "GolemFluidDensity.h"
 
-class GolemFluidDensityLinear;
-
-template <>
-InputParameters validParams<GolemFluidDensityLinear>();
-
 class GolemFluidDensityLinear : public GolemFluidDensity
 {
 public:
+  static InputParameters validParams();
   GolemFluidDensityLinear(const InputParameters & parameters);
   Real computeDensity(Real, Real temperature, Real rho0) const;
   Real computedDensitydT(Real, Real, Real rho0) const;

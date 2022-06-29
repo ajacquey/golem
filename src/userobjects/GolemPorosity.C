@@ -20,11 +20,10 @@
 
 #include "GolemPorosity.h"
 
-template <>
 InputParameters
-validParams<GolemPorosity>()
+GolemPorosity::validParams()
 {
-  InputParameters params = validParams<GeneralUserObject>();
+  InputParameters params = GeneralUserObject::validParams();
   params.addClassDescription(
       "Golem Porosity base class. Override the virtual functions in your class.");
   return params;

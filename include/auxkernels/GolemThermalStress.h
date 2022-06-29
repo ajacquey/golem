@@ -23,14 +23,10 @@
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
 
-class GolemThermalStress;
-
-template <>
-InputParameters validParams<GolemThermalStress>();
-
 class GolemThermalStress : public AuxKernel
 {
 public:
+  static InputParameters validParams();
   GolemThermalStress(const InputParameters & parameters);
 
 protected:

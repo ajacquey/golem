@@ -23,14 +23,10 @@
 #include "AuxKernel.h"
 #include "RankTwoTensor.h"
 
-class GolemStrain;
-
-template <>
-InputParameters validParams<GolemStrain>();
-
 class GolemStrain : public AuxKernel
 {
 public:
+  static InputParameters validParams();
   GolemStrain(const InputParameters & parameters);
   static MooseEnum strainType();
 

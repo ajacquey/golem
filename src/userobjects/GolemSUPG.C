@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemSUPG);
 
-template <>
 InputParameters
-validParams<GolemSUPG>()
+GolemSUPG::validParams()
 {
-  InputParameters params = validParams<GeneralUserObject>();
+  InputParameters params = GeneralUserObject::validParams();
   params.addParam<MooseEnum>("effective_length",
                              GolemSUPG::eleType() = "min",
                              "The characteristic element length for SUPG upwinding.");

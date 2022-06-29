@@ -24,11 +24,10 @@
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
 
-template <>
 InputParameters
-validParams<GolemApp>()
+GolemApp::validParams()
 {
-  InputParameters params = validParams<MooseApp>();
+  InputParameters params = MooseApp::validParams();
 
   // Do not use legacy material output
   params.set<bool>("use_legacy_material_output") = false;

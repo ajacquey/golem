@@ -22,11 +22,10 @@
 #include "libmesh/utility.h" // for Utility::pow
 #include <petscblaslapack.h> // LAPACKgesv_
 
-template <>
 InputParameters
-validParams<GolemPQPlasticity>()
+GolemPQPlasticity::validParams()
 {
-  InputParameters params = validParams<GolemInelasticBase>();
+  InputParameters params = GolemInelasticBase::validParams();
   params.addClassDescription(
       "Base class for plasticity return-map algorithm for (P, Q) plastic models.");
   params.addRangeCheckedParam<unsigned int>(

@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemKernelH);
 
-template <>
 InputParameters
-validParams<GolemKernelH>()
+GolemKernelH::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = Kernel::validParams();
   params.addCoupledVar("temperature", "The temperature variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");
   params.addParam<bool>("has_boussinesq", false, "Has Boussinesq terms?");

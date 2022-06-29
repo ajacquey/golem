@@ -23,11 +23,10 @@
 
 registerMooseObject("GolemApp", GolemPermeabilityCubicLaw);
 
-template <>
 InputParameters
-validParams<GolemPermeabilityCubicLaw>()
+GolemPermeabilityCubicLaw::validParams()
 {
-  InputParameters params = validParams<GolemPermeability>();
+  InputParameters params = GolemPermeability::validParams();
   params.addClassDescription("Cubic law permeability formulation.");
   return params;
 }

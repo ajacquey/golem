@@ -38,11 +38,10 @@ int J_gibbs[34] = {-2, -1, 0,  1, 2, 3,  4,  5,  -9, -7,  -1, 0,   1,   3,   -3,
 
 registerMooseObject("GolemApp", GolemFluidDensityIAPWS);
 
-template <>
 InputParameters
-validParams<GolemFluidDensityIAPWS>()
+GolemFluidDensityIAPWS::validParams()
 {
-  InputParameters params = validParams<GolemFluidDensity>();
+  InputParameters params = GolemFluidDensity::validParams();
   params.addClassDescription("IAPWS fluid density formulation for region 1.");
   params.addParam<bool>("has_kelvin", false, "Is the temperature in Kelvin?");
   return params;

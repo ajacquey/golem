@@ -22,14 +22,10 @@
 
 #include "GeneralUserObject.h"
 
-class GolemHardeningModel;
-
-template <>
-InputParameters validParams<GolemHardeningModel>();
-
 class GolemHardeningModel : public GeneralUserObject
 {
 public:
+  static InputParameters validParams();
   GolemHardeningModel(const InputParameters & parameters);
   void initialize() {}
   void execute() {}

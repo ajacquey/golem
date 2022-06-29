@@ -30,11 +30,10 @@
 
 registerMooseObject("GolemApp", GolemKernelTH);
 
-template <>
 InputParameters
-validParams<GolemKernelTH>()
+GolemKernelTH::validParams()
 {
-  InputParameters params = validParams<TimeKernel>();
+  InputParameters params = TimeKernel::validParams();
   params.addRequiredCoupledVar("pore_pressure", "The pore pressure");
   params.addCoupledVar("displacements", "The displacement vector");
   params.addParam<bool>("is_conservative", false, "Is conservative?");

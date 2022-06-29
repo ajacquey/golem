@@ -22,16 +22,10 @@
 
 #include "NeumannBC.h"
 
-class GolemPressureBC;
-class Function;
-class GolemScaling;
-
-template <>
-InputParameters validParams<GolemPressureBC>();
-
 class GolemPressureBC : public NeumannBC
 {
 public:
+  static InputParameters validParams();
   GolemPressureBC(const InputParameters & parameters);
 
 protected:

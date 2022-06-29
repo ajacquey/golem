@@ -22,14 +22,10 @@
 
 #include "Function.h"
 
-class GolemFunctionReadFile;
-
-template <>
-InputParameters validParams<GolemFunctionReadFile>();
-
 class GolemFunctionReadFile : public Function
 {
 public:
+  static InputParameters validParams();
   GolemFunctionReadFile(const InputParameters & parameters);
   virtual Real value(Real t, const Point & pt) const override;
 

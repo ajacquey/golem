@@ -22,14 +22,10 @@
 
 #include "GolemHardeningModel.h"
 
-class GolemHardeningCubic;
-
-template <>
-InputParameters validParams<GolemHardeningCubic>();
-
 class GolemHardeningCubic : public GolemHardeningModel
 {
 public:
+  static InputParameters validParams();
   GolemHardeningCubic(const InputParameters & parameters);
   Real value(Real intnl) const;
   Real dvalue(Real intnl) const;

@@ -27,11 +27,10 @@
 
 registerMooseObject("GolemApp", GMSMaterial);
 
-template <>
 InputParameters
-validParams<GMSMaterial>()
+GMSMaterial::validParams()
 {
-  InputParameters params = validParams<Material>();
+  InputParameters params = Material::validParams();
   params.addClassDescription("material class to run steady pressure load and steady/transient heat "
                              "with parameters from file.");
   params.addCoupledVar("temperature", "temperature");

@@ -22,11 +22,10 @@
 
 registerMooseObject("GolemApp", GolemKernelT);
 
-template <>
 InputParameters
-validParams<GolemKernelT>()
+GolemKernelT::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = Kernel::validParams();
   params.addCoupledVar("pore_pressure", "The pore pressure variable.");
   params.addCoupledVar("displacements", "The displacement variables vector.");
   return params;

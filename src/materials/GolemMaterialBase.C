@@ -24,11 +24,10 @@
 
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592308
 
-template <>
 InputParameters
-validParams<GolemMaterialBase>()
+GolemMaterialBase::validParams()
 {
-  InputParameters params = validParams<Material>();
+  InputParameters params = Material::validParams();
   params.addParam<Real>("fluid_density_initial", 0.0, "The initial density of the fluid [kg/m^3].");
   params.addParam<Real>(
       "solid_density_initial", 0.0, "The initial density of the solid matrix [kg/m^3].");

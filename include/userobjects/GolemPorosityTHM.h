@@ -22,14 +22,10 @@
 
 #include "GolemPorosity.h"
 
-class GolemPorosityTHM;
-
-template <>
-InputParameters validParams<GolemPorosityTHM>();
-
 class GolemPorosityTHM : public GolemPorosity
 {
 public:
+  static InputParameters validParams();
   GolemPorosityTHM(const InputParameters & parameters);
   Real computePorosity(
       Real phi_old, Real dphi_dev, Real dphi_dpf, Real dphi_dT, Real dev, Real dpf, Real dT) const;

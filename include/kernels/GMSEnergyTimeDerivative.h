@@ -22,14 +22,10 @@
 
 #include "TimeDerivative.h"
 
-class GMSEnergyTimeDerivative;
-
-template <>
-InputParameters validParams<GMSEnergyTimeDerivative>();
-
 class GMSEnergyTimeDerivative : public TimeDerivative
 {
 public:
+  static InputParameters validParams();
   GMSEnergyTimeDerivative(const InputParameters & parameters);
 
 protected:
