@@ -27,6 +27,7 @@ class GolemMaterialMInelastic : public GolemMaterialMElastic
 public:
   static InputParameters validParams();
   GolemMaterialMInelastic(const InputParameters & parameters);
+  virtual void initialSetup() override;
 
 protected:
   virtual void initQpStatefulProperties();
