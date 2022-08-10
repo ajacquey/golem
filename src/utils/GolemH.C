@@ -115,6 +115,6 @@ computeKernel(std::vector<Real> k0, MooseEnum dist, Real den, int dim)
         break;
     }
   }
-  k = RankTwoTensor(kx, ky, kz);
+  k = RankTwoTensor::initializeFromRows(kx, ky, kz);
   return k;
 }

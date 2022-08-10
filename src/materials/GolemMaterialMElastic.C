@@ -441,7 +441,8 @@ GolemMaterialMElastic::computeStrain()
     case 1:
       for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
       {
-        RankTwoTensor A((*_grad_disp[0])[_qp], (*_grad_disp[1])[_qp], (*_grad_disp[2])[_qp]);
+        RankTwoTensor A = RankTwoTensor::initializeFromRows(
+            (*_grad_disp[0])[_qp], (*_grad_disp[1])[_qp], (*_grad_disp[2])[_qp]);
         _total_strain[_qp] = 0.5 * (A + A.transpose());
         _mechanical_strain[_qp] = _total_strain[_qp];
       }
@@ -449,8 +450,9 @@ GolemMaterialMElastic::computeStrain()
     case 2:
       for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
       {
-        RankTwoTensor A((*_grad_disp[0])[_qp], (*_grad_disp[1])[_qp], (*_grad_disp[2])[_qp]);
-        RankTwoTensor Fbar(
+        RankTwoTensor A = RankTwoTensor::initializeFromRows(
+            (*_grad_disp[0])[_qp], (*_grad_disp[1])[_qp], (*_grad_disp[2])[_qp]);
+        RankTwoTensor Fbar = RankTwoTensor::initializeFromRows(
             (*_grad_disp_old[0])[_qp], (*_grad_disp_old[1])[_qp], (*_grad_disp_old[2])[_qp]);
         A -= Fbar;
         _total_strain_increment[_qp] = 0.5 * (A + A.transpose());
@@ -464,8 +466,9 @@ GolemMaterialMElastic::computeStrain()
       Real ave_dfgrd_det = 0.0;
       for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
       {
-        RankTwoTensor A((*_grad_disp[0])[_qp], (*_grad_disp[1])[_qp], (*_grad_disp[2])[_qp]);
-        RankTwoTensor Fbar(
+        RankTwoTensor A = RankTwoTensor::initializeFromRows(
+            (*_grad_disp[0])[_qp], (*_grad_disp[1])[_qp], (*_grad_disp[2])[_qp]);
+        RankTwoTensor Fbar = RankTwoTensor::initializeFromRows(
             (*_grad_disp_old[0])[_qp], (*_grad_disp_old[1])[_qp], (*_grad_disp_old[2])[_qp]);
         (*_deformation_gradient)[_qp] = A;
         (*_deformation_gradient)[_qp].addIa(1.0);
@@ -879,7 +882,7 @@ GolemMaterialMElastic::GolemSubstractEigenStrain()
 void
 GolemMaterialMElastic::substractThermalEigenStrain(RankTwoTensor & strain_incr)
 {
-  RankTwoTensor thermal_es_incr;
+  RankTwoTensor thermal_es_incr = RankTwoTensor();
   if (_has_T)
   {
     Real bulk_thermal_expansion_coeff =
