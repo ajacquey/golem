@@ -20,32 +20,18 @@
 
 #pragma once
 
-#include "GolemMaterialMElastic.h"
+#include "AuxKernel.h"
+#include "RankTwoTensor.h"
 
-class GolemMaterialMInelastic : public GolemMaterialMElastic
+class GolemEqvInelasticStrainRate : public AuxKernel
 {
 public:
   static InputParameters validParams();
-  GolemMaterialMInelastic(const InputParameters & parameters);
-  virtual void initialSetup() override;
+  GolemEqvInelasticStrainRate(const InputParameters & parameters);
 
 protected:
-  virtual void initQpStatefulProperties();
-  virtual void GolemStress();
-  virtual void updateQpStress(RankTwoTensor & combined_inelastic_strain_increment);
-  virtual void updateQpStressSingleModel(RankTwoTensor & combined_inelastic_strain_increment);
-  virtual void computeAdmissibleState(unsigned model_number,
-                                      RankTwoTensor & elastic_strain_increment,
-                                      RankTwoTensor & inelastic_strain_increment,
-                                      RankFourTensor & consistent_tangent_operator);
-  virtual void computeQpJacobian(const std::vector<RankFourTensor> & consistent_tangent_operator);
-
-  const unsigned int _max_its;
-  const Real _relative_tolerance;
-  const Real _absolute_tolerance;
-  std::vector<GolemInelasticBase *> _models;
-  MaterialProperty<RankTwoTensor> & _inelastic_strain;
+  virtual Real computeValue();
+  const VariableValue & _u_old;
+  const MaterialProperty<RankTwoTensor> & _inelastic_strain;
   const MaterialProperty<RankTwoTensor> & _inelastic_strain_old;
-  const enum class TangentOperatorEnum { elastic, nonlinear } _tangent_operator_type;
-  const unsigned _num_models;
 };

@@ -18,34 +18,25 @@
 /*    along with this program.  If not, see <http://www.gnu.org/licenses/>    */
 /******************************************************************************/
 
-#pragma once
+#include "GolemVonMisesStress.h"
 
-#include "GolemMaterialMElastic.h"
+registerMooseObject("GolemApp", GolemVonMisesStress);
 
-class GolemMaterialMInelastic : public GolemMaterialMElastic
+InputParameters
+GolemVonMisesStress::validParams()
 {
-public:
-  static InputParameters validParams();
-  GolemMaterialMInelastic(const InputParameters & parameters);
-  virtual void initialSetup() override;
+  InputParameters params = AuxKernel::validParams();
+  return params;
+}
 
-protected:
-  virtual void initQpStatefulProperties();
-  virtual void GolemStress();
-  virtual void updateQpStress(RankTwoTensor & combined_inelastic_strain_increment);
-  virtual void updateQpStressSingleModel(RankTwoTensor & combined_inelastic_strain_increment);
-  virtual void computeAdmissibleState(unsigned model_number,
-                                      RankTwoTensor & elastic_strain_increment,
-                                      RankTwoTensor & inelastic_strain_increment,
-                                      RankFourTensor & consistent_tangent_operator);
-  virtual void computeQpJacobian(const std::vector<RankFourTensor> & consistent_tangent_operator);
+GolemVonMisesStress::GolemVonMisesStress(const InputParameters & parameters)
+  : AuxKernel(parameters),
+    _stress(getMaterialProperty<RankTwoTensor>("stress"))
+{
+}
 
-  const unsigned int _max_its;
-  const Real _relative_tolerance;
-  const Real _absolute_tolerance;
-  std::vector<GolemInelasticBase *> _models;
-  MaterialProperty<RankTwoTensor> & _inelastic_strain;
-  const MaterialProperty<RankTwoTensor> & _inelastic_strain_old;
-  const enum class TangentOperatorEnum { elastic, nonlinear } _tangent_operator_type;
-  const unsigned _num_models;
-};
+Real
+GolemVonMisesStress::computeValue()
+{
+  return std::sqrt(_stress[_qp].secondInvariant()); 
+}

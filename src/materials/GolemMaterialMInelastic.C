@@ -60,17 +60,6 @@ GolemMaterialMInelastic::GolemMaterialMInelastic(const InputParameters & paramet
 {
   if (_strain_model < 2)
     mooseError("GolemMaterialMInelastic: you need to use an incremental strain model!");
-
-  std::vector<MaterialName> models = getParam<std::vector<MaterialName>>("inelastic_models");
-  for (unsigned int i = 0; i < models.size(); ++i)
-  {
-    GolemInelasticBase * base = dynamic_cast<GolemInelasticBase *>(&getMaterialByName(models[i]));
-    if (base)
-      _models.push_back(base);
-    else
-      mooseError("GolemMaterialMInelastic: the inelastic model " + models[i] +
-                 " is not compatible with the class.");
-  }
 }
 
 void
@@ -78,6 +67,21 @@ GolemMaterialMInelastic::initQpStatefulProperties()
 {
   GolemMaterialMElastic::initQpStatefulProperties();
   _inelastic_strain[_qp].zero();
+}
+
+void
+GolemMaterialMInelastic::initialSetup()
+{
+  std::vector<MaterialName> models = getParam<std::vector<MaterialName>>("inelastic_models");
+  for (unsigned int i = 0; i < models.size(); ++i)
+  {
+    GolemInelasticBase * base = dynamic_cast<GolemInelasticBase *>(&this->getMaterialByName(models[i]));
+    if (base)
+      _models.push_back(base);
+    else
+      mooseError("GolemMaterialMInelastic: the inelastic model " + models[i] +
+                 " is not compatible with the class.");
+  }
 }
 
 void
