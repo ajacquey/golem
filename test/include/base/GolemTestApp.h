@@ -2,14 +2,10 @@
 
 #include "MooseApp.h"
 
-class GolemTestApp;
-
-template <>
-InputParameters validParams<GolemTestApp>();
-
 class GolemTestApp : public MooseApp
 {
 public:
+  static InputParameters validParams();
   GolemTestApp(InputParameters parameters);
   virtual ~GolemTestApp();
 

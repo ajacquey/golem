@@ -5,11 +5,10 @@
 #include "MooseSyntax.h"
 #include "ModulesApp.h"
 
-template <>
 InputParameters
-validParams<GolemTestApp>()
+GolemTestApp::validParams()
 {
-  InputParameters params = validParams<GolemApp>();
+  InputParameters params = GolemApp::validParams();
   return params;
 }
 
