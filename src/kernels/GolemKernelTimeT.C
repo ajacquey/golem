@@ -84,9 +84,10 @@ GolemKernelTimeT::GolemKernelTimeT(const InputParameters & parameters)
 void
 GolemKernelTimeT::computeResidual()
 {
-  DenseVector<Number> & re = _assembly.residualBlock(_var.number());
-  _local_re.resize(re.size());
-  _local_re.zero();
+  prepareVectorTag(_assembly, _var.number());
+
+  precalculateResidual();
+
   Real inv_dt = 1.0 / _dt;
   Real weight = 0.0;
   Real dT_dt = 0.0;
@@ -119,8 +120,8 @@ GolemKernelTimeT::computeResidual()
   }
   else
   {
-    for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
-      for (_i = 0; _i < _test.size(); ++_i)
+    for (_i = 0; _i < _test.size(); _i++)
+      for (_qp = 0; _qp < _qrule->n_points(); _qp++)
       {
         weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp];
         dT_dt = (_u[_qp] - _u_old[_qp]) * inv_dt;
@@ -137,12 +138,14 @@ GolemKernelTimeT::computeResidual()
         _local_re(_i) += _scaling_factor[_qp] * weight * res;
       }
   }
-  re += _local_re;
+
+  accumulateTaggedLocalResidual();
+
   if (_has_save_in)
   {
     Threads::spin_mutex::scoped_lock lock(Threads::spin_mtx);
-    for (unsigned int i = 0; i < _save_in.size(); ++i)
-      _save_in[i]->sys().solution().add_vector(_local_re, _save_in[i]->dofIndices());
+    for (const auto & var : _save_in)
+      var->sys().solution().add_vector(_local_re, var->dofIndices());
   }
 }
 
@@ -159,9 +162,10 @@ GolemKernelTimeT::computeQpResidual()
 void
 GolemKernelTimeT::computeJacobian()
 {
-  DenseMatrix<Number> & ke = _assembly.jacobianBlock(_var.number(), _var.number());
-  _local_ke.resize(ke.m(), ke.n());
-  _local_ke.zero();
+  prepareMatrixTag(_assembly, _var.number(), _var.number());
+
+  precalculateJacobian();
+
   Real inv_dt = 1.0 / _dt;
   Real weight = 0.0;
   Real dT_dt = 0.0;
@@ -199,9 +203,9 @@ GolemKernelTimeT::computeJacobian()
   }
   else
   {
-    for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
-      for (_i = 0; _i < _test.size(); ++_i)
-        for (_j = 0; _j < _phi.size(); ++_j)
+    for (_i = 0; _i < _test.size(); _i++)
+      for (_j = 0; _j < _phi.size(); _j++)
+        for (_qp = 0; _qp < _qrule->n_points(); _qp++)
         {
           weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp] * _phi[_j][_qp];
           jac = 0.0;
@@ -223,13 +227,12 @@ GolemKernelTimeT::computeJacobian()
           _local_ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
         }
   }
-  ke += _local_ke;
-  if (_has_diag_save_in)
+  
+  accumulateTaggedLocalMatrix();
+
+  if (_has_diag_save_in && !_sys.computingScalingJacobian())
   {
-    unsigned int rows = ke.m();
-    DenseVector<Number> diag(rows);
-    for (unsigned int i = 0; i < rows; ++i)
-      diag(i) = _local_ke(i, i);
+    DenseVector<Number> diag = _assembly.getJacobianDiagonal(_local_ke);
     Threads::spin_mutex::scoped_lock lock(Threads::spin_mtx);
     for (const auto & var : _diag_save_in)
       var->sys().solution().add_vector(diag, var->dofIndices());
@@ -252,7 +255,9 @@ GolemKernelTimeT::computeOffDiagJacobian(const unsigned int jvar_num)
   if (jvar_num == _var.number())
     computeJacobian();
 
-  DenseMatrix<Number> & ke = _assembly.jacobianBlock(_var.number(), jvar_num);
+  // DenseMatrix<Number> & ke = _assembly.jacobianBlock(_var.number(), jvar_num);
+  prepareMatrixTag(_assembly, _var.number(), jvar_num);
+
   Real inv_dt = 1.0 / _dt;
   Real weight = 0.0;
   Real dT_dt = 0.0;
@@ -280,7 +285,7 @@ GolemKernelTimeT::computeOffDiagJacobian(const unsigned int jvar_num)
         if ((_has_disp && _has_pf) && (jvar_num == _disp_var[i]))
           jac += _dT_kernel_time_dev[_qp_nodal] * dT_dt;
 
-      ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * jac;
+      _local_ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * jac;
     }
   }
   else
@@ -304,7 +309,7 @@ GolemKernelTimeT::computeOffDiagJacobian(const unsigned int jvar_num)
             if ((_has_disp && _has_pf) && (jvar_num == _disp_var[i]))
               jac += _dT_kernel_time_dev[_qp] * dT_dt * _grad_phi[_j][_qp](i);
 
-          ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
+          _local_ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
         }
   }
 }
