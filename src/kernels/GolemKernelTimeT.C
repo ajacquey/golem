@@ -312,6 +312,7 @@ GolemKernelTimeT::computeOffDiagJacobian(const unsigned int jvar_num)
           _local_ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
         }
   }
+  accumulateTaggedLocalMatrix();
 }
 
 Real
