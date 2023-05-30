@@ -84,9 +84,10 @@ GolemKernelTimeT::GolemKernelTimeT(const InputParameters & parameters)
 void
 GolemKernelTimeT::computeResidual()
 {
-  DenseVector<Number> & re = _assembly.residualBlock(_var.number());
-  _local_re.resize(re.size());
-  _local_re.zero();
+  prepareVectorTag(_assembly, _var.number());
+
+  precalculateResidual();
+
   Real inv_dt = 1.0 / _dt;
   Real weight = 0.0;
   Real dT_dt = 0.0;
@@ -119,8 +120,8 @@ GolemKernelTimeT::computeResidual()
   }
   else
   {
-    for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
-      for (_i = 0; _i < _test.size(); ++_i)
+    for (_i = 0; _i < _test.size(); _i++)
+      for (_qp = 0; _qp < _qrule->n_points(); _qp++)
       {
         weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp];
         dT_dt = (_u[_qp] - _u_old[_qp]) * inv_dt;
@@ -137,12 +138,14 @@ GolemKernelTimeT::computeResidual()
         _local_re(_i) += _scaling_factor[_qp] * weight * res;
       }
   }
-  re += _local_re;
+
+  accumulateTaggedLocalResidual();
+
   if (_has_save_in)
   {
     Threads::spin_mutex::scoped_lock lock(Threads::spin_mtx);
-    for (unsigned int i = 0; i < _save_in.size(); ++i)
-      _save_in[i]->sys().solution().add_vector(_local_re, _save_in[i]->dofIndices());
+    for (const auto & var : _save_in)
+      var->sys().solution().add_vector(_local_re, var->dofIndices());
   }
 }
 
@@ -159,9 +162,10 @@ GolemKernelTimeT::computeQpResidual()
 void
 GolemKernelTimeT::computeJacobian()
 {
-  DenseMatrix<Number> & ke = _assembly.jacobianBlock(_var.number(), _var.number());
-  _local_ke.resize(ke.m(), ke.n());
-  _local_ke.zero();
+  prepareMatrixTag(_assembly, _var.number(), _var.number());
+
+  precalculateJacobian();
+
   Real inv_dt = 1.0 / _dt;
   Real weight = 0.0;
   Real dT_dt = 0.0;
@@ -199,9 +203,9 @@ GolemKernelTimeT::computeJacobian()
   }
   else
   {
-    for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
-      for (_i = 0; _i < _test.size(); ++_i)
-        for (_j = 0; _j < _phi.size(); ++_j)
+    for (_i = 0; _i < _test.size(); _i++)
+      for (_j = 0; _j < _phi.size(); _j++)
+        for (_qp = 0; _qp < _qrule->n_points(); _qp++)
         {
           weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp] * _phi[_j][_qp];
           jac = 0.0;
@@ -223,13 +227,12 @@ GolemKernelTimeT::computeJacobian()
           _local_ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
         }
   }
-  ke += _local_ke;
-  if (_has_diag_save_in)
+  
+  accumulateTaggedLocalMatrix();
+
+  if (_has_diag_save_in && !_sys.computingScalingJacobian())
   {
-    unsigned int rows = ke.m();
-    DenseVector<Number> diag(rows);
-    for (unsigned int i = 0; i < rows; ++i)
-      diag(i) = _local_ke(i, i);
+    DenseVector<Number> diag = _assembly.getJacobianDiagonal(_local_ke);
     Threads::spin_mutex::scoped_lock lock(Threads::spin_mtx);
     for (const auto & var : _diag_save_in)
       var->sys().solution().add_vector(diag, var->dofIndices());
@@ -249,46 +252,63 @@ GolemKernelTimeT::computeQpJacobian()
 void
 GolemKernelTimeT::computeOffDiagJacobian(const unsigned int jvar_num)
 {
+   const auto & jvar = getVariable(jvar_num);
+
   if (jvar_num == _var.number())
     computeJacobian();
-
-  DenseMatrix<Number> & ke = _assembly.jacobianBlock(_var.number(), jvar_num);
-  Real inv_dt = 1.0 / _dt;
-  Real weight = 0.0;
-  Real dT_dt = 0.0;
-  Real jac = 0.0;
-  if (_has_lumped_mass_matrix)
-  {
-    _qp_map.assign(_test.size(), -1);
-    for (unsigned _qp = 0; _qp < _qrule->n_points(); ++_qp)
-      _qp_map[(*_node_number)[_qp]] = _qp;
-    for (_i = 0; _i < _test.size(); ++_i)
-    {
-      const int _qp_nodal = _qp_map[_i];
-      if (_qp_nodal == -1)
-        return;
-      weight = (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
-      dT_dt = ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) * inv_dt;
-      jac = 0.0;
-      if (_has_pf && (jvar_num == _pf_var))
-      {
-        jac += _dT_kernel_time_dpf[_qp_nodal] * dT_dt;
-        if (_has_boussinesq)
-          jac += _dT_kernel_time_dpf[_qp_nodal] * inv_dt * (*_nodal_temp)[_qp_nodal];
-      }
-      for (unsigned i = 0; i < _ndisp; ++i)
-        if ((_has_disp && _has_pf) && (jvar_num == _disp_var[i]))
-          jac += _dT_kernel_time_dev[_qp_nodal] * dT_dt;
-
-      ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * jac;
-    }
-  }
   else
   {
-    for (_qp = 0; _qp < _qrule->n_points(); ++_qp)
-      for (_i = 0; _i < _test.size(); ++_i)
-        for (_j = 0; _j < _phi.size(); ++_j)
+    prepareMatrixTag(_assembly, _var.number(), jvar_num);
+
+    // This (undisplaced) jvar could potentially yield the wrong phi size if this object is acting
+    // on the displaced mesh
+    auto phi_size = jvar.dofIndices().size();
+    mooseAssert(
+        phi_size * jvar.count() == _local_ke.n(),
+        "The size of the phi container does not match the number of local Jacobian columns");
+
+    if (_local_ke.m() != _test.size())
+      return;
+
+    precalculateOffDiagJacobian(jvar_num);
+
+    Real inv_dt = 1.0 / _dt;
+    Real weight = 0.0;
+    Real dT_dt = 0.0;
+    Real jac = 0.0;
+
+    if (_has_lumped_mass_matrix)
+    {
+      _qp_map.assign(_test.size(), -1);
+      for (_qp = 0; _qp < _qrule->n_points(); _qp++)
+        _qp_map[(*_node_number)[_qp]] = _qp;
+      for (_i = 0; _i < _test.size(); _i++)
+      {
+        const int _qp_nodal = _qp_map[_i];
+        if (_qp_nodal == -1)
+          return;
+        weight = (_current_elem->volume() * _scaling_factor[_qp_nodal]) / _current_elem->n_nodes();
+        dT_dt = ((*_nodal_temp)[_qp_nodal] - (*_nodal_temp_old)[_qp_nodal]) * inv_dt;
+        jac = 0.0;
+        if (_has_pf && (jvar_num == _pf_var))
         {
+          jac += _dT_kernel_time_dpf[_qp_nodal] * dT_dt;
+          if (_has_boussinesq)
+            jac += _dT_kernel_time_dpf[_qp_nodal] * inv_dt * (*_nodal_temp)[_qp_nodal];
+        }
+        for (unsigned i = 0; i < _ndisp; ++i)
+          if ((_has_disp && _has_pf) && (jvar_num == _disp_var[i]))
+            jac += _dT_kernel_time_dev[_qp_nodal] * dT_dt;
+
+        _local_ke(_i, _i) += _scaling_factor[_qp_nodal] * weight * jac;
+      }
+    }
+    else
+    {
+      for (_i = 0; _i < _test.size(); _i++)
+        for (_j = 0; _j < phi_size; _j++)
+          for (_qp = 0; _qp < _qrule->n_points(); _qp++)
+          {
           weight = _JxW[_qp] * _coord[_qp] * _test[_i][_qp];
           dT_dt = (_u[_qp] - _u_old[_qp]) * inv_dt;
           jac = 0.0;
@@ -304,8 +324,11 @@ GolemKernelTimeT::computeOffDiagJacobian(const unsigned int jvar_num)
             if ((_has_disp && _has_pf) && (jvar_num == _disp_var[i]))
               jac += _dT_kernel_time_dev[_qp] * dT_dt * _grad_phi[_j][_qp](i);
 
-          ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
+          _local_ke(_i, _j) += _scaling_factor[_qp] * weight * jac;
         }
+    }
+
+    accumulateTaggedLocalMatrix();
   }
 }
 
