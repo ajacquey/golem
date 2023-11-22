@@ -68,7 +68,7 @@ GolemKernelM::GolemKernelM(const InputParameters & parameters)
     _disp_var[i] = coupled("displacements", i);
   if (_use_finite_deform_jacobian)
   {
-    _assembly_undisplaced = &_fe_problem.assembly(_tid);
+    _assembly_undisplaced = &_fe_problem.assembly(_tid, _sys.number());
     _grad_phi_undisplaced = &(*_assembly_undisplaced).gradPhi();
     _deformation_gradient = &getMaterialProperty<RankTwoTensor>("deformation_gradient");
     _deformation_gradient_old = &getMaterialPropertyOld<RankTwoTensor>("deformation_gradient");
