@@ -6,44 +6,44 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
     initial_condition = 0.0
-  [../]
+  []
 []
 
 [Kernels]
-  [./H_time]
+  [H_time]
     type = GolemKernelTimeH
     variable = pore_pressure
-  [../]
-  [./HKernel]
+  []
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
+  []
 []
 
 [Functions]
-  [./q_func]
+  [q_func]
     type = ParsedFunction
-    value = 'q1*t'
-    vars = 'q1'
-    vals = '4.46530093e-11'
-  [../]
+    expression = 'q1*t'
+    symbol_names = 'q1'
+    symbol_values = '4.46530093e-11'
+  []
 []
 
 [BCs]
-  [./q_right]
+  [q_right]
     type = FunctionNeumannBC
     variable = pore_pressure
     boundary = right
     function = q_func
-  [../]
+  []
 []
 
 [Materials]
-  [./hydro_1]
+  [hydro_1]
     type = GolemMaterialH
     block = 0
     permeability_initial = 1.0e-14
@@ -54,8 +54,8 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
-  [./hydro_2]
+  []
+  [hydro_2]
     type = GolemMaterialH
     block = 1
     permeability_initial = 1.0e-14
@@ -66,26 +66,26 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -96,7 +96,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

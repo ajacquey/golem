@@ -46,6 +46,7 @@ GolemMaterialMElastic::validParams()
   params.addParam<Real>("young_modulus", "The young modulus [Pa].");
   params.addParam<std::vector<FunctionName>>(
       "background_stress",
+      {},
       "A list of functions describing the background stress. If provided, "
       "there must be 3 of these, corresponding to the xx, yy, zz components.");
   params.addParam<Real>("solid_bulk_modulus", 1e+99, "The solid bulk modulus [Pa].");
@@ -251,17 +252,19 @@ GolemMaterialMElastic::setElasticModuli()
 void
 GolemMaterialMElastic::setBackgroundStress()
 {
-  const std::vector<FunctionName> & fcn_names(
-      getParam<std::vector<FunctionName>>("background_stress"));
-  const unsigned num = fcn_names.size();
-  if (!(num == 0 || num == 3))
+  const std::vector<FunctionName> fcn_names = getParam<std::vector<FunctionName>>("background_stress");
+  _num_background_stress = fcn_names.size();
+  if (!(_num_background_stress == 0 || _num_background_stress == 3))
     mooseError("Either zero or 3 background stress functions must be provided to GolemMaterialM*. "
                "You supplied ",
-               num,
+               _num_background_stress,
                ".\n");
-  _background_stress.resize(num);
-  for (unsigned i = 0; i < num; ++i)
-    _background_stress[i] = &getFunctionByName(fcn_names[i]);
+  if (_num_background_stress > 0)
+  {
+    _background_stress.resize(_num_background_stress);
+    for (unsigned i = 0; i < _num_background_stress; ++i)
+      _background_stress[i] = &getFunctionByName(fcn_names[i]);
+  }
 }
 
 void
@@ -413,7 +416,7 @@ GolemMaterialMElastic::initQpStatefulProperties()
 {
   _mechanical_strain[_qp].zero();
   _stress[_qp].zero();
-  if (_background_stress.size() == 3)
+  if (_num_background_stress == 3)
     for (unsigned i = 0; i < 3; ++i)
       _stress[_qp](i, i) = _background_stress[i]->value(_t, _q_point[_qp]);
   if (_strain_model > 2)

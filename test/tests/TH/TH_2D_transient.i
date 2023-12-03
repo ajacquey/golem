@@ -15,113 +15,113 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
     initial_condition = 0.0
-  [../]
-  [./temperature]
+  []
+  [temperature]
     order = FIRST
     family = LAGRANGE
    initial_condition = 0.0
-  [../]
+  []
 []
 
 [Kernels]
-  [./HKernel]
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
-  [./temp_time]
+  []
+  [temp_time]
     type = GolemKernelTimeT
     variable = temperature
-  [../]
-  [./THKernel]
+  []
+  [THKernel]
     type = GolemKernelTH
     variable = temperature
     is_conservative = true
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./vx]
+  [vx]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./vy]
+  []
+  [vy]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./vz]
+  []
+  [vz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./darcyx]
+  [darcyx]
     type = GolemDarcyVelocity
     variable = vx
     component = 0
-  [../]
-  [./darcyy]
+  []
+  [darcyy]
     type = GolemDarcyVelocity
     variable = vy
     component = 1
-  [../]
-  [./darcyz]
+  []
+  [darcyz]
     type = GolemDarcyVelocity
     variable = vz
     component = 2
-  [../]
+  []
 []
 
 [Functions]
-  [./T_bc_func_y]
+  [T_bc_func_y]
     type = PiecewiseMultilinear
     data_file = BC_y.txt
-  [../]
-  [./T0_func]
+  []
+  [T0_func]
     type = ConstantFunction
     value = 10.0
-  [../]
-  [./T_bc_func]
+  []
+  [T_bc_func]
     type = CompositeFunction
     functions = 'T_bc_func_y T0_func'
-  [../]
+  []
 []
 
 [BCs]
-  [./p0_left]
+  [p0_left]
     type = DirichletBC
     variable = pore_pressure
     boundary = left
     value = 2.0e+04
     preset = true
-  [../]
-  [./p_right]
+  []
+  [p_right]
     type = DirichletBC
     variable = pore_pressure
     boundary = right
     value = 0.0
     preset = true
-  [../]
-  [./T_left]
+  []
+  [T_left]
     type = FunctionDirichletBC
     variable = temperature
     boundary = left
     function = T_bc_func
     preset = true
-  [../]
-  [./T_no_bc]
+  []
+  [T_no_bc]
     type = GolemConvectiveTHBC
     variable = temperature
     boundary = 'right top bottom'
-  [../]
+  []
 []
 
 [Materials]
-  [./THMaterial]
+  [THMaterial]
     type = GolemMaterialTH
     block = 0
     porosity_initial = 0.1
@@ -137,47 +137,47 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./fieldsplit]
+  [fieldsplit]
     type = FSP
     topsplit = pT
-    [./pT]
+    [pT]
       splitting = 'p T'
       splitting_type = multiplicative
       petsc_options_iname = '-snes_type -snes_linesearch_type
                              -snes_atol -snes_rtol -snes_max_it'
       petsc_options_value = 'newtonls basic
                              1.0e-05 1.0e-12 25'
-    [../]
-    [./p]
+    []
+    [p]
      vars = 'pore_pressure'
      petsc_options_iname = '-pc_type -pc_hypre_type'
      petsc_options_value = 'hypre boomeramg'
-    [../]
-    [./T]
+    []
+    [T]
      vars = 'temperature'
      petsc_options_iname = '-pc_type -pc_hypre_type'
      petsc_options_value = 'hypre boomeramg'
-    [../]
-  [../]
+    []
+  []
 []
 
 [Executioner]

@@ -20,127 +20,127 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./temperature]
+  []
+  [temperature]
     order = FIRST
     family = LAGRANGE
     initial_condition = 50.0
-  [../]
+  []
 []
 
 [Kernels]
-  [./Htime]
+  [Htime]
     type = GolemKernelTimeH
     variable = pore_pressure
-  [../]
-  [./HKernel]
+  []
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
-  [./Ttime]
+  []
+  [Ttime]
     type = GolemKernelTimeT
     variable = temperature
-  [../]
-  [./TKernel]
+  []
+  [TKernel]
     type = GolemKernelT
     variable = temperature
-  [../]
-  [./THKernel]
+  []
+  [THKernel]
     type = GolemKernelTH
     variable = temperature
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./vx]
+  [vx]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./vy]
+  []
+  [vy]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./vz]
+  []
+  [vz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./darcyx]
+  [darcyx]
     type = GolemDarcyVelocity
     variable = vx
     component = 0
-  [../]
-  [./darcyy]
+  []
+  [darcyy]
     type = GolemDarcyVelocity
     variable = vy
     component = 1
-  [../]
-  [./darcyz]
+  []
+  [darcyz]
     type = GolemDarcyVelocity
     variable = vz
     component = 2
-  [../]
-  [./fluid_density_aux]
+  []
+  [fluid_density_aux]
     type = MaterialRealAux
     variable = fluid_density
     property = fluid_density
-  [../]
-  [./fluid_viscosity_aux]
+  []
+  [fluid_viscosity_aux]
     type = MaterialRealAux
     variable = fluid_viscosity
     property = fluid_viscosity
-  [../]
+  []
 []
 
 [Functions]
-  [./hydrostat]
+  [hydrostat]
     type = ParsedFunction
-    value = 'p0-rho_f*g*z'
-    vars = 'p0 rho_f g'
-    vals = '1.0 1000e-06 9.81'
-  [../]
+    expression = 'p0-rho_f*g*z' 
+    symbol_names = 'p0 rho_f g'
+    symbol_values = '1.0 1000e-06 9.81'
+  []
 []
 
 [ICs]
-  [./pf_ic]
+  [pf_ic]
     type = FunctionIC
     variable = pore_pressure
     function = hydrostat
-  [../]
+  []
 []
 
 [BCs]
-  [./p_front]
+  [p_front]
     type = DirichletBC
     variable = pore_pressure
     boundary = front
     value = 1.0
     preset = false
-  [../]
-  [./T_front]
+  []
+  [T_front]
     type = DirichletBC
     variable = temperature
     boundary = front
     value = 10
     preset = false
-  [../]
+  []
 []
 
 [Materials]
-  [./THMaterial]
+  [THMaterial]
     type = GolemMaterialTH
     block = 0
     has_gravity = true
@@ -159,39 +159,39 @@
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
     supg_uo = supg
-  [../]
+  []
 []
 
 [UserObjects]
-  [./scaling]
+  [scaling]
     type = GolemScaling
     characteristic_length = 1.0
     characteristic_stress = 1.0e+06
     characteristic_time = 1.0
     characteristic_temperature = 1.0
-  [../]
-  [./porosity]
+  []
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityIAPWS
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityIAPWS
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
-  [./supg]
+  []
+  [supg]
     type = GolemSUPG
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./fieldsplit]
+  [fieldsplit]
     type = FSP
     topsplit = pT
-    [./pT]
+    [pT]
       splitting = 'p T'
       splitting_type = multiplicative
       petsc_options_iname = '-ksp_type
@@ -202,18 +202,18 @@
                              1.0e-12 50
                              newtonls cp
                              1.0e-05 1.0e-12 25'
-    [../]
-    [./p]
+    []
+    [p]
      vars = 'pore_pressure'
      petsc_options_iname = '-ksp_type -pc_type -sub_pc_type -sub_pc_factor_levels -ksp_rtol -ksp_max_it'
      petsc_options_value = 'fgmres asm ilu 1 1e-12 500'
-    [../]
-    [./T]
+    []
+    [T]
      vars = 'temperature'
      petsc_options_iname = '-ksp_type -pc_type -pc_hypre_type -ksp_rtol -ksp_max_it'
      petsc_options_value = 'preonly hypre boomeramg 1e-12 500'
-    [../]
-  [../]
+    []
+  []
 []
 
 [Executioner]

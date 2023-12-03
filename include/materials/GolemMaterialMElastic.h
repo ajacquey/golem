@@ -98,6 +98,7 @@ protected:
   Real _G;
   Real _p_hat;
   // SetBackgroundStress
+  unsigned int _num_background_stress;
   std::vector<const Function *> _background_stress;
   // ============================ HM properties ================================
   bool _has_pf;

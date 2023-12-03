@@ -6,57 +6,57 @@
 []
 
 [Variables]
-  [./temperature]
+  [temperature]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./T_time]
+  [T_time]
     type = GolemKernelTimeT
     variable = temperature
-  [../]
-  [./TKernel]
+  []
+  [TKernel]
     type = GolemKernelT
     variable = temperature
-  [../]
+  []
 []
 
 [Functions]
-  [./IC_x_func]
+  [IC_x_func]
     type = PiecewiseMultilinear
     data_file = IC_x.txt
-  [../]
+  []
 []
 
 [ICs]
-  [./T_IC]
+  [T_IC]
     type = FunctionIC
     variable = temperature
     function = 'IC_x_func'
-  [../]
+  []
 []
 
 [BCs]
-  [./T0_left1]
+  [T0_left1]
     type = DirichletBC
     variable = temperature
     boundary = left1
     value = 0.0
     preset = true
-  [../]
-  [./T0_right1]
+  []
+  [T0_right1]
     type = DirichletBC
     variable = temperature
     boundary = right1
     value = 0.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./thermal_left]
+  [thermal_left]
     type = GolemMaterialT
     block = 0
     fluid_thermal_conductivity_initial = 1.0
@@ -65,8 +65,8 @@
     solid_density_initial = 2000
     porosity_uo = porosity
     fluid_density_uo = fluid_density
-  [../]
-  [./thermal_right]
+  []
+  [thermal_right]
     type = GolemMaterialT
     block = 1
     fluid_thermal_conductivity_initial = 1.0
@@ -75,20 +75,20 @@
     solid_density_initial = 2000
     porosity_uo = porosity
     fluid_density_uo = fluid_density
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -99,7 +99,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

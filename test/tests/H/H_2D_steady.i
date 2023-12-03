@@ -11,67 +11,67 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./HKernel]
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
+  []
 []
 
 [Functions]
-  [./p_right_func]
+  [p_right_func]
     type = ParsedFunction
-    value = 'p0*y/L'
-    vars = 'p0 L'
-    vals = '1.0e+06 1.0'
-  [../]
-  [./p_top_func]
+    expression = 'p0*y/L'
+    symbol_names = 'p0 L'
+    symbol_values = '1.0e+06 1.0'
+  []
+  [p_top_func]
     type = ParsedFunction
-    value = 'p0*x/L'
-    vars = 'p0 L'
-    vals = '1.0e+06 1.0'
-  [../]
+    expression = 'p0*x/L'
+    symbol_names = 'p0 L'
+    symbol_values = '1.0e+06 1.0'
+  []
 []
 
 [BCs]
-  [./p0_left]
+  [p0_left]
     type = DirichletBC
     variable = pore_pressure
     boundary = left
     value = 0.0
     preset = true
-  [../]
-  [./p0_bottom]
+  []
+  [p0_bottom]
     type = DirichletBC
     variable = pore_pressure
     boundary = bottom
     value = 0.0
     preset = true
-  [../]
-  [./p_right]
+  []
+  [p_right]
     type = FunctionDirichletBC
     variable = pore_pressure
     boundary = right
     function = p_right_func
     preset = true
-  [../]
-  [./p_top]
+  []
+  [p_top]
     type = FunctionDirichletBC
     variable = pore_pressure
     boundary = top
     function = p_top_func
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./hydro]
+  [hydro]
     type = GolemMaterialH
     block = 0
     permeability_initial = 1.0e-15
@@ -80,26 +80,26 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -110,7 +110,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

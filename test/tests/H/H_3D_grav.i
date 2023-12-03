@@ -13,31 +13,31 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./HKernel]
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
+  []
 []
 
 [BCs]
-  [./p0_front]
+  [p0_front]
     type = DirichletBC
     variable = pore_pressure
     boundary = front
     value = 0.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./hydro]
+  [hydro]
     type = GolemMaterialH
     block = 0
     has_gravity = true
@@ -49,26 +49,26 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -79,7 +79,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

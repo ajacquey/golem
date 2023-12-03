@@ -18,98 +18,98 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
     initial_condition = 0.0
-  [../]
-  [./temperature]
+  []
+  [temperature]
     order = FIRST
     family = LAGRANGE
    initial_condition = 0.0
-  [../]
+  []
 []
 
 [Kernels]
-  [./HKernel]
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
-  [./temp_time]
+  []
+  [temp_time]
     type = GolemKernelTimeT
     variable = temperature
-  [../]
-  [./THKernel]
+  []
+  [THKernel]
     type = GolemKernelTH
     variable = temperature
     is_conservative = true
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./vx]
+  [vx]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./vy]
+  []
+  [vy]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./vz]
+  []
+  [vz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./darcyx]
+  [darcyx]
     type = GolemDarcyVelocity
     variable = vx
     component = 0
-  [../]
-  [./darcyy]
+  []
+  [darcyy]
     type = GolemDarcyVelocity
     variable = vy
     component = 1
-  [../]
-  [./darcyz]
+  []
+  [darcyz]
     type = GolemDarcyVelocity
     variable = vz
     component = 2
-  [../]
+  []
 []
 
 [BCs]
-  [./p_left]
+  [p_left]
     type = DirichletBC
     variable = pore_pressure
     boundary = left
     value = 1.0e+05
     preset = true
-  [../]
-  [./p0_right]
+  []
+  [p0_right]
     type = DirichletBC
     variable = pore_pressure
     boundary = right
     value = 0.0
     preset = true
-  [../]
-  [./T0_left]
+  []
+  [T0_left]
     type = DirichletBC
     variable = temperature
     boundary = left
     value = 10
     preset = true
-  [../]
-  [./T_right]
+  []
+  [T_right]
     type = GolemConvectiveTHBC
     variable = temperature
     boundary = right
-  [../]
+  []
 []
 
 [Materials]
-  [./THMaterial]
+  [THMaterial]
     type = GolemMaterialTH
     block = 0
     porosity_initial = 0.1
@@ -125,47 +125,47 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./fieldsplit]
+  [fieldsplit]
     type = FSP
     topsplit = pT
-    [./pT]
+    [pT]
       splitting = 'p T'
       splitting_type = multiplicative
       petsc_options_iname = '-snes_type -snes_linesearch_type
                              -snes_atol -snes_rtol -snes_max_it'
       petsc_options_value = 'newtonls basic
                              1.0e-05 1.0e-12 25'
-    [../]
-    [./p]
+    []
+    [p]
      vars = 'pore_pressure'
      petsc_options_iname = '-pc_type -pc_hypre_type'
      petsc_options_value = 'hypre boomeramg'
-    [../]
-    [./T]
+    []
+    [T]
      vars = 'temperature'
      petsc_options_iname = '-pc_type -pc_hypre_type'
      petsc_options_value = 'hypre boomeramg'
-    [../]
-  [../]
+    []
+  []
 []
 
 [Executioner]

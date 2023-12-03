@@ -17,129 +17,129 @@
 []
 
 [Variables]
-  [./disp_x]
+  [disp_x]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_y]
+  []
+  [disp_y]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_z]
+  []
+  [disp_z]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./MKernel_x]
+  [MKernel_x]
     type = GolemKernelM
     variable = disp_x
     component = 0
-  [../]
-  [./MKernel_y]
+  []
+  [MKernel_y]
     type = GolemKernelM
     variable = disp_y
     component = 1
-  [../]
-  [./MKernel_z]
+  []
+  [MKernel_z]
     type = GolemKernelM
     variable = disp_z
     component = 2
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./strain_xy]
+  [strain_xy]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./stress_xy]
+  []
+  [stress_xy]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  #[./strain_xy_analytical]
+  []
+  #[strain_xy_analytical]
   #  order = CONSTANT
   #  family = MONOMIAL
-  #[../]
-  #[./stress_xy_analytical]
+  #[]
+  #[stress_xy_analytical]
   #  order = CONSTANT
   #  family = MONOMIAL
-  #[../]
+  #[]
 []
 
 [AuxKernels]
-  [./strain_xy]
+  [strain_xy]
     type = GolemStrain
     variable = strain_xy
     index_i = 0
     index_j = 1
-  [../]
-  [./stress_xy]
+  []
+  [stress_xy]
     type = GolemStress
     variable = stress_xy
     index_i = 0
     index_j = 1
-  [../]
-  #[./strain_xy_analytical]
+  []
+  #[strain_xy_analytical]
   #  type = FunctionAux
   #  variable = strain_xy_analytical
   #  function = strain_xy_analytical
-  #[../]
-  #[./stress_xy_analytical]
+  #[]
+  #[stress_xy_analytical]
   #  type = FunctionAux
   #  variable = stress_xy_analytical
   #  function = stress_xy_analytical
-  #[../]
+  #[]
 []
 
 [Functions]
-  [./disp_y_func]
+  [disp_y_func]
     type = ParsedFunction
-    value = 'm*t*x'
-    vars = 'm'
-    vals = '-0.1'
-  [../]
-  #[./strain_xy_analytical]
+    expression = 'm*t*x'
+    symbol_names = 'm'
+    symbol_values = '-0.1'
+  []
+  #[strain_xy_analytical]
   #  type = ParsedFunction
   #  value = 'm*t/2'
   #  vars = 'm'
   #  vals = '-0.1'
-  #[../]
-  #[./stress_xy_analytical]
+  #[]
+  #[stress_xy_analytical]
   #  type = ParsedFunction
   #  value = 'E/(2*(1+nu))*m*t'
   #  vars = 'm E nu'
   #  vals = '-0.1 10.0e+09 0.25'
-  #[../]
+  #[]
 []
 
 [BCs]
-  [./no_x]
+  [no_x]
     type = DirichletBC
     variable = disp_x
     boundary = 'left right bottom top front back'
     value = 0.0
     preset = true
-  [../]
-  [./no_z]
+  []
+  [no_z]
     type = DirichletBC
     variable = disp_z
     boundary = 'left right bottom top front back'
     value = 0.0
     preset = true
-  [../]
-  [./disp_y_plate]
+  []
+  [disp_y_plate]
     type = FunctionDirichletBC
     variable = disp_y
     boundary = 'left right bottom top front back'
     function = disp_y_func
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./MMaterial]
+  [MMaterial]
     type = GolemMaterialMElastic
     block = 0
     strain_model = small_strain
@@ -147,33 +147,33 @@
     poisson_ratio = 0.25
     porosity_uo = porosity
     fluid_density_uo = fluid_density
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
+  []
 []
 
 #[Postprocessors]
-#  [./error_exy]
+#  [error_exy]
 #    type = ElementL2Difference
 #    variable = strain_xy
 #    other_variable = strain_xy_analytical
-#  [../]
-#  [./error_sxy]
+#  []
+#  [error_sxy]
 #    type = ElementL2Difference
 #    variable = stress_xy
 #    other_variable = stress_xy_analytical
-#  [../]
+#  []
 #[]
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -184,7 +184,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

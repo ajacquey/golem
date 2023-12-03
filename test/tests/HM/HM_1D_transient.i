@@ -11,166 +11,166 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
     initial_condition = 0.0
-  [../]
-  [./disp_x]
+  []
+  [disp_x]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_y]
+  []
+  [disp_y]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_z]
+  []
+  [disp_z]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./HKernel]
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
-  [./HMKernel]
+  []
+  [HMKernel]
     type = GolemKernelHPoroElastic
     variable = pore_pressure
-  [../]
-  [./MKernel_x]
+  []
+  [MKernel_x]
     type = GolemKernelM
     variable = disp_x
     component = 0
-  [../]
-  [./MKernel_y]
+  []
+  [MKernel_y]
     type = GolemKernelM
     variable = disp_y
     component = 1
-  [../]
-  [./MKernel_z]
+  []
+  [MKernel_z]
     type = GolemKernelM
     variable = disp_z
     component = 2
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./strain_xx]
+  [strain_xx]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./stress_xx]
+  []
+  [stress_xx]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./strain_yy]
+  []
+  [strain_yy]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./stress_yy]
+  []
+  [stress_yy]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./strain_zz]
+  []
+  [strain_zz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./stress_zz]
+  []
+  [stress_zz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./strain_xx]
+  [strain_xx]
     type = GolemStrain
     variable = strain_xx
     index_i = 0
     index_j = 0
-  [../]
-  [./stress_xx]
+  []
+  [stress_xx]
     type = GolemStress
     variable = stress_xx
     index_i = 0
     index_j = 0
-  [../]
-  [./strain_yy]
+  []
+  [strain_yy]
     type = GolemStrain
     variable = strain_yy
     index_i = 0
     index_j = 0
-  [../]
-  [./stress_yy]
+  []
+  [stress_yy]
     type = GolemStress
     variable = stress_yy
     index_i = 0
     index_j = 0
-  [../]
-  [./strain_zz]
+  []
+  [strain_zz]
     type = GolemStrain
     variable = strain_zz
     index_i = 0
     index_j = 0
-  [../]
-  [./stress_zz]
+  []
+  [stress_zz]
     type = GolemStress
     variable = stress_zz
     index_i = 0
     index_j = 0
-  [../]
+  []
 []
 
 [Functions]
-  [./func_p1_right]
+  [func_p1_right]
     type = ParsedFunction
-    value = 'p_rate*t'
-    vars = 'p_rate'
-    vals = '100'
-  [../]
+    expression = 'p_rate*t'
+    symbol_names = 'p_rate'
+    symbol_values = '100'
+  []
 []
 
 [BCs]
-  [./p0_left]
+  [p0_left]
     type = DirichletBC
     variable = pore_pressure
     boundary = left
     value = 0.0
     preset = true
-  [../]
-  [./p1_right]
+  []
+  [p1_right]
     type = FunctionDirichletBC
     variable = pore_pressure
     boundary = right
     function = func_p1_right
     preset = true
-  [../]
-  [./no_x_right]
+  []
+  [no_x_right]
     type = DirichletBC
     variable = disp_x
     boundary = right
     value = 0.0
     preset = true
-  [../]
-  [./no_y]
+  []
+  [no_y]
     type = DirichletBC
     variable = disp_y
     boundary = 'front back'
     value = 0.0
     preset = true
-  [../]
-  [./no_z]
+  []
+  [no_z]
     type = DirichletBC
     variable = disp_z
     boundary = 'bottom top'
     value = 0.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./HMMaterial]
+  [HMMaterial]
     type = GolemMaterialMElastic
     block = 0
     strain_model = incr_small_strain
@@ -182,32 +182,32 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./precond]
+  [precond]
     type = SMP
     full = true
     petsc_options = '-snes_ksp_ew'
     petsc_options_iname = '-ksp_type -pc_type -snes_atol -snes_rtol -snes_max_it -ksp_max_it -sub_pc_type -sub_pc_factor_shift_type'
     petsc_options_value = 'gmres asm 1E-20 1E-10 200 500 lu NONZERO'
-  [../]
+  []
 []
 
 [Executioner]

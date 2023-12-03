@@ -13,54 +13,54 @@
 []
 
 [Variables]
-  [./temperature]
+  [temperature]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./TKernel]
+  [TKernel]
     type = GolemKernelT
     variable = temperature
-  [../]
+  []
 []
 
 [BCs]
-  [./T0_left]
+  [T0_left]
     type = DirichletBC
     variable = temperature
     boundary = left
     value = 0.0
     preset = true
-  [../]
-  [./T1_right]
+  []
+  [T1_right]
     type = DirichletBC
     variable = temperature
     boundary = right
     value = 1.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./thermal]
+  [thermal]
     type = GolemMaterialT
     block = 0
     fluid_thermal_conductivity_initial = 1.0
     solid_thermal_conductivity_initial = 1.0
     porosity_uo = porosity
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -71,7 +71,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

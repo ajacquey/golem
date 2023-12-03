@@ -13,42 +13,42 @@
 []
 
 [Variables]
- [./pore_pressure]
+ [pore_pressure]
    order = FIRST
    family = LAGRANGE
- [../]
+ []
 []
 
 [Kernels]
-  [./HKernel]
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
+  []
 []
 
 [DiracKernels]
-  [./H_injection]
+  [H_injection]
     type = GolemDiracKernelTH
     variable = pore_pressure
     source_point = '0.0 0.0 0.0'
     in_out_rate = 1.0
     start_time = 0.0
     end_time = 10.0
-  [../]
+  []
 []
 
 [BCs]
-  [./p0_outer]
+  [p0_outer]
     type = DirichletBC
     variable = pore_pressure
     boundary = 'left right bottom top front back'
     value = 0.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./hydro]
+  [hydro]
     type = GolemMaterialH
     block = 0
     permeability_initial = 1.0e-15
@@ -58,26 +58,26 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 #[VectorPostprocessors]
-#  [./line_pf]
+#  [line_pf]
 #    type = LineValueSampler
 #    variable = pore_pressure
 #    start_point = '0.0 0.0 0.0'
@@ -85,11 +85,11 @@
 #    num_points = 10
 #    sort_by = x
 #    outputs = csv
-#  [../]
+#  []
 #[]
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -100,7 +100,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

@@ -13,121 +13,121 @@
 []
 
 [Variables]
-  [./temperature]
+  [temperature]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./TKernel]
+  [TKernel]
     type = GolemKernelT
     variable = temperature
-  [../]
+  []
 []
 
 [Functions]
-  [./T_left_func]
+  [T_left_func]
     type = ParsedFunction
-    value = 'T0*(0+y/L+z/L)'
-    vars = 'T0 L'
-    vals = '1.0 1.0'
-  [../]
-  [./T_right_func]
+    expression = 'T0*(0+y/L+z/L)'
+    symbol_names = 'T0 L'
+    symbol_values = '1.0 1.0'
+  []
+  [T_right_func]
     type = ParsedFunction
-    value = 'T0*(1+y/L+z/L)'
-    vars = 'T0 L'
-    vals = '1.0 1.0'
-  [../]
-  [./T_bottom_func]
+    expression = 'T0*(1+y/L+z/L)'
+    symbol_names = 'T0 L'
+    symbol_values = '1.0 1.0'
+  []
+  [T_bottom_func]
     type = ParsedFunction
-    value = 'T0*(x/L+0+z/L)'
-    vars = 'T0 L'
-    vals = '1.0 1.0'
-  [../]
-  [./T_top_func]
+    expression = 'T0*(x/L+0+z/L)'
+    symbol_names = 'T0 L'
+    symbol_values = '1.0 1.0'
+  []
+  [T_top_func]
     type = ParsedFunction
-    value = 'T0*(x/L+1+z/L)'
-    vars = 'T0 L'
-    vals = '1.0 1.0'
-  [../]
-  [./T_back_func]
+    expression = 'T0*(x/L+1+z/L)'
+    symbol_names = 'T0 L'
+    symbol_values = '1.0 1.0'
+  []
+  [T_back_func]
     type = ParsedFunction
-    value = 'T0*(x/L+y/L+0)'
-    vars = 'T0 L'
-    vals = '1.0 1.0'
-  [../]
-  [./T_front_func]
+    expression = 'T0*(x/L+y/L+0)'
+    symbol_names = 'T0 L'
+    symbol_values = '1.0 1.0'
+  []
+  [T_front_func]
     type = ParsedFunction
-    value = 'T0*(x/L+y/L+1)'
-    vars = 'T0 L'
-    vals = '1.0 1.0'
-  [../]
+    expression = 'T0*(x/L+y/L+1)'
+    symbol_names = 'T0 L'
+    symbol_values = '1.0 1.0'
+  []
 []
 
 [BCs]
-  [./T_left]
+  [T_left]
     type = FunctionDirichletBC
     variable = temperature
     boundary = left
     function = T_left_func
     preset = true
-  [../]
-  [./T_right]
+  []
+  [T_right]
     type = FunctionDirichletBC
     variable = temperature
     boundary = right
     function = T_right_func
     preset = true
-  [../]
-  [./T_bottom]
+  []
+  [T_bottom]
     type = FunctionDirichletBC
     variable = temperature
     boundary = bottom
     function = T_bottom_func
     preset = true
-  [../]
-  [./T_top]
+  []
+  [T_top]
     type = FunctionDirichletBC
     variable = temperature
     boundary = top
     function = T_top_func
     preset = true
-  [../]
-  [./T_front]
+  []
+  [T_front]
     type = FunctionDirichletBC
     variable = temperature
     boundary = front
     function = T_front_func
     preset = true
-  [../]
-  [./T_back]
+  []
+  [T_back]
     type = FunctionDirichletBC
     variable = temperature
     boundary = back
     function = T_back_func
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./thermal]
+  [thermal]
     type = GolemMaterialT
     block = 0
     fluid_thermal_conductivity_initial = 1.0
     solid_thermal_conductivity_initial = 1.0
     porosity_uo = porosity
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -138,7 +138,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

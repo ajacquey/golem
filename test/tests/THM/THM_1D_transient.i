@@ -19,139 +19,139 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
     initial_condition = 0.0
-  [../]
-  [./temperature]
+  []
+  [temperature]
     order = FIRST
     family = LAGRANGE
    initial_condition = 0.0
-  [../]
-  [./disp_x]
+  []
+  [disp_x]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_y]
+  []
+  [disp_y]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_z]
+  []
+  [disp_z]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./HKernel]
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
-  [./TKernelTime]
+  []
+  [TKernelTime]
     type = GolemKernelTimeT
     variable = temperature
-  [../]
-  [./TKernel]
+  []
+  [TKernel]
     type = GolemKernelTH
     variable = temperature
     is_conservative = true
-  [../]
-  [./MKernel_x]
+  []
+  [MKernel_x]
     type = GolemKernelM
     variable = disp_x
     component = 0
-  [../]
-  [./MKernel_y]
+  []
+  [MKernel_y]
     type = GolemKernelM
     variable = disp_y
     component = 1
-  [../]
-  [./MKernel_z]
+  []
+  [MKernel_z]
     type = GolemKernelM
     variable = disp_z
     component = 2
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./strain_zz]
+  [strain_zz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./stress_zz]
+  []
+  [stress_zz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./strain_zz]
+  [strain_zz]
     type = GolemStrain
     variable = strain_zz
     index_i = 2
     index_j = 2
-  [../]
-  [./stress_zz]
+  []
+  [stress_zz]
     type = GolemStress
     variable = stress_zz
     index_i = 2
     index_j = 2
-  [../]
+  []
 []
 
 [BCs]
-  [./pf_left]
+  [pf_left]
     type = DirichletBC
     variable = pore_pressure
     boundary = 'left'
     value = 1.0e+05
     preset = false
-  [../]
-  [./pf_right]
+  []
+  [pf_right]
     type = DirichletBC
     variable = pore_pressure
     boundary = 'right'
     value = 0.0
     preset = false
-  [../]
-  [./T_left]
+  []
+  [T_left]
     type = DirichletBC
     variable = temperature
     boundary = 'left'
     value = -10
     preset = false
-  [../]
-  [./T_right]
+  []
+  [T_right]
     type = GolemConvectiveTHBC
     variable = temperature
     boundary = 'right'
-  [../]
-  [./no_x]
+  []
+  [no_x]
     type = DirichletBC
     variable = disp_x
     boundary = 'left'
     value = 0.0
     preset = true
-  [../]
-  [./no_y]
+  []
+  [no_y]
     type = DirichletBC
     variable = disp_y
     boundary = 'bottom top'
     value = 0.0
     preset = true
-  [../]
-  [./no_z]
+  []
+  [no_z]
     type = DirichletBC
     variable = disp_z
     boundary = 'back front'
     value = 0.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./MMaterial]
+  [MMaterial]
     type = GolemMaterialMElastic
     block = 0
     solid_density_initial = 2000
@@ -172,26 +172,26 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -202,7 +202,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

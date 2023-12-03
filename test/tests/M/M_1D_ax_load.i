@@ -17,91 +17,91 @@
 []
 
 [Variables]
-  [./disp_x]
+  [disp_x]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_y]
+  []
+  [disp_y]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_z]
+  []
+  [disp_z]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./MKernel_x]
+  [MKernel_x]
     type = GolemKernelM
     variable = disp_x
     component = 0
-  [../]
-  [./MKernel_y]
+  []
+  [MKernel_y]
     type = GolemKernelM
     variable = disp_y
     component = 1
-  [../]
-  [./MKernel_z]
+  []
+  [MKernel_z]
     type = GolemKernelM
     variable = disp_z
     component = 2
-  [../]
+  []
 []
 
 #[Functions]
-#  [./disp_x_analytical]
+#  [disp_x_analytical]
 #    type = ParsedFunction
 #    value = 'S0/E*x'
 #    vars = 'S0 E'
 #    vals = '2.0e+06 10.0e+09'
-#  [../]
-#  [./disp_y_analytical]
+#  []
+#  [disp_y_analytical]
 #    type = ParsedFunction
 #    value = '-nu*S0/E*y'
 #    vars = 'S0 E nu'
 #    vals = '2.0e+06 10.0e+09 0.25'
-#  [../]
-#  [./disp_z_analytical]
+#  []
+#  [disp_z_analytical]
 #    type = ParsedFunction
 #    value = '-nu*S0/E*z'
 #    vars = 'S0 E nu'
 #    vals = '2.0e+06 10.0e+09 0.25'
-#  [../]
+#  []
 #[]
 
 [BCs]
-  [./no_x_left]
+  [no_x_left]
     type = DirichletBC
     variable = disp_x
     boundary = left
     value = 0.0
     preset = true
-  [../]
-  [./load_x_right]
+  []
+  [load_x_right]
     type = NeumannBC
     variable = disp_x
     boundary = right
     value = 2.0e+06
-  [../]
-  [./no_y_bottom]
+  []
+  [no_y_bottom]
     type = DirichletBC
     variable = disp_y
     boundary = bottom
     value = 0.0
     preset = true
-  [../]
-  [./no_z_back]
+  []
+  [no_z_back]
     type = DirichletBC
     variable = disp_z
     boundary = back
     value = 0.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./MMaterial]
+  [MMaterial]
     type = GolemMaterialMElastic
     block = 0
     strain_model = small_strain
@@ -109,38 +109,38 @@
     poisson_ratio = 0.25
     porosity_uo = porosity
     fluid_density_uo = fluid_density
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
+  []
 []
 
 #[Postprocessors]
-#  [./error_ux]
+#  [error_ux]
 #    type = NodalL2Error
 #    variable = disp_x
 #    function = disp_x_analytical
-#  [../]
-#  [./error_uy]
+#  []
+#  [error_uy]
 #    type = NodalL2Error
 #    variable = disp_y
 #    function = disp_y_analytical
-#  [../]
-#  [./error_uz]
+#  []
+#  [error_uz]
 #    type = NodalL2Error
 #    variable = disp_z
 #    function = disp_z_analytical
-#  [../]
+#  []
 #[]
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -151,7 +151,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-10 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

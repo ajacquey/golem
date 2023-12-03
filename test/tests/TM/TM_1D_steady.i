@@ -18,122 +18,122 @@
 []
 
 [Variables]
-  [./temperature]
+  [temperature]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_x]
+  []
+  [disp_x]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_y]
+  []
+  [disp_y]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_z]
+  []
+  [disp_z]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./TKernel]
+  [TKernel]
     type = GolemKernelT
     variable = temperature
-  [../]
-  [./MKernel_x]
+  []
+  [MKernel_x]
     type = GolemKernelM
     variable = disp_x
     component = 0
-  [../]
-  [./MKernel_y]
+  []
+  [MKernel_y]
     type = GolemKernelM
     variable = disp_y
     component = 1
-  [../]
-  [./MKernel_z]
+  []
+  [MKernel_z]
     type = GolemKernelM
     variable = disp_z
     component = 2
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./strain_xx]
+  [strain_xx]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./stress_yy]
+  []
+  [stress_yy]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./stress_zz]
+  []
+  [stress_zz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./strain_xx]
+  [strain_xx]
     type = GolemStrain
     variable = strain_xx
     index_i = 0
     index_j = 0
-  [../]
-  [./stress_yy]
+  []
+  [stress_yy]
     type = GolemStress
     variable = stress_yy
     index_i = 1
     index_j = 1
-  [../]
-  [./stress_zz]
+  []
+  [stress_zz]
     type = GolemStress
     variable = stress_zz
     index_i = 2
     index_j = 2
-  [../]
+  []
 []
 
 [BCs]
-  [./T0_left]
+  [T0_left]
     type = DirichletBC
     variable = temperature
     boundary = left
     value = 0.0
     preset = false
-  [../]
-  [./T1_right]
+  []
+  [T1_right]
     type = DirichletBC
     variable = temperature
     boundary = right
     value = 1.0
     preset = false
-  [../]
-  [./no_x_right]
+  []
+  [no_x_right]
     type = DirichletBC
     variable = disp_x
     boundary = right
     value = 0.0
     preset = true
-  [../]
-  [./no_y]
+  []
+  [no_y]
     type = DirichletBC
     variable = disp_y
     boundary = 'bottom top'
     value = 0.0
     preset = true
-  [../]
-  [./no_z]
+  []
+  [no_z]
     type = DirichletBC
     variable = disp_z
     boundary = 'back front'
     value = 0.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./TMMaterial]
+  [TMMaterial]
     type = GolemMaterialMElastic
     block = 0
     strain_model = incr_small_strain
@@ -144,20 +144,20 @@
     solid_thermal_conductivity_initial = 1.0
     porosity_uo = porosity
     fluid_density_uo = fluid_density
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -168,7 +168,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

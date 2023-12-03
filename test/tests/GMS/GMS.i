@@ -3,8 +3,8 @@
 []
 
 [Variables]
-  [./temperature]
-  [../]
+  [temperature]
+  []
 []
 
 [GlobalParams]
@@ -12,70 +12,70 @@
 []
 
 [Functions]
-  [./func_bc_0]
+  [func_bc_0]
     type = GolemFunctionBCFromFile
     data_file = bc_file_0.dat
     interpolate_data_in_time = false
     interpolate_data_in_space = true
-  [../]
+  []
 []
 
 [BCs]
-  [./bc_0]
+  [bc_0]
     type = FunctionDirichletBC
     function = func_bc_0
     boundary = 1
     variable = temperature
     preset = false
-  [../]
-  [./bc_1]
+  []
+  [bc_1]
     type = DirichletBC
     value = 250
     boundary = 2
     variable = temperature
     preset = false
-  [../]
+  []
 []
 
 [Kernels]
-  [./temp_conduction]
+  [temp_conduction]
     type = GMSEnergyResidual
     variable = temperature
-  [../]
+  []
 []
 
 [UserObjects]
-  [./prop]
+  [prop]
     type = GolemPropertyReadFile
     prop_file_name = GMS_prop.dat
     nprop = 4
     nele = 1071
-  [../]
+  []
 []
 
 [Materials]
- [./layer1]
+ [layer1]
    type = GMSMaterial
    block = 0
    read_prop_user_object = prop
    outputs = out
- [../]
- [./layer2]
+ []
+ [layer2]
    type = GMSMaterial
    block = 1
    read_prop_user_object = prop
    outputs = out
- [../]
- [./layer3]
+ []
+ [layer3]
    type = GMSMaterial
    block = 2
    read_prop_user_object = prop
    outputs = out
- [../]
+ []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -86,7 +86,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]
@@ -98,7 +98,7 @@
 [Outputs]
   print_linear_residuals = true
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []

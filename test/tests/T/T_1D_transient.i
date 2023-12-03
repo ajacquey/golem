@@ -13,52 +13,52 @@
 []
 
 [Variables]
-  [./temperature]
+  [temperature]
     order = FIRST
     family = LAGRANGE
     initial_condition = 0.0
-  [../]
+  []
 []
 
 [Kernels]
-  [./T_time]
+  [T_time]
     type = GolemKernelTimeT
     variable = temperature
-  [../]
-  [./TKernel]
+  []
+  [TKernel]
     type = GolemKernelT
     variable = temperature
-  [../]
+  []
 []
 
 [Functions]
-  [./T_time_func]
+  [T_time_func]
     type = ParsedFunction
-    value = 'T1*t'
-    vars = 'T1'
-    vals = '0.000023148'
-  [../]
+    expression = 'T1*t'
+    symbol_names = 'T1'
+    symbol_values = '0.000023148'
+  []
 []
 
 [BCs]
-  [./T_left]
+  [T_left]
     type = FunctionDirichletBC
     variable = temperature
     boundary = left
     function = T_time_func
     preset = true
-  [../]
-  [./T_right]
+  []
+  [T_right]
     type = FunctionDirichletBC
     variable = temperature
     boundary = right
     function = T_time_func
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./thermal]
+  [thermal]
     type = GolemMaterialT
     block = 0
     fluid_thermal_conductivity_initial = 1.0
@@ -67,20 +67,20 @@
     solid_density_initial = 2500
     porosity_uo = porosity
     fluid_density_uo = fluid_density
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./hypre]
+  [hypre]
     type = SMP
     full = true
     petsc_options_iname = '-pc_type -pc_hypre_type
@@ -91,7 +91,7 @@
                            fgmres 1e-10 100
                            newtonls 1e-05 1e-10 100
                            201'
-  [../]
+  []
 []
 
 [Executioner]

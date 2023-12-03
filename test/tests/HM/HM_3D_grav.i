@@ -18,105 +18,105 @@
 []
 
 [Variables]
-  [./pore_pressure]
+  [pore_pressure]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_x]
+  []
+  [disp_x]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_y]
+  []
+  [disp_y]
     order = FIRST
     family = LAGRANGE
-  [../]
-  [./disp_z]
+  []
+  [disp_z]
     order = FIRST
     family = LAGRANGE
-  [../]
+  []
 []
 
 [Kernels]
-  [./HKernel]
+  [HKernel]
     type = GolemKernelH
     variable = pore_pressure
-  [../]
-  [./MKernel_x]
+  []
+  [MKernel_x]
     type = GolemKernelM
     variable = disp_x
     component = 0
-  [../]
-  [./MKernel_y]
+  []
+  [MKernel_y]
     type = GolemKernelM
     variable = disp_y
     component = 1
-  [../]
-  [./MKernel_z]
+  []
+  [MKernel_z]
     type = GolemKernelM
     variable = disp_z
     component = 2
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./strain_zz]
+  [strain_zz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./stress_zz]
+  []
+  [stress_zz]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./strain_zz]
+  [strain_zz]
     type = GolemStrain
     variable = strain_zz
     index_i = 2
     index_j = 2
-  [../]
-  [./stress_zz]
+  []
+  [stress_zz]
     type = GolemStress
     variable = stress_zz
     index_i = 2
     index_j = 2
-  [../]
+  []
 []
 
 [BCs]
-  [./p0_front]
+  [p0_front]
     type = DirichletBC
     variable = pore_pressure
     boundary = front
     value = 0.0
     preset = false
-  [../]
-  [./no_x]
+  []
+  [no_x]
     type = DirichletBC
     variable = disp_x
     boundary = 'left right'
     value = 0.0
     preset = true
-  [../]
-  [./no_y]
+  []
+  [no_y]
     type = DirichletBC
     variable = disp_y
     boundary = 'bottom top'
     value = 0.0
     preset = true
-  [../]
-  [./no_z_back]
+  []
+  [no_z_back]
     type = DirichletBC
     variable = disp_z
     boundary = back
     value = 0.0
     preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./HMMaterial]
+  [HMMaterial]
     type = GolemMaterialMElastic
     block = 0
     strain_model = incr_small_strain
@@ -132,32 +132,32 @@
     fluid_density_uo = fluid_density
     fluid_viscosity_uo = fluid_viscosity
     permeability_uo = permeability
-  [../]
+  []
 []
 
 [UserObjects]
-  [./porosity]
+  [porosity]
     type = GolemPorosityConstant
-  [../]
-  [./fluid_density]
+  []
+  [fluid_density]
     type = GolemFluidDensityConstant
-  [../]
-  [./fluid_viscosity]
+  []
+  [fluid_viscosity]
     type = GolemFluidViscosityConstant
-  [../]
-  [./permeability]
+  []
+  [permeability]
     type = GolemPermeabilityConstant
-  [../]
+  []
 []
 
 [Preconditioning]
-  [./precond]
+  [precond]
     type = SMP
     full = true
     petsc_options = '-snes_ksp_ew'
     petsc_options_iname = '-ksp_type -pc_type -snes_atol -snes_rtol -snes_max_it -ksp_max_it -sub_pc_type -sub_pc_factor_shift_type'
     petsc_options_value = 'gmres asm 1E-10 1E-10 200 500 lu NONZERO'
-  [../]
+  []
 []
 
 [Executioner]
