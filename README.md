@@ -37,7 +37,7 @@ GOLEM is distributed under the [GNU GENERAL PUBLIC LICENSE v3](https://github.co
 ## Getting Started
 
 #### Minimum System Requirements
-The following system requirements are from the MOOSE framework (see [Getting Started](http://mooseframework.org/getting-started/) for more information):
+The following system requirements are from the MOOSE framework (see [Getting Started](http://mooseframework.inl.gov/getting_started/) for more information):
 * Compiler: C++11 Compliant GCC 4.8.4, Clang 3.4.0, Intel20130607
 * Python 2.7+
 * Memory: 16 GBs (debug builds)
@@ -47,7 +47,7 @@ The following system requirements are from the MOOSE framework (see [Getting Sta
 
 #### 1. Setting Up a MOOSE Installation
 To install GOLEM, you need first to have a working and up-to-date installation of the MOOSE framework.  
-To do so, please visit the [Getting Started](http://mooseframework.org/getting-started/) page of the MOOSE framework and follow the instructions. If you encounter difficulties at this step, you can ask for help on the [MOOSE-users Google group](https://groups.google.com/forum/#!forum/moose-users).
+To do so, please visit the [Getting Started](http://mooseframework.inl.gov/getting_started/) page of the MOOSE framework and follow the instructions. If you encounter difficulties at this step, you can ask for help on the [MOOSE-users Google group](https://groups.google.com/forum/#!forum/moose-users).
 
 #### 2. Clone GOLEM
 GOLEM can be cloned directly from [GitHub](https://github.com/ajacquey/Golem) using [Git](https://git-scm.com/). In the following, we refer to the directory `projects` which you created during the MOOSE installation (by default `~/projects`):  
